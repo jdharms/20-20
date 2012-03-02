@@ -40,6 +40,47 @@ namespace _20
             Console.WriteLine("\t" + currButton.ToString());
         }
 
+        private void historyBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            //The selected value "changes" even when it goes to having no selected value.
+            //This only shows the delete button if the selected value is an actual event,
+            //and hides the box when the new selection is nothing.
+            if (historyBox.SelectedItem != null)
+            {
+                deleteEventButton.Visible = true;
+            }
+            else
+            {
+                deleteEventButton.Visible = false;
+            }
+
+        }
+
+        private void historyBox_Leave(object sender, EventArgs e)
+        {
+            //When we leave the box, clear the selected value so no accidental deletions are possible.
+            if (ActiveControl != deleteEventButton)
+            {
+                historyBox.ClearSelected();
+            }
+        }
+
+        private void deleteEventButton_Click(object sender, EventArgs e)
+        {
+            //requests user to confirm deletion of event.
+            if (MessageBox.Show("Really Delete?", "Confirm Delete.", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                //this branch runs if the result of the confirmation is "OK"
+                Console.WriteLine("Deleting...");
+            }
+            else
+            {
+                //this branch executes if the user says "Cancel".
+                Console.WriteLine("Not deleting...");
+                historyBox.ClearSelected();
+            }
+        }
+
 
     }
 }
