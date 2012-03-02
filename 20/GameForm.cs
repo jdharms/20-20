@@ -21,9 +21,7 @@ namespace _20
 
         }
 
-        /*
-         * Method is executed when the court is clicked */
-        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        private void courtBox_MouseDown(object sender, MouseEventArgs e)
         {
             const int imageBorder = 6;
             const float xSize = 1199;
