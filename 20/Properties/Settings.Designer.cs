@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace _Basket.Properties {
+namespace _20.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

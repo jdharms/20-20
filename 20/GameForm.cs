@@ -36,6 +36,7 @@ namespace _20
              * and the bottom right corner is (940, 500). */
             loc.X = (int)((loc.X - imageBorder) / xSize * 940);
             loc.Y = (int)((loc.Y - imageBorder) / ySize * 500);
+
             Console.WriteLine("Click registered:");
             Console.WriteLine("\t" + loc.ToString());
             Console.WriteLine("\t" + currButton.ToString());
