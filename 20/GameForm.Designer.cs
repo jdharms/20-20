@@ -32,12 +32,12 @@
             this.reboundButton = new System.Windows.Forms.Button();
             this.turnoverButton = new System.Windows.Forms.Button();
             this.jumpBallButton = new System.Windows.Forms.Button();
-            this.periodEndButton = new System.Windows.Forms.Button();
             this.periodStartButton = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.substitutionButton = new System.Windows.Forms.Button();
             this.timeoutButton = new System.Windows.Forms.Button();
+            this.buttonBox = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.courtBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -78,22 +78,13 @@
             this.jumpBallButton.Text = "Jump Ball";
             this.jumpBallButton.UseVisualStyleBackColor = true;
             // 
-            // periodEndButton
-            // 
-            this.periodEndButton.Location = new System.Drawing.Point(1043, 759);
-            this.periodEndButton.Name = "periodEndButton";
-            this.periodEndButton.Size = new System.Drawing.Size(164, 35);
-            this.periodEndButton.TabIndex = 4;
-            this.periodEndButton.Text = "Period End";
-            this.periodEndButton.UseVisualStyleBackColor = true;
-            // 
             // periodStartButton
             // 
             this.periodStartButton.Location = new System.Drawing.Point(873, 759);
             this.periodStartButton.Name = "periodStartButton";
             this.periodStartButton.Size = new System.Drawing.Size(164, 35);
             this.periodStartButton.TabIndex = 5;
-            this.periodStartButton.Text = "Period Start";
+            this.periodStartButton.Text = "Period Start/End";
             this.periodStartButton.UseVisualStyleBackColor = true;
             // 
             // button6
@@ -115,7 +106,7 @@
             // 
             // substitutionButton
             // 
-            this.substitutionButton.Location = new System.Drawing.Point(1213, 759);
+            this.substitutionButton.Location = new System.Drawing.Point(1043, 759);
             this.substitutionButton.Name = "substitutionButton";
             this.substitutionButton.Size = new System.Drawing.Size(164, 35);
             this.substitutionButton.TabIndex = 8;
@@ -131,6 +122,14 @@
             this.timeoutButton.Text = "Timeout";
             this.timeoutButton.UseVisualStyleBackColor = true;
             // 
+            // buttonBox
+            // 
+            this.buttonBox.Location = new System.Drawing.Point(12, 749);
+            this.buttonBox.Name = "buttonBox";
+            this.buttonBox.Size = new System.Drawing.Size(1204, 46);
+            this.buttonBox.TabIndex = 10;
+            this.buttonBox.TabStop = false;
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -141,11 +140,11 @@
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.periodStartButton);
-            this.Controls.Add(this.periodEndButton);
             this.Controls.Add(this.jumpBallButton);
             this.Controls.Add(this.turnoverButton);
             this.Controls.Add(this.reboundButton);
             this.Controls.Add(this.courtBox);
+            this.Controls.Add(this.buttonBox);
             this.Name = "GameForm";
             this.Text = "20-20 Basketball";
             this.Load += new System.EventHandler(this.GameForm_Load);
@@ -160,12 +159,12 @@
         private System.Windows.Forms.Button reboundButton;
         private System.Windows.Forms.Button turnoverButton;
         private System.Windows.Forms.Button jumpBallButton;
-        private System.Windows.Forms.Button periodEndButton;
         private System.Windows.Forms.Button periodStartButton;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Button substitutionButton;
         private System.Windows.Forms.Button timeoutButton;
+        private System.Windows.Forms.GroupBox buttonBox;
     }
 }
 
