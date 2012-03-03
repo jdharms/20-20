@@ -111,6 +111,16 @@ namespace _20
             //send turnover event to server
         }
 
+        private void jumpBallButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void periodStartButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
 
     }
 }
