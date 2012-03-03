@@ -80,6 +80,7 @@
             this.jumpBallButton.TabIndex = 3;
             this.jumpBallButton.Text = "Jump Ball";
             this.jumpBallButton.UseVisualStyleBackColor = true;
+            this.jumpBallButton.Click += new System.EventHandler(this.jumpBallButton_Click);
             // 
             // periodStartButton
             // 
@@ -89,6 +90,7 @@
             this.periodStartButton.TabIndex = 5;
             this.periodStartButton.Text = "Period Start/End";
             this.periodStartButton.UseVisualStyleBackColor = true;
+            this.periodStartButton.Click += new System.EventHandler(this.periodStartButton_Click);
             // 
             // button6
             // 
