@@ -34,17 +34,18 @@
             this.jumpBallButton = new System.Windows.Forms.Button();
             this.periodStartButton = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.historyBox = new System.Windows.Forms.ListBox();
             this.substitutionButton = new System.Windows.Forms.Button();
             this.timeoutButton = new System.Windows.Forms.Button();
             this.buttonBox = new System.Windows.Forms.GroupBox();
+            this.deleteEventButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.courtBox)).BeginInit();
             this.SuspendLayout();
             // 
             // courtBox
             // 
             this.courtBox.Image = global::_20.Properties.Resources.BasketballCourt;
-            this.courtBox.Location = new System.Drawing.Point(12, 146);
+            this.courtBox.Location = new System.Drawing.Point(23, 22);
             this.courtBox.Name = "courtBox";
             this.courtBox.Size = new System.Drawing.Size(1213, 731);
             this.courtBox.TabIndex = 0;
@@ -53,7 +54,7 @@
             // 
             // reboundButton
             // 
-            this.reboundButton.Location = new System.Drawing.Point(12, 883);
+            this.reboundButton.Location = new System.Drawing.Point(23, 759);
             this.reboundButton.Name = "reboundButton";
             this.reboundButton.Size = new System.Drawing.Size(164, 35);
             this.reboundButton.TabIndex = 1;
@@ -62,7 +63,7 @@
             // 
             // turnoverButton
             // 
-            this.turnoverButton.Location = new System.Drawing.Point(182, 883);
+            this.turnoverButton.Location = new System.Drawing.Point(193, 759);
             this.turnoverButton.Name = "turnoverButton";
             this.turnoverButton.Size = new System.Drawing.Size(164, 35);
             this.turnoverButton.TabIndex = 2;
@@ -71,7 +72,7 @@
             // 
             // jumpBallButton
             // 
-            this.jumpBallButton.Location = new System.Drawing.Point(352, 883);
+            this.jumpBallButton.Location = new System.Drawing.Point(363, 759);
             this.jumpBallButton.Name = "jumpBallButton";
             this.jumpBallButton.Size = new System.Drawing.Size(164, 35);
             this.jumpBallButton.TabIndex = 3;
@@ -80,7 +81,7 @@
             // 
             // periodStartButton
             // 
-            this.periodStartButton.Location = new System.Drawing.Point(862, 883);
+            this.periodStartButton.Location = new System.Drawing.Point(873, 759);
             this.periodStartButton.Name = "periodStartButton";
             this.periodStartButton.Size = new System.Drawing.Size(164, 35);
             this.periodStartButton.TabIndex = 5;
@@ -89,24 +90,30 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(522, 883);
+            this.button6.Location = new System.Drawing.Point(533, 759);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(164, 35);
             this.button6.TabIndex = 6;
             this.button6.Text = "Foul";
             this.button6.UseVisualStyleBackColor = true;
             // 
-            // listBox1
+            // historyBox
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(1231, 148);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(195, 732);
-            this.listBox1.TabIndex = 7;
+            this.historyBox.FormattingEnabled = true;
+            this.historyBox.Items.AddRange(new object[] {
+            "Event 1",
+            "Event 2",
+            "Event 3"});
+            this.historyBox.Location = new System.Drawing.Point(1242, 24);
+            this.historyBox.Name = "historyBox";
+            this.historyBox.Size = new System.Drawing.Size(195, 680);
+            this.historyBox.TabIndex = 7;
+            this.historyBox.SelectedValueChanged += new System.EventHandler(this.historyBox_SelectedValueChanged);
+            this.historyBox.Leave += new System.EventHandler(this.historyBox_Leave);
             // 
             // substitutionButton
             // 
-            this.substitutionButton.Location = new System.Drawing.Point(1032, 883);
+            this.substitutionButton.Location = new System.Drawing.Point(1043, 759);
             this.substitutionButton.Name = "substitutionButton";
             this.substitutionButton.Size = new System.Drawing.Size(164, 35);
             this.substitutionButton.TabIndex = 8;
@@ -115,7 +122,7 @@
             // 
             // timeoutButton
             // 
-            this.timeoutButton.Location = new System.Drawing.Point(692, 883);
+            this.timeoutButton.Location = new System.Drawing.Point(703, 759);
             this.timeoutButton.Name = "timeoutButton";
             this.timeoutButton.Size = new System.Drawing.Size(164, 35);
             this.timeoutButton.TabIndex = 9;
@@ -124,20 +131,32 @@
             // 
             // buttonBox
             // 
-            this.buttonBox.Location = new System.Drawing.Point(1, 873);
+            this.buttonBox.Location = new System.Drawing.Point(12, 749);
             this.buttonBox.Name = "buttonBox";
             this.buttonBox.Size = new System.Drawing.Size(1204, 46);
             this.buttonBox.TabIndex = 10;
             this.buttonBox.TabStop = false;
             // 
+            // deleteEventButton
+            // 
+            this.deleteEventButton.Location = new System.Drawing.Point(1242, 710);
+            this.deleteEventButton.Name = "deleteEventButton";
+            this.deleteEventButton.Size = new System.Drawing.Size(195, 31);
+            this.deleteEventButton.TabIndex = 11;
+            this.deleteEventButton.Text = "Delete Event";
+            this.deleteEventButton.UseVisualStyleBackColor = true;
+            this.deleteEventButton.Visible = false;
+            this.deleteEventButton.Click += new System.EventHandler(this.deleteEventButton_Click);
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1443, 924);
+            this.ClientSize = new System.Drawing.Size(1445, 807);
+            this.Controls.Add(this.deleteEventButton);
             this.Controls.Add(this.timeoutButton);
             this.Controls.Add(this.substitutionButton);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.historyBox);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.periodStartButton);
             this.Controls.Add(this.jumpBallButton);
@@ -161,10 +180,11 @@
         private System.Windows.Forms.Button jumpBallButton;
         private System.Windows.Forms.Button periodStartButton;
         private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox historyBox;
         private System.Windows.Forms.Button substitutionButton;
         private System.Windows.Forms.Button timeoutButton;
         private System.Windows.Forms.GroupBox buttonBox;
+        private System.Windows.Forms.Button deleteEventButton;
     }
 }
 
