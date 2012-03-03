@@ -81,6 +81,36 @@ namespace _20
             }
         }
 
+        /* 
+         * Stub author: Daniel
+         * 
+         * Purpose: Handles clicks to the rebound button.
+         */
+        private void reboundButton_Click(object sender, EventArgs e)
+        {
+            //Ask for location
+            //Ask for team
+            //Ask for rebound type ("offensive", "defensive", "dead-ball", "team-offensive", or "team-defensive")
+            //Ask for player (optional except dead-ball rebounds must have player.)
+
+            //send rebound event to server
+        }
+
+        /*
+         * Stub author: Daniel
+         * 
+         * Purpose: Handles clicks to the turnover button.
+         */
+        private void turnoverButton_Click(object sender, EventArgs e)
+        {
+            //Ask for location
+            //Ask for team
+            //Ask for optional player on opposing team that forced turnover.
+            //Ask for turnover type ( "traveling", "lost-ball", "offensive-foul", "out-of-bounds", "violation", "offensive-goaltending" or "thrown-away")
+
+            //send turnover event to server
+        }
+
 
     }
 }
