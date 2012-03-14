@@ -81,7 +81,7 @@
             "Event 3"});
             this.historyBox.Location = new System.Drawing.Point(962, 12);
             this.historyBox.Name = "historyBox";
-            this.historyBox.Size = new System.Drawing.Size(195, 680);
+            this.historyBox.Size = new System.Drawing.Size(195, 615);
             this.historyBox.TabIndex = 7;
             this.historyBox.SelectedValueChanged += new System.EventHandler(this.historyBox_SelectedValueChanged);
             this.historyBox.Leave += new System.EventHandler(this.historyBox_Leave);
@@ -108,7 +108,7 @@
             // 
             // deleteEventButton
             // 
-            this.deleteEventButton.Location = new System.Drawing.Point(1242, 710);
+            this.deleteEventButton.Location = new System.Drawing.Point(962, 633);
             this.deleteEventButton.Name = "deleteEventButton";
             this.deleteEventButton.Size = new System.Drawing.Size(195, 31);
             this.deleteEventButton.TabIndex = 11;
