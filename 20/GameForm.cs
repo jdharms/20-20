@@ -23,17 +23,21 @@ namespace _20
 
         private void courtBox_MouseDown(object sender, MouseEventArgs e)
         {
-            const int imageBorder = 6;
-            const float xSize = 1199;
-            const float ySize = 716;
+            const int imageBorder = 2;
 
             MouseButtons currButton = e.Button;
             Point loc = new Point(e.X, e.Y);
 
             /* We need to get the location of the click in "ESPN" coordinates.  That is, the top left corner is (0,0)
              * and the bottom right corner is (940, 500). */
-            loc.X = (int)((loc.X - imageBorder) / xSize * 940);
-            loc.Y = (int)((loc.Y - imageBorder) / ySize * 500);
+
+            /* This is close enough for now... later we can make a better rescale of the image and perfect this algorithm */
+
+            loc.X = (int)(loc.X - imageBorder);
+            loc.Y = (int)(loc.Y - imageBorder);
+
+            if (loc.X < 0) loc.X = 0;
+            if (loc.Y < 0) loc.Y = 0;
 
             Console.WriteLine("Click registered:");
             Console.WriteLine("\t" + loc.ToString());
