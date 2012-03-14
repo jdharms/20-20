@@ -96,6 +96,8 @@ namespace _20
 
         public bool Equals(Team team)
         {
+            if (team == null)
+                return false;
             return (team.id == this.id);
         }
 
