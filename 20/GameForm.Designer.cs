@@ -30,31 +30,31 @@
         {
             this.courtBox = new System.Windows.Forms.PictureBox();
             this.reboundButton = new System.Windows.Forms.Button();
-            this.turnoverButton = new System.Windows.Forms.Button();
-            this.jumpBallButton = new System.Windows.Forms.Button();
             this.periodStartButton = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
             this.historyBox = new System.Windows.Forms.ListBox();
             this.substitutionButton = new System.Windows.Forms.Button();
             this.timeoutButton = new System.Windows.Forms.Button();
-            this.buttonBox = new System.Windows.Forms.GroupBox();
             this.deleteEventButton = new System.Windows.Forms.Button();
+            this.jumpBallButton = new System.Windows.Forms.Button();
+            this.turnoverButton = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.courtBox)).BeginInit();
             this.SuspendLayout();
             // 
             // courtBox
             // 
             this.courtBox.Image = global::_20.Properties.Resources.BasketballCourt;
-            this.courtBox.Location = new System.Drawing.Point(23, 22);
+            this.courtBox.Location = new System.Drawing.Point(12, 12);
             this.courtBox.Name = "courtBox";
-            this.courtBox.Size = new System.Drawing.Size(1213, 731);
+            this.courtBox.Size = new System.Drawing.Size(944, 504);
+            this.courtBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.courtBox.TabIndex = 0;
             this.courtBox.TabStop = false;
             this.courtBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.courtBox_MouseDown);
             // 
             // reboundButton
             // 
-            this.reboundButton.Location = new System.Drawing.Point(23, 759);
+            this.reboundButton.Location = new System.Drawing.Point(12, 522);
             this.reboundButton.Name = "reboundButton";
             this.reboundButton.Size = new System.Drawing.Size(164, 35);
             this.reboundButton.TabIndex = 1;
@@ -62,44 +62,15 @@
             this.reboundButton.UseVisualStyleBackColor = true;
             this.reboundButton.Click += new System.EventHandler(this.reboundButton_Click);
             // 
-            // turnoverButton
-            // 
-            this.turnoverButton.Location = new System.Drawing.Point(193, 759);
-            this.turnoverButton.Name = "turnoverButton";
-            this.turnoverButton.Size = new System.Drawing.Size(164, 35);
-            this.turnoverButton.TabIndex = 2;
-            this.turnoverButton.Text = "Turnover";
-            this.turnoverButton.UseVisualStyleBackColor = true;
-            this.turnoverButton.Click += new System.EventHandler(this.turnoverButton_Click);
-            // 
-            // jumpBallButton
-            // 
-            this.jumpBallButton.Location = new System.Drawing.Point(363, 759);
-            this.jumpBallButton.Name = "jumpBallButton";
-            this.jumpBallButton.Size = new System.Drawing.Size(164, 35);
-            this.jumpBallButton.TabIndex = 3;
-            this.jumpBallButton.Text = "Jump Ball";
-            this.jumpBallButton.UseVisualStyleBackColor = true;
-            this.jumpBallButton.Click += new System.EventHandler(this.jumpBallButton_Click);
-            // 
             // periodStartButton
             // 
-            this.periodStartButton.Location = new System.Drawing.Point(873, 759);
+            this.periodStartButton.Location = new System.Drawing.Point(12, 564);
             this.periodStartButton.Name = "periodStartButton";
             this.periodStartButton.Size = new System.Drawing.Size(164, 35);
             this.periodStartButton.TabIndex = 5;
             this.periodStartButton.Text = "Period Start/End";
             this.periodStartButton.UseVisualStyleBackColor = true;
             this.periodStartButton.Click += new System.EventHandler(this.periodStartButton_Click);
-            // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(533, 759);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(164, 35);
-            this.button6.TabIndex = 6;
-            this.button6.Text = "Foul";
-            this.button6.UseVisualStyleBackColor = true;
             // 
             // historyBox
             // 
@@ -108,7 +79,7 @@
             "Event 1",
             "Event 2",
             "Event 3"});
-            this.historyBox.Location = new System.Drawing.Point(1242, 24);
+            this.historyBox.Location = new System.Drawing.Point(962, 12);
             this.historyBox.Name = "historyBox";
             this.historyBox.Size = new System.Drawing.Size(195, 680);
             this.historyBox.TabIndex = 7;
@@ -117,7 +88,7 @@
             // 
             // substitutionButton
             // 
-            this.substitutionButton.Location = new System.Drawing.Point(1043, 759);
+            this.substitutionButton.Location = new System.Drawing.Point(352, 564);
             this.substitutionButton.Name = "substitutionButton";
             this.substitutionButton.Size = new System.Drawing.Size(164, 35);
             this.substitutionButton.TabIndex = 8;
@@ -126,20 +97,12 @@
             // 
             // timeoutButton
             // 
-            this.timeoutButton.Location = new System.Drawing.Point(703, 759);
+            this.timeoutButton.Location = new System.Drawing.Point(182, 564);
             this.timeoutButton.Name = "timeoutButton";
             this.timeoutButton.Size = new System.Drawing.Size(164, 35);
             this.timeoutButton.TabIndex = 9;
             this.timeoutButton.Text = "Timeout";
             this.timeoutButton.UseVisualStyleBackColor = true;
-            // 
-            // buttonBox
-            // 
-            this.buttonBox.Location = new System.Drawing.Point(12, 749);
-            this.buttonBox.Name = "buttonBox";
-            this.buttonBox.Size = new System.Drawing.Size(1204, 46);
-            this.buttonBox.TabIndex = 10;
-            this.buttonBox.TabStop = false;
             // 
             // deleteEventButton
             // 
@@ -152,22 +115,50 @@
             this.deleteEventButton.Visible = false;
             this.deleteEventButton.Click += new System.EventHandler(this.deleteEventButton_Click);
             // 
+            // jumpBallButton
+            // 
+            this.jumpBallButton.Location = new System.Drawing.Point(522, 523);
+            this.jumpBallButton.Name = "jumpBallButton";
+            this.jumpBallButton.Size = new System.Drawing.Size(164, 35);
+            this.jumpBallButton.TabIndex = 3;
+            this.jumpBallButton.Text = "Jump Ball";
+            this.jumpBallButton.UseVisualStyleBackColor = true;
+            this.jumpBallButton.Click += new System.EventHandler(this.jumpBallButton_Click);
+            // 
+            // turnoverButton
+            // 
+            this.turnoverButton.Location = new System.Drawing.Point(352, 523);
+            this.turnoverButton.Name = "turnoverButton";
+            this.turnoverButton.Size = new System.Drawing.Size(164, 35);
+            this.turnoverButton.TabIndex = 2;
+            this.turnoverButton.Text = "Turnover";
+            this.turnoverButton.UseVisualStyleBackColor = true;
+            this.turnoverButton.Click += new System.EventHandler(this.turnoverButton_Click);
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(182, 523);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(164, 35);
+            this.button6.TabIndex = 6;
+            this.button6.Text = "Foul";
+            this.button6.UseVisualStyleBackColor = true;
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1445, 807);
-            this.Controls.Add(this.deleteEventButton);
-            this.Controls.Add(this.timeoutButton);
-            this.Controls.Add(this.substitutionButton);
-            this.Controls.Add(this.historyBox);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.periodStartButton);
+            this.ClientSize = new System.Drawing.Size(1173, 730);
             this.Controls.Add(this.jumpBallButton);
             this.Controls.Add(this.turnoverButton);
+            this.Controls.Add(this.button6);
+            this.Controls.Add(this.substitutionButton);
+            this.Controls.Add(this.deleteEventButton);
+            this.Controls.Add(this.timeoutButton);
+            this.Controls.Add(this.historyBox);
+            this.Controls.Add(this.periodStartButton);
             this.Controls.Add(this.reboundButton);
             this.Controls.Add(this.courtBox);
-            this.Controls.Add(this.buttonBox);
             this.Name = "GameForm";
             this.Text = "20-20 Basketball";
             this.Load += new System.EventHandler(this.GameForm_Load);
@@ -180,15 +171,14 @@
 
         private System.Windows.Forms.PictureBox courtBox;
         private System.Windows.Forms.Button reboundButton;
-        private System.Windows.Forms.Button turnoverButton;
-        private System.Windows.Forms.Button jumpBallButton;
         private System.Windows.Forms.Button periodStartButton;
-        private System.Windows.Forms.Button button6;
         private System.Windows.Forms.ListBox historyBox;
         private System.Windows.Forms.Button substitutionButton;
         private System.Windows.Forms.Button timeoutButton;
-        private System.Windows.Forms.GroupBox buttonBox;
         private System.Windows.Forms.Button deleteEventButton;
+        private System.Windows.Forms.Button jumpBallButton;
+        private System.Windows.Forms.Button turnoverButton;
+        private System.Windows.Forms.Button button6;
     }
 }
 
