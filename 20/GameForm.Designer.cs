@@ -39,11 +39,11 @@
             this.turnoverButton = new System.Windows.Forms.Button();
             this.foulButton = new System.Windows.Forms.Button();
             this.homeBox = new System.Windows.Forms.GroupBox();
-            this.awayBox = new System.Windows.Forms.GroupBox();
-            this.homeNameLabel = new System.Windows.Forms.Label();
-            this.awayNameLabel = new System.Windows.Forms.Label();
             this.homeScore = new System.Windows.Forms.Label();
+            this.homeNameLabel = new System.Windows.Forms.Label();
+            this.awayBox = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.awayNameLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.courtBox)).BeginInit();
             this.homeBox.SuspendLayout();
             this.awayBox.SuspendLayout();
@@ -166,37 +166,6 @@
             this.homeBox.TabStop = false;
             this.homeBox.Text = "Home";
             // 
-            // awayBox
-            // 
-            this.awayBox.Controls.Add(this.label1);
-            this.awayBox.Controls.Add(this.awayNameLabel);
-            this.awayBox.Location = new System.Drawing.Point(492, 19);
-            this.awayBox.Name = "awayBox";
-            this.awayBox.Size = new System.Drawing.Size(470, 99);
-            this.awayBox.TabIndex = 13;
-            this.awayBox.TabStop = false;
-            this.awayBox.Text = "Away";
-            // 
-            // homeNameLabel
-            // 
-            this.homeNameLabel.AutoSize = true;
-            this.homeNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.homeNameLabel.Location = new System.Drawing.Point(6, 16);
-            this.homeNameLabel.Name = "homeNameLabel";
-            this.homeNameLabel.Size = new System.Drawing.Size(241, 31);
-            this.homeNameLabel.TabIndex = 0;
-            this.homeNameLabel.Text = "Home Team Name";
-            // 
-            // awayNameLabel
-            // 
-            this.awayNameLabel.AutoSize = true;
-            this.awayNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.awayNameLabel.Location = new System.Drawing.Point(6, 16);
-            this.awayNameLabel.Name = "awayNameLabel";
-            this.awayNameLabel.Size = new System.Drawing.Size(236, 31);
-            this.awayNameLabel.TabIndex = 1;
-            this.awayNameLabel.Text = "Away Team Name";
-            // 
             // homeScore
             // 
             this.homeScore.AutoSize = true;
@@ -208,6 +177,27 @@
             this.homeScore.TabIndex = 1;
             this.homeScore.Text = "00";
             // 
+            // homeNameLabel
+            // 
+            this.homeNameLabel.AutoSize = true;
+            this.homeNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.homeNameLabel.Location = new System.Drawing.Point(6, 16);
+            this.homeNameLabel.Name = "homeNameLabel";
+            this.homeNameLabel.Size = new System.Drawing.Size(241, 31);
+            this.homeNameLabel.TabIndex = 0;
+            this.homeNameLabel.Text = "Home Team Name";
+            // 
+            // awayBox
+            // 
+            this.awayBox.Controls.Add(this.label1);
+            this.awayBox.Controls.Add(this.awayNameLabel);
+            this.awayBox.Location = new System.Drawing.Point(492, 19);
+            this.awayBox.Name = "awayBox";
+            this.awayBox.Size = new System.Drawing.Size(470, 99);
+            this.awayBox.TabIndex = 13;
+            this.awayBox.TabStop = false;
+            this.awayBox.Text = "Away";
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -218,6 +208,16 @@
             this.label1.Size = new System.Drawing.Size(108, 71);
             this.label1.TabIndex = 2;
             this.label1.Text = "00";
+            // 
+            // awayNameLabel
+            // 
+            this.awayNameLabel.AutoSize = true;
+            this.awayNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.awayNameLabel.Location = new System.Drawing.Point(6, 16);
+            this.awayNameLabel.Name = "awayNameLabel";
+            this.awayNameLabel.Size = new System.Drawing.Size(236, 31);
+            this.awayNameLabel.TabIndex = 1;
+            this.awayNameLabel.Text = "Away Team Name";
             // 
             // GameForm
             // 
