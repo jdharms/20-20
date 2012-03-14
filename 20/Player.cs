@@ -71,6 +71,8 @@ namespace _20
 
         public bool Equals(Player p)
         {
+            if (p == null)
+                return false;
             return (p.getId() == this.id);
         }
 
