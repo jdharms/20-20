@@ -38,13 +38,21 @@
             this.jumpBallButton = new System.Windows.Forms.Button();
             this.turnoverButton = new System.Windows.Forms.Button();
             this.foulButton = new System.Windows.Forms.Button();
+            this.homeBox = new System.Windows.Forms.GroupBox();
+            this.awayBox = new System.Windows.Forms.GroupBox();
+            this.homeNameLabel = new System.Windows.Forms.Label();
+            this.awayNameLabel = new System.Windows.Forms.Label();
+            this.homeScore = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.courtBox)).BeginInit();
+            this.homeBox.SuspendLayout();
+            this.awayBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // courtBox
             // 
             this.courtBox.Image = global::_20.Properties.Resources.BasketballCourt;
-            this.courtBox.Location = new System.Drawing.Point(12, 12);
+            this.courtBox.Location = new System.Drawing.Point(12, 124);
             this.courtBox.Name = "courtBox";
             this.courtBox.Size = new System.Drawing.Size(944, 504);
             this.courtBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -54,7 +62,7 @@
             // 
             // reboundButton
             // 
-            this.reboundButton.Location = new System.Drawing.Point(12, 522);
+            this.reboundButton.Location = new System.Drawing.Point(12, 634);
             this.reboundButton.Name = "reboundButton";
             this.reboundButton.Size = new System.Drawing.Size(164, 35);
             this.reboundButton.TabIndex = 1;
@@ -64,7 +72,7 @@
             // 
             // periodStartButton
             // 
-            this.periodStartButton.Location = new System.Drawing.Point(12, 564);
+            this.periodStartButton.Location = new System.Drawing.Point(12, 676);
             this.periodStartButton.Name = "periodStartButton";
             this.periodStartButton.Size = new System.Drawing.Size(164, 35);
             this.periodStartButton.TabIndex = 5;
@@ -88,7 +96,7 @@
             // 
             // substitutionButton
             // 
-            this.substitutionButton.Location = new System.Drawing.Point(352, 564);
+            this.substitutionButton.Location = new System.Drawing.Point(352, 676);
             this.substitutionButton.Name = "substitutionButton";
             this.substitutionButton.Size = new System.Drawing.Size(164, 35);
             this.substitutionButton.TabIndex = 8;
@@ -98,7 +106,7 @@
             // 
             // timeoutButton
             // 
-            this.timeoutButton.Location = new System.Drawing.Point(182, 564);
+            this.timeoutButton.Location = new System.Drawing.Point(182, 676);
             this.timeoutButton.Name = "timeoutButton";
             this.timeoutButton.Size = new System.Drawing.Size(164, 35);
             this.timeoutButton.TabIndex = 9;
@@ -119,7 +127,7 @@
             // 
             // jumpBallButton
             // 
-            this.jumpBallButton.Location = new System.Drawing.Point(522, 523);
+            this.jumpBallButton.Location = new System.Drawing.Point(522, 635);
             this.jumpBallButton.Name = "jumpBallButton";
             this.jumpBallButton.Size = new System.Drawing.Size(164, 35);
             this.jumpBallButton.TabIndex = 3;
@@ -129,7 +137,7 @@
             // 
             // turnoverButton
             // 
-            this.turnoverButton.Location = new System.Drawing.Point(352, 523);
+            this.turnoverButton.Location = new System.Drawing.Point(352, 635);
             this.turnoverButton.Name = "turnoverButton";
             this.turnoverButton.Size = new System.Drawing.Size(164, 35);
             this.turnoverButton.TabIndex = 2;
@@ -139,7 +147,7 @@
             // 
             // foulButton
             // 
-            this.foulButton.Location = new System.Drawing.Point(182, 523);
+            this.foulButton.Location = new System.Drawing.Point(182, 635);
             this.foulButton.Name = "foulButton";
             this.foulButton.Size = new System.Drawing.Size(164, 35);
             this.foulButton.TabIndex = 6;
@@ -147,11 +155,77 @@
             this.foulButton.UseVisualStyleBackColor = true;
             this.foulButton.Click += new System.EventHandler(this.foulButton_Click);
             // 
+            // homeBox
+            // 
+            this.homeBox.Controls.Add(this.homeScore);
+            this.homeBox.Controls.Add(this.homeNameLabel);
+            this.homeBox.Location = new System.Drawing.Point(16, 19);
+            this.homeBox.Name = "homeBox";
+            this.homeBox.Size = new System.Drawing.Size(470, 99);
+            this.homeBox.TabIndex = 12;
+            this.homeBox.TabStop = false;
+            this.homeBox.Text = "Home";
+            // 
+            // awayBox
+            // 
+            this.awayBox.Controls.Add(this.label1);
+            this.awayBox.Controls.Add(this.awayNameLabel);
+            this.awayBox.Location = new System.Drawing.Point(492, 19);
+            this.awayBox.Name = "awayBox";
+            this.awayBox.Size = new System.Drawing.Size(470, 99);
+            this.awayBox.TabIndex = 13;
+            this.awayBox.TabStop = false;
+            this.awayBox.Text = "Away";
+            // 
+            // homeNameLabel
+            // 
+            this.homeNameLabel.AutoSize = true;
+            this.homeNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.homeNameLabel.Location = new System.Drawing.Point(6, 16);
+            this.homeNameLabel.Name = "homeNameLabel";
+            this.homeNameLabel.Size = new System.Drawing.Size(241, 31);
+            this.homeNameLabel.TabIndex = 0;
+            this.homeNameLabel.Text = "Home Team Name";
+            // 
+            // awayNameLabel
+            // 
+            this.awayNameLabel.AutoSize = true;
+            this.awayNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.awayNameLabel.Location = new System.Drawing.Point(6, 16);
+            this.awayNameLabel.Name = "awayNameLabel";
+            this.awayNameLabel.Size = new System.Drawing.Size(236, 31);
+            this.awayNameLabel.TabIndex = 1;
+            this.awayNameLabel.Text = "Away Team Name";
+            // 
+            // homeScore
+            // 
+            this.homeScore.AutoSize = true;
+            this.homeScore.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.homeScore.Font = new System.Drawing.Font("Courier New", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.homeScore.Location = new System.Drawing.Point(358, 27);
+            this.homeScore.Name = "homeScore";
+            this.homeScore.Size = new System.Drawing.Size(108, 71);
+            this.homeScore.TabIndex = 1;
+            this.homeScore.Text = "00";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label1.Font = new System.Drawing.Font("Courier New", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(356, 25);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(108, 71);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "00";
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1173, 730);
+            this.Controls.Add(this.awayBox);
+            this.Controls.Add(this.homeBox);
             this.Controls.Add(this.jumpBallButton);
             this.Controls.Add(this.turnoverButton);
             this.Controls.Add(this.foulButton);
@@ -166,6 +240,10 @@
             this.Text = "20-20 Basketball";
             this.Load += new System.EventHandler(this.GameForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.courtBox)).EndInit();
+            this.homeBox.ResumeLayout(false);
+            this.homeBox.PerformLayout();
+            this.awayBox.ResumeLayout(false);
+            this.awayBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -182,6 +260,12 @@
         private System.Windows.Forms.Button jumpBallButton;
         private System.Windows.Forms.Button turnoverButton;
         private System.Windows.Forms.Button foulButton;
+        private System.Windows.Forms.GroupBox homeBox;
+        private System.Windows.Forms.Label homeScore;
+        private System.Windows.Forms.Label homeNameLabel;
+        private System.Windows.Forms.GroupBox awayBox;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label awayNameLabel;
     }
 }
 
