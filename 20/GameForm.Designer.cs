@@ -37,7 +37,7 @@
             this.deleteEventButton = new System.Windows.Forms.Button();
             this.jumpBallButton = new System.Windows.Forms.Button();
             this.turnoverButton = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
+            this.foulButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.courtBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -94,6 +94,7 @@
             this.substitutionButton.TabIndex = 8;
             this.substitutionButton.Text = "Substitution";
             this.substitutionButton.UseVisualStyleBackColor = true;
+            this.substitutionButton.Click += new System.EventHandler(this.substitutionButton_Click);
             // 
             // timeoutButton
             // 
@@ -103,6 +104,7 @@
             this.timeoutButton.TabIndex = 9;
             this.timeoutButton.Text = "Timeout";
             this.timeoutButton.UseVisualStyleBackColor = true;
+            this.timeoutButton.Click += new System.EventHandler(this.timeoutButton_Click);
             // 
             // deleteEventButton
             // 
@@ -135,14 +137,15 @@
             this.turnoverButton.UseVisualStyleBackColor = true;
             this.turnoverButton.Click += new System.EventHandler(this.turnoverButton_Click);
             // 
-            // button6
+            // foulButton
             // 
-            this.button6.Location = new System.Drawing.Point(182, 523);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(164, 35);
-            this.button6.TabIndex = 6;
-            this.button6.Text = "Foul";
-            this.button6.UseVisualStyleBackColor = true;
+            this.foulButton.Location = new System.Drawing.Point(182, 523);
+            this.foulButton.Name = "foulButton";
+            this.foulButton.Size = new System.Drawing.Size(164, 35);
+            this.foulButton.TabIndex = 6;
+            this.foulButton.Text = "Foul";
+            this.foulButton.UseVisualStyleBackColor = true;
+            this.foulButton.Click += new System.EventHandler(this.foulButton_Click);
             // 
             // GameForm
             // 
@@ -151,7 +154,7 @@
             this.ClientSize = new System.Drawing.Size(1173, 730);
             this.Controls.Add(this.jumpBallButton);
             this.Controls.Add(this.turnoverButton);
-            this.Controls.Add(this.button6);
+            this.Controls.Add(this.foulButton);
             this.Controls.Add(this.substitutionButton);
             this.Controls.Add(this.deleteEventButton);
             this.Controls.Add(this.timeoutButton);
@@ -178,7 +181,7 @@
         private System.Windows.Forms.Button deleteEventButton;
         private System.Windows.Forms.Button jumpBallButton;
         private System.Windows.Forms.Button turnoverButton;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button foulButton;
     }
 }
 

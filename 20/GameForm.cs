@@ -111,14 +111,74 @@ namespace _20
             //send turnover event to server
         }
 
+        /*
+         * Stub author: Daniel
+         * 
+         * Purpose: Handles clicks to the jumpball button.
+         */
         private void jumpBallButton_Click(object sender, EventArgs e)
         {
+            //Ask for location
+            //Ask for home player
+            //Ask for away player
+            //Ask for result
 
+            //send jumpball event to server
         }
 
+        /*
+         * Stub author: Daniel
+         * 
+         * Purpose: Handles clicks to the period start/end button
+         */
         private void periodStartButton_Click(object sender, EventArgs e)
         {
+            //Determine if we're entering/exiting a period,
+            //and which period.
 
+            //send appropriate event to server
+        }
+
+        /*
+         * Stub author: Daniel
+         * 
+         * Purpose: Handles clicks to the foul button
+         */
+        private void foulButton_Click(object sender, EventArgs e)
+        {
+            //Ask for location
+            //ask for fouled player
+            //ask for committing player
+            //ask for type of foul
+                //ejected?
+
+            //send foul event
+        }
+
+        /*
+         * Stub author: Daniel
+         * 
+         * Purpose: Handles clicks to timeout button
+         */
+        private void timeoutButton_Click(object sender, EventArgs e)
+        {
+            //ask for type of timeout
+            //ask for team (if necessary)
+
+            //send timeout event to server
+        }
+
+        /*
+         * Stub author: Daniel
+         * 
+         * Purpose: Handles clicks to sub button
+         */
+        private void substitutionButton_Click(object sender, EventArgs e)
+        {
+            //Ask for exiting player
+            //Ask for entering player
+
+            //send sub event to server
         }
 
 
