@@ -44,6 +44,7 @@
             this.awayBox = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.awayNameLabel = new System.Windows.Forms.Label();
+            this.alpacaButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.courtBox)).BeginInit();
             this.homeBox.SuspendLayout();
             this.awayBox.SuspendLayout();
@@ -219,11 +220,22 @@
             this.awayNameLabel.TabIndex = 1;
             this.awayNameLabel.Text = "Away Team Name";
             // 
+            // alpacaButton
+            // 
+            this.alpacaButton.Location = new System.Drawing.Point(522, 676);
+            this.alpacaButton.Name = "alpacaButton";
+            this.alpacaButton.Size = new System.Drawing.Size(164, 35);
+            this.alpacaButton.TabIndex = 14;
+            this.alpacaButton.Text = "Testing";
+            this.alpacaButton.UseVisualStyleBackColor = true;
+            this.alpacaButton.Click += new System.EventHandler(this.alpacaButton_Click);
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1173, 730);
+            this.Controls.Add(this.alpacaButton);
             this.Controls.Add(this.awayBox);
             this.Controls.Add(this.homeBox);
             this.Controls.Add(this.jumpBallButton);
@@ -266,6 +278,7 @@
         private System.Windows.Forms.GroupBox awayBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label awayNameLabel;
+        private System.Windows.Forms.Button alpacaButton;
     }
 }
 
