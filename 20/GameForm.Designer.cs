@@ -39,11 +39,12 @@
             this.turnoverButton = new System.Windows.Forms.Button();
             this.foulButton = new System.Windows.Forms.Button();
             this.homeBox = new System.Windows.Forms.GroupBox();
-            this.awayBox = new System.Windows.Forms.GroupBox();
-            this.homeNameLabel = new System.Windows.Forms.Label();
-            this.awayNameLabel = new System.Windows.Forms.Label();
             this.homeScore = new System.Windows.Forms.Label();
+            this.homeNameLabel = new System.Windows.Forms.Label();
+            this.awayBox = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.awayNameLabel = new System.Windows.Forms.Label();
+            this.alpacaButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.courtBox)).BeginInit();
             this.homeBox.SuspendLayout();
             this.awayBox.SuspendLayout();
@@ -166,16 +167,16 @@
             this.homeBox.TabStop = false;
             this.homeBox.Text = "Home";
             // 
-            // awayBox
+            // homeScore
             // 
-            this.awayBox.Controls.Add(this.label1);
-            this.awayBox.Controls.Add(this.awayNameLabel);
-            this.awayBox.Location = new System.Drawing.Point(492, 19);
-            this.awayBox.Name = "awayBox";
-            this.awayBox.Size = new System.Drawing.Size(470, 99);
-            this.awayBox.TabIndex = 13;
-            this.awayBox.TabStop = false;
-            this.awayBox.Text = "Away";
+            this.homeScore.AutoSize = true;
+            this.homeScore.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.homeScore.Font = new System.Drawing.Font("Courier New", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.homeScore.Location = new System.Drawing.Point(358, 27);
+            this.homeScore.Name = "homeScore";
+            this.homeScore.Size = new System.Drawing.Size(108, 71);
+            this.homeScore.TabIndex = 1;
+            this.homeScore.Text = "00";
             // 
             // homeNameLabel
             // 
@@ -187,26 +188,16 @@
             this.homeNameLabel.TabIndex = 0;
             this.homeNameLabel.Text = "Home Team Name";
             // 
-            // awayNameLabel
+            // awayBox
             // 
-            this.awayNameLabel.AutoSize = true;
-            this.awayNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.awayNameLabel.Location = new System.Drawing.Point(6, 16);
-            this.awayNameLabel.Name = "awayNameLabel";
-            this.awayNameLabel.Size = new System.Drawing.Size(236, 31);
-            this.awayNameLabel.TabIndex = 1;
-            this.awayNameLabel.Text = "Away Team Name";
-            // 
-            // homeScore
-            // 
-            this.homeScore.AutoSize = true;
-            this.homeScore.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.homeScore.Font = new System.Drawing.Font("Courier New", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.homeScore.Location = new System.Drawing.Point(358, 27);
-            this.homeScore.Name = "homeScore";
-            this.homeScore.Size = new System.Drawing.Size(108, 71);
-            this.homeScore.TabIndex = 1;
-            this.homeScore.Text = "00";
+            this.awayBox.Controls.Add(this.label1);
+            this.awayBox.Controls.Add(this.awayNameLabel);
+            this.awayBox.Location = new System.Drawing.Point(492, 19);
+            this.awayBox.Name = "awayBox";
+            this.awayBox.Size = new System.Drawing.Size(470, 99);
+            this.awayBox.TabIndex = 13;
+            this.awayBox.TabStop = false;
+            this.awayBox.Text = "Away";
             // 
             // label1
             // 
@@ -219,11 +210,32 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "00";
             // 
+            // awayNameLabel
+            // 
+            this.awayNameLabel.AutoSize = true;
+            this.awayNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.awayNameLabel.Location = new System.Drawing.Point(6, 16);
+            this.awayNameLabel.Name = "awayNameLabel";
+            this.awayNameLabel.Size = new System.Drawing.Size(236, 31);
+            this.awayNameLabel.TabIndex = 1;
+            this.awayNameLabel.Text = "Away Team Name";
+            // 
+            // alpacaButton
+            // 
+            this.alpacaButton.Location = new System.Drawing.Point(522, 676);
+            this.alpacaButton.Name = "alpacaButton";
+            this.alpacaButton.Size = new System.Drawing.Size(164, 35);
+            this.alpacaButton.TabIndex = 14;
+            this.alpacaButton.Text = "Testing";
+            this.alpacaButton.UseVisualStyleBackColor = true;
+            this.alpacaButton.Click += new System.EventHandler(this.alpacaButton_Click);
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1173, 730);
+            this.Controls.Add(this.alpacaButton);
             this.Controls.Add(this.awayBox);
             this.Controls.Add(this.homeBox);
             this.Controls.Add(this.jumpBallButton);
@@ -266,6 +278,7 @@
         private System.Windows.Forms.GroupBox awayBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label awayNameLabel;
+        private System.Windows.Forms.Button alpacaButton;
     }
 }
 

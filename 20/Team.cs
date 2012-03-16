@@ -18,12 +18,16 @@ namespace _20
 
         private int score;
         private int teamFouls;
+        private int timeOutsLeft;
 
         public Team(string id, string name, List<Player> players)
         {
             this.id = id;
             this.name = name;
             this.players = players;
+            this.teamFouls = 0;
+            this.timeOutsLeft = 5;
+            this.score = 0;
 
             //find and set teamPlayer
             foreach(Player p in players)
@@ -101,6 +105,21 @@ namespace _20
             if (team == null)
                 return false;
             return (team.id == this.id);
+        }
+
+        public int timeOutsRemaining()
+        {
+            return timeOutsLeft;
+        }
+
+        public bool hasTimeOutsRemaining()
+        {
+            return timeOutsLeft > 0;
+        }
+
+        public bool useTimeout()
+        {
+            return (timeOutsLeft-- > 0);
         }
 
 
