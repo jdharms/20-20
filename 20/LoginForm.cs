@@ -13,6 +13,7 @@ namespace _20
     {
         private string username;
         private string password;
+        public bool failed { get; set; }
 
         public string Username
         {
@@ -44,5 +45,17 @@ namespace _20
                 Close();
             }
         }
+
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+            if (failed)
+            {
+                failedLoginLabel.Visible = true;
+                userNameBox.Text = "";
+                passwordBox.Text = "";
+                userNameBox.Focus();
+            }
+        }
+
     }
 }

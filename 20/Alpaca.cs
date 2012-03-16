@@ -14,50 +14,79 @@ namespace _20
     {
         string token;
         string secret = "gPIpZC5lxC9X3vEBZAydWCX4HKWHP7RPU1S2KP2U";
-        string signature;
         string key = "bb5a7d5f935000f490320164827abba009029cd1";
 
         private string username;
         private string password;
+        private bool authenticated;
+        DateTime lastAuthed;
+
+        private Team awayTeam;
+        private Team homeTeam;
 
         public Alpaca()
         {
             LoginForm child = new LoginForm();
-            child.ShowDialog();
+            while (!authenticated)
+            {
+                child.ShowDialog();
 
-            username = child.Username;
-            password = child.Password;
+                username = child.Username;
+                password = child.Password;
 
-            Console.WriteLine(login(username, password));
+                token = login(username, password);
+                child.failed = true;
+            }
+            lastAuthed = DateTime.Now;
+
+            Console.WriteLine(token);
         }
 
         private string login(string username, string password)
         {
             var url = "https://api.espnalps.com/login?signature=" + generateSignature(key, secret) + "&key=" + key;
             WebRequest request = WebRequest.Create(url);
+
+            string payload = JsonConvert.SerializeObject(new { username = username, password = password });
+
             request.Method = "POST";
             request.ContentType = "application/json";
-
+            request.ContentLength = payload.Length;
+            
             using (var streamWriter = new StreamWriter(request.GetRequestStream()))
             {
-                string payload = JsonConvert.SerializeObject(new { username = username, password = password });
                 streamWriter.Write(payload);
             }
 
             try
             {
-                var response = request.GetResponse();
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
                 using (var streamReader = new StreamReader(response.GetResponseStream()))
                 {
                     var responseText = streamReader.ReadToEnd();
-                    return responseText;
+                    authenticated = true;
+                    LoginResponse loginResponse = JsonConvert.DeserializeObject<LoginResponse>(responseText);
+                    loginResponse.response.TryGetValue("token", out token);
+                    lastAuthed = DateTime.Now;
+                    return token;
                 }
             }
-            catch (WebException)
+            //TODO: Deserialize error response and print/display useful information.
+            catch (WebException e)
             {
-                Console.WriteLine("Authentication failed.");
+                using (var response = e.Response)
+                {
+                    Console.WriteLine(e.Message);
+                    using (Stream data = response.GetResponseStream())
+                    {
+                        string responseText = new StreamReader(data).ReadToEnd();
+                        Console.WriteLine(responseText);
+                    }
+                }
                 return null;
             }
+
 
         }
 
