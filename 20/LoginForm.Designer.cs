@@ -33,6 +33,7 @@
             this.userNameBox = new System.Windows.Forms.TextBox();
             this.passwordBox = new System.Windows.Forms.TextBox();
             this.submitButton = new System.Windows.Forms.Button();
+            this.failedLoginLabel = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -80,12 +81,26 @@
             this.submitButton.UseVisualStyleBackColor = true;
             this.submitButton.Click += new System.EventHandler(this.submitButton_Click);
             // 
+            // failedLoginLabel
+            // 
+            this.failedLoginLabel.AutoSize = true;
+            this.failedLoginLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.failedLoginLabel.ForeColor = System.Drawing.Color.Red;
+            this.failedLoginLabel.Location = new System.Drawing.Point(121, 89);
+            this.failedLoginLabel.Name = "failedLoginLabel";
+            this.failedLoginLabel.Size = new System.Drawing.Size(207, 20);
+            this.failedLoginLabel.TabIndex = 5;
+            this.failedLoginLabel.Text = "Bad username or password.";
+            this.failedLoginLabel.Visible = false;
+            // 
             // LoginForm
             // 
             this.AcceptButton = this.submitButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(323, 174);
+            this.ControlBox = false;
+            this.Controls.Add(this.failedLoginLabel);
             this.Controls.Add(this.submitButton);
             this.Controls.Add(this.passwordBox);
             this.Controls.Add(this.userNameBox);
@@ -94,7 +109,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "LoginForm";
             this.Text = "Login";
-            this.TopMost = true;
+            this.Load += new System.EventHandler(this.LoginForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -105,5 +120,6 @@
         private System.Windows.Forms.TextBox userNameBox;
         private System.Windows.Forms.TextBox passwordBox;
         private System.Windows.Forms.Button submitButton;
+        private System.Windows.Forms.Label failedLoginLabel;
     }
 }
