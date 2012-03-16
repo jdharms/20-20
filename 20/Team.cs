@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-//johny was here 8====D~~~~
-
 namespace _20
 {
     class Team
