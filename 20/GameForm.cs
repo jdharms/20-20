@@ -188,6 +188,8 @@ namespace _20
         private void alpacaButton_Click(object sender, EventArgs e)
         {
             Alpaca pac = new Alpaca();
+            List<Game> games = pac.getGames(new DateTime(2011, 1, 1), new DateTime(2013, 1, 1));
+            pac.getGameData(games[1].gameId);
         }
 
 
