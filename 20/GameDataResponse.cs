@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace _20
 {
@@ -51,9 +52,34 @@ namespace _20
 
         public Dictionary<string, TeamData> response;
 
+        [JsonIgnore]
+        private TeamData awayTeamData;
+        [JsonIgnore]
+        private TeamData homeTeamData;
+
+        public TeamData AwayTeamData 
+        {
+            get { return awayTeamData; }
+        }
+
+        public TeamData HomeTeamData
+        {
+            get { return homeTeamData; }
+        }
+
+
         public override string ToString()
         {
-            return response["homeTeam"].ToString() + response["awayTeam"].ToString();
+            flatten();
+            return homeTeamData.ToString() + awayTeamData.ToString();
+        }
+
+        //This method takes the two TeamData objects out of the 
+        //rather inconvenient dictionary that they're packaged in.
+        public void flatten()
+        {
+            awayTeamData = response["awayTeam"];
+            homeTeamData = response["homeTeam"];
         }
     }
 }
