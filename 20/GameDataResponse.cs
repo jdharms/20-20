@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace _20
@@ -22,6 +23,12 @@ namespace _20
             }
             return name["lastName"] + ", " + name["firstName"] +
                 " -- " + jerseyNumber;
+        }
+
+        public string[] nameArray()
+        {
+            string[] nameAry = {name["firstName"], name["middleName"], name["lastName"] };
+            return nameAry;
         }
     }
 
@@ -50,7 +57,11 @@ namespace _20
         public string request;
         public string result;
 
-        public Dictionary<string, TeamData> response;
+        //TODO: Response needs to be changed from a Dictionary<string, TeamData>
+        //to a Dictionary<string, string>.  Individual teams can be parsed,
+        //followed by any gameSetupData.
+        public Dictionary<string, string> response;
+        private Dictionary<string, string> gameSetupData;
 
         [JsonIgnore]
         private TeamData awayTeamData;
@@ -76,10 +87,17 @@ namespace _20
 
         //This method takes the two TeamData objects out of the 
         //rather inconvenient dictionary that they're packaged in.
+        [OnSerialized]
         public void flatten()
         {
-            awayTeamData = response["awayTeam"];
-            homeTeamData = response["homeTeam"];
+            awayTeamData = JsonConvert.DeserializeObject<TeamData>(response["awayTeam"]);
+            homeTeamData = JsonConvert.DeserializeObject<TeamData>(response["homeTeam"]);
+
+            if (response.ContainsKey("gameSetupData"))
+            {
+                gameSetupData = JsonConvert.DeserializeObject<Dictionary<string, string>>(response["gameSetupData"]);
+            }
+
         }
     }
 }

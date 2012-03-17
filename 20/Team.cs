@@ -138,5 +138,14 @@ namespace _20
             return (timeOutsLeft-- > 0);
         }
 
+        //TODO:
+        //Add the following:
+        //public bool playerOnCourt(string playerId);
+        //public Player getPlayer(string playerId);
+        //public bool registerFoul(string playerId); return false if it is 5th foul.
+        //public Player getTeamPlayer();
+        //public List<string> getBenchId();
+        //public List<string> getCourtId();
+
     }
 }
