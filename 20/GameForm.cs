@@ -189,7 +189,26 @@ namespace _20
         {
             Alpaca pac = new Alpaca();
             List<Game> games = pac.getGames(new DateTime(2011, 1, 1), new DateTime(2013, 1, 1));
-            pac.getGameData(games[1].gameId);
+            GameDataResponse gameData = pac.getGameData(games[1].gameId);
+            pac.GameID = games[1].gameId;
+
+            StartingLineups lineups = new StartingLineups();
+            TeamData awayTeam = gameData.AwayTeamData;
+            TeamData homeTeam = gameData.HomeTeamData;
+
+            IEnumerable<PlayerData> awayFive =  awayTeam.players.Take(5);
+            IEnumerable<PlayerData> homeFive =  homeTeam.players.Take(5);
+            foreach (PlayerData playerData in awayFive)
+            {
+                lineups.addStarter(false, playerData.playerId);
+            }
+            foreach (PlayerData playerData in homeFive)
+            {
+                lineups.addStarter(true, playerData.playerId);
+            }
+            lineups.pack(pac.generateTimestamp());
+            string eventId = pac.setGameData(lineups);
+            Console.WriteLine(eventId);
         }
 
 

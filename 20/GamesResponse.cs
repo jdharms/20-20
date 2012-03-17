@@ -11,6 +11,6 @@ namespace _20
         public string request;
         public string result;
         public Dictionary<string, List<Game>> response;
-        string gameId;
+        public string gameId;
     }
 }
