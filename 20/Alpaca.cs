@@ -181,6 +181,12 @@ namespace _20
             }
         }
 
+        /// <summary>
+        /// Retrieves teams/players for given game id.
+        /// @TODO: Change to return some useful type...
+        /// </summary>
+        /// <param name="gid">Id of game to get data.</param>
+        /// <returns>Nothing useful.</returns>
         public bool getGameData(string gid)
         {
             string url = generateUrl("getGameData", gid);
