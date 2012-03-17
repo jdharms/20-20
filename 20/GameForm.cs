@@ -207,8 +207,8 @@ namespace _20
                 lineups.addStarter(true, playerData.playerId);
             }
             lineups.pack(pac.generateTimestamp());
-            string eventId = pac.setGameData(lineups);
-            Console.WriteLine(eventId);
+            //string eventId = pac.setGameData(lineups);
+            //Console.WriteLine(eventId);
         }
 
 

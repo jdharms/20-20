@@ -80,7 +80,6 @@ namespace _20
         {
             awayTeamData = response["awayTeam"];
             homeTeamData = response["homeTeam"];
-            gameData
         }
     }
 }
