@@ -102,7 +102,7 @@ namespace _20
         {
             if (p == null)
                 return false;
-            return (p.getId() == this.id);
+            return (p.Id == this.id);
         }
 
     }

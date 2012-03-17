@@ -53,7 +53,7 @@ namespace _20
             //find and set teamPlayer
             foreach(Player p in players)
             {
-                if(p.isTeamPlayer())
+                if(p.TeamPlayer)
                 {
                     teamPlayer = p;
                     break;
@@ -85,7 +85,7 @@ namespace _20
             //Make sure each player is on our team...
             foreach (Player p in players)
             {
-                if (p.getTeamId() != this.id)
+                if (p.TeamId != this.id)
                 {
                     return false;
                 }
@@ -98,7 +98,7 @@ namespace _20
         public bool makeSubstitution(Player goingIn, Player comingOut)
         {
             //make sure both players are on this team
-            if (goingIn.getTeamId() != id || comingOut.getTeamId() != id)
+            if (goingIn.TeamId != id || comingOut.TeamId != id)
             {
                 return false;
             }
