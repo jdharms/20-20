@@ -15,9 +15,32 @@ namespace _20
         Player teamPlayer;
 
         private int score;
-        private int teamFouls;
-        private int timeOutsLeft;
+        public int Score
+        {
+            get
+            {
+                return score;
+            }
+        }
 
+        private int teamFouls;
+        public int TeamFouls
+        {
+            get
+            {
+                return teamFouls;
+            }
+        }
+
+        private int timeOutsLeft;
+        public int TimeOutsLeft
+        {
+            get
+            {
+                return timeOutsLeft;
+            }
+        }
+        
         public Team(string id, string name, List<Player> players)
         {
             this.id = id;
@@ -30,7 +53,7 @@ namespace _20
             //find and set teamPlayer
             foreach(Player p in players)
             {
-                if(p.isTeamPlayer())
+                if(p.TeamPlayer)
                 {
                     teamPlayer = p;
                     break;
@@ -62,7 +85,7 @@ namespace _20
             //Make sure each player is on our team...
             foreach (Player p in players)
             {
-                if (p.getTeamId() != this.id)
+                if (p.TeamId != this.id)
                 {
                     return false;
                 }
@@ -75,7 +98,7 @@ namespace _20
         public bool makeSubstitution(Player goingIn, Player comingOut)
         {
             //make sure both players are on this team
-            if (goingIn.getTeamId() != id || comingOut.getTeamId() != id)
+            if (goingIn.TeamId != id || comingOut.TeamId != id)
             {
                 return false;
             }
@@ -105,21 +128,15 @@ namespace _20
             return (team.id == this.id);
         }
 
-        public int timeOutsRemaining()
-        {
-            return timeOutsLeft;
-        }
-
         public bool hasTimeOutsRemaining()
         {
-            return timeOutsLeft > 0;
+            return (timeOutsLeft > 0);
         }
 
         public bool useTimeout()
         {
             return (timeOutsLeft-- > 0);
         }
-
 
     }
 }
