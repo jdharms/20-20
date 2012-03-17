@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace _20
 {
@@ -31,6 +32,9 @@ namespace _20
             InitializeComponent();
         }
 
+        public acceptCredentials login;
+
+        //TODO: Make login threaded to prevent form-lag.
         private void submitButton_Click(object sender, EventArgs e)
         {
             if (userNameBox.TextLength == 0 || passwordBox.TextLength == 0)
@@ -42,6 +46,13 @@ namespace _20
                 username = userNameBox.Text;
                 password = passwordBox.Text;
 
+                failedLoginLabel.Text = "Attempting login...";
+                failedLoginLabel.Visible = true;
+                failedLoginLabel.Invalidate();
+                this.Refresh();
+
+                login(username, password);
+
                 Close();
             }
         }
@@ -50,6 +61,7 @@ namespace _20
         {
             if (failed)
             {
+                failedLoginLabel.Text = "Bad username or password.";
                 failedLoginLabel.Visible = true;
                 userNameBox.Text = "";
                 passwordBox.Text = "";
