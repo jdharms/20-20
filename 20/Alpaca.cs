@@ -31,6 +31,12 @@ namespace _20
         private Team homeTeam;
         private string gid;
 
+        public string GameID
+        {
+            get { return gid; }
+            set { gid = value; }
+        }
+
         /// <summary>
         /// Currently, the constructor for Alpaca loads the LoginForm and asks for
         /// username/passsword pairs until it finds a good one.  It would be nice to
@@ -130,10 +136,8 @@ namespace _20
             var url = generateUrl("games");
             WebRequest request = WebRequest.Create(url);
 
-            //Replace is a hack to make up for the fact that the ESPN ALPS api doesn't
-            //accept "Z" as a valid GMT offset (it means +0000 from GMT).
-            string startStamp = XmlConvert.ToString(start, XmlDateTimeSerializationMode.Utc).Replace("Z", "+0000");
-            string endStamp = XmlConvert.ToString(end, XmlDateTimeSerializationMode.Utc).Replace("Z", "+0000");
+            string startStamp = generateTimestamp(start);
+            string endStamp = generateTimestamp(end);
             string payload = JsonConvert.SerializeObject(new { start = startStamp, end = endStamp });
 
             request.Method = "POST";
@@ -187,7 +191,7 @@ namespace _20
         /// </summary>
         /// <param name="gid">Id of game to get data.</param>
         /// <returns>Nothing useful.</returns>
-        public bool getGameData(string gid)
+        public GameDataResponse getGameData(string gid)
         {
             string url = generateUrl("getGameData", gid);
             WebRequest request = WebRequest.Create(url);
@@ -203,17 +207,69 @@ namespace _20
                     var responseText = streamReader.ReadToEnd();
                     authenticated = true;
                     GameDataResponse gameResponse = JsonConvert.DeserializeObject<GameDataResponse>(responseText);
+                    gameResponse.flatten();
+                    //gameResponse is the useful data from this call.  It has team names, player names, player numbers.
                     Console.WriteLine(gameResponse);
-                    return true;
+                    Console.WriteLine(responseText);
+                    return gameResponse;
                 }
             }
             catch (Exception E)
             {
                 Console.WriteLine(E.Message);
-                return false;
+                return null;
             }
         }
 
+        public string setGameData(StartingLineups lineups)
+        {
+            var url = generateUrl("setGameData", GameID);
+
+            WebRequest request = WebRequest.Create(url);
+
+            lineups.pack(generateTimestamp());
+            string payload = JsonConvert.SerializeObject(lineups);
+
+            request.Method = "POST";
+            request.ContentType = "application/json";
+            request.ContentLength = payload.Length;
+            using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+            {
+                streamWriter.Write(payload);
+            }
+
+            try
+            {
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                using (var streamReader = new StreamReader(response.GetResponseStream()))
+                {
+                    var responseText = streamReader.ReadToEnd();
+                    authenticated = true;
+                    AckResponse ack = JsonConvert.DeserializeObject<AckResponse>(responseText);
+                    //TODO: Need to change this to a "try for key".  Error messages will 
+                    //make it crash.
+                    string gameId = ack.response["gameId"];
+
+                    Console.WriteLine(responseText);
+                    return gameId;
+                }
+            }
+            //TODO: deserialize error response
+            catch (WebException e)
+            {
+                using (var response = e.Response)
+                {
+                    Console.WriteLine(e.Message);
+                    using (Stream data = response.GetResponseStream())
+                    {
+                        string responseText = new StreamReader(data).ReadToEnd();
+                        Console.WriteLine(responseText);
+                    }
+                }
+                return null;
+            }
+        }
 
         /// <summary>
         /// Generates a signature from the shared secret and private key.
@@ -269,11 +325,23 @@ namespace _20
         }
 
         private string generateUrl(string method, string gameID)
+
         {
             string ret = "http://api.espnalps.com/v0/cbb/" + method + "/" + gameID +
             "?token=" + token + "&signature=" + generateSignature(key, secret) + "&key=" + key;
 
             return ret;
+        }
+
+        public string generateTimestamp()
+        {
+            DateTime now = DateTime.Now;
+            return XmlConvert.ToString(now, XmlDateTimeSerializationMode.Utc).Replace("Z", "+0000");
+        }
+
+        private string generateTimestamp(DateTime time)
+        {
+            return XmlConvert.ToString(time, XmlDateTimeSerializationMode.Utc).Replace("Z", "+0000");
         }
 
     }
