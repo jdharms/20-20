@@ -27,8 +27,8 @@ namespace _20
         private bool authenticated;
         DateTime lastAuthed;
 
-        private Team awayTeam;
-        private Team homeTeam;
+        public Team AwayTeam { get; set; }
+        public Team HomeTeam { get; set; }
         private string gid;
 
         public string GameID
@@ -333,7 +333,7 @@ namespace _20
             return ret;
         }
 
-        public string generateTimestamp()
+        public static string generateTimestamp()
         {
             DateTime now = DateTime.Now;
             return XmlConvert.ToString(now, XmlDateTimeSerializationMode.Utc).Replace("Z", "+0000");
