@@ -196,6 +196,28 @@ namespace _20
             TeamData awayTeam = gameData.AwayTeamData;
             TeamData homeTeam = gameData.HomeTeamData;
 
+            List<Player> homePlayers = new List<Player>();
+            foreach (PlayerData playerData in homeTeam.players)
+            {
+                Player p = new Player(playerData.playerId, playerData.nameArray(), playerData.jerseyNumber, playerData.teamId, playerData.isTeamPlayer);
+                homePlayers.Add(p);
+            }
+            Team home = new Team(homeTeam.teamId, homeTeam.teamName, homePlayers);
+
+            List<Player> awayPlayers = new List<Player>();
+            foreach (PlayerData playerData in awayTeam.players)
+            {
+                Player p = new Player(playerData.playerId, playerData.nameArray(), playerData.jerseyNumber, playerData.teamId, playerData.isTeamPlayer);
+                awayPlayers.Add(p);
+            }
+            Team away = new Team(awayTeam.teamId, awayTeam.teamName, awayPlayers);
+
+            pac.HomeTeam = home;
+            pac.AwayTeam = away;
+
+            List<Player> homeCourt = new List<Player>();
+            List<Player> awayCourt = new List<Player>();
+
             IEnumerable<PlayerData> awayFive =  awayTeam.players.Take(5);
             IEnumerable<PlayerData> homeFive =  homeTeam.players.Take(5);
             foreach (PlayerData playerData in awayFive)
@@ -206,7 +228,7 @@ namespace _20
             {
                 lineups.addStarter(true, playerData.playerId);
             }
-            lineups.pack(pac.generateTimestamp());
+            lineups.pack(Alpaca.generateTimestamp());
             //string eventId = pac.setGameData(lineups);
             //Console.WriteLine(eventId);
         }
