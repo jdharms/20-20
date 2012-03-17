@@ -15,9 +15,32 @@ namespace _20
         Player teamPlayer;
 
         private int score;
-        private int teamFouls;
-        private int timeOutsLeft;
+        public int Score
+        {
+            get
+            {
+                return score;
+            }
+        }
 
+        private int teamFouls;
+        public int TeamFouls
+        {
+            get
+            {
+                return teamFouls;
+            }
+        }
+
+        private int timeOutsLeft;
+        public int TimeOutsLeft
+        {
+            get
+            {
+                return timeOutsLeft;
+            }
+        }
+        
         public Team(string id, string name, List<Player> players)
         {
             this.id = id;
@@ -105,21 +128,15 @@ namespace _20
             return (team.id == this.id);
         }
 
-        public int timeOutsRemaining()
-        {
-            return timeOutsLeft;
-        }
-
         public bool hasTimeOutsRemaining()
         {
-            return timeOutsLeft > 0;
+            return (timeOutsLeft > 0);
         }
 
         public bool useTimeout()
         {
             return (timeOutsLeft-- > 0);
         }
-
 
     }
 }

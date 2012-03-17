@@ -10,16 +10,80 @@ namespace _20
         private string fName;
         private string mName;
         private string lName;
-        private string displayName;
-        private string id;
-        private int jersey;
-        private string teamId;
+        public string Name
+        {
+            get
+            {
+                return lName +", " + fName + " " + mName;
+            }
+        }
 
+        private string displayName;
+        public string DisplayName
+        {
+            get
+            {
+                return fName + " " + lName;
+            }
+        }
+
+        private string id;
+        public string Id
+        {
+            get
+            {
+                return id;
+            }
+        }
+
+        private int jersey;
+        public int Jersey
+        {
+            get
+            {
+                return jersey;
+            }
+        }
+
+        private string teamId;
+        public string TeamId
+        {
+            get
+            {
+                return teamId;
+            }
+        }
 
         private bool teamPlayer;
+        public bool TeamPlayer
+        {
+            get
+            {
+                return teamPlayer;
+            }
+        }  
 
         private int fouls;
+        public int Fouls
+        {
+            get
+            {
+                return fouls;
+            }
+        }
+
         private bool onCourt;
+        public bool OnCourt
+        {
+            get
+            {
+                return onCourt;
+            }
+            set
+            {
+                onCourt = value;
+            }
+        }  
 
         public Player(string id, string[] name, int jersey, string teamId, bool isTeamPlayer)
         {
@@ -32,41 +96,6 @@ namespace _20
             this.teamPlayer = isTeamPlayer;
 
             fouls = 0;
-        }
-
-        public bool isTeamPlayer()
-        {
-            return teamPlayer;
-        }
-
-        public int getJersey()
-        {
-            return jersey;
-        }
-
-        public int getFouls()
-        {
-            return fouls;
-        }
-
-        public bool isOnCourt()
-        {
-            return onCourt;
-        }
-
-        public string getId()
-        {
-            return id;
-        }
-
-        public string getTeamId()
-        {
-            return teamId;
-        }
-
-        public string getDisplayName()
-        {
-            return fName + " " + lName;
         }
 
         public bool Equals(Player p)
