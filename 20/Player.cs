@@ -10,80 +10,30 @@ namespace _20
         private string fName;
         private string mName;
         private string lName;
-        public string Name
-        {
-            get
-            {
-                return lName +", " + fName + " " + mName;
-            }
-        }
+        public string Name { get { return lName + ", " + fName + " " + mName; } }
 
         private string displayName;
-        public string DisplayName
-        {
-            get
-            {
-                return fName + " " + lName;
-            }
-        }
+        public string DisplayName { get { return fName + " " + lName; } }
 
         private string id;
-        public string Id
-        {
-            get
-            {
-                return id;
-            }
-        }
+        public string Id { get { return id; } }
 
         private int jersey;
-        public int Jersey
-        {
-            get
-            {
-                return jersey;
-            }
-        }
+        public int Jersey { get { return jersey; } }
 
         private string teamId;
-        public string TeamId
-        {
-            get
-            {
-                return teamId;
-            }
-        }
+        public string TeamId { get { return teamId; } }
 
         private bool teamPlayer;
-        public bool TeamPlayer
-        {
-            get
-            {
-                return teamPlayer;
-            }
-        }  
+        public bool TeamPlayer { get { return teamPlayer; } }
 
         private int fouls;
-        public int Fouls
-        {
-            get
-            {
-                return fouls;
-            }
-        }
+        public int Fouls { get { return fouls; } }
 
-        private bool onCourt;
-        public bool OnCourt
-        {
-            get
-            {
-                return onCourt;
-            }
-            set
-            {
-                onCourt = value;
-            }
-        }  
+        private bool ejected;
+        public bool Ejected { get { return ejected; } }
+
+        public bool OnCourt { get; set; }
 
         public Player(string id, string[] name, int jersey, string teamId, bool isTeamPlayer)
         {
@@ -96,6 +46,7 @@ namespace _20
             this.teamPlayer = isTeamPlayer;
 
             fouls = 0;
+            this.ejected = false;
         }
 
         public bool Equals(Player p)
@@ -103,6 +54,19 @@ namespace _20
             if (p == null)
                 return false;
             return (p.Id == this.id);
+        }
+
+        /// <summary>
+        /// Adds a foul to the player.
+        /// </summary>
+        /// <returns>false if the player this was the player's 5th foul.</returns>
+        public bool addFoul()
+        {
+            if (++fouls == 5)
+            {
+                return false;
+            }
+            return true;
         }
 
     }

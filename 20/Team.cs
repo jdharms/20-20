@@ -2,44 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections.ObjectModel;
 
 namespace _20
 {
     class Team
     {
         private string id;
+        public string Id { get { return id; } }
         private string name;
 
-        List<Player> players;
-        List<Player> onCourt;
-        Player teamPlayer;
+        private List<Player> players;
+        private List<Player> onCourt; 
+        public Player teamPlayer;
 
         private int score;
-        public int Score
-        {
-            get
-            {
-                return score;
-            }
-        }
+        public int Score { get { return score; } } 
 
         private int teamFouls;
-        public int TeamFouls
-        {
-            get
-            {
-                return teamFouls;
-            }
-        }
+        public int TeamFouls { get { return teamFouls; } } 
 
         private int timeOutsLeft;
-        public int TimeOutsLeft
-        {
-            get
-            {
-                return timeOutsLeft;
-            }
-        }
+        public int TimeOutsLeft { get { return timeOutsLeft; } }
         
         public Team(string id, string name, List<Player> players)
         {
@@ -49,6 +33,7 @@ namespace _20
             this.teamFouls = 0;
             this.timeOutsLeft = 5;
             this.score = 0;
+            this.onCourt = new List<Player>();
 
             //find and set teamPlayer
             foreach(Player p in players)
@@ -60,6 +45,11 @@ namespace _20
                 }
             }
 
+        }
+
+        public override string ToString()
+        {
+            return name;
         }
 
 
@@ -138,14 +128,37 @@ namespace _20
             return (timeOutsLeft-- > 0);
         }
 
-        //TODO:
-        //Add the following:
-        //public bool playerOnCourt(string playerId);
-        //public Player getPlayer(string playerId);
-        //public bool registerFoul(string playerId); return false if it is 5th foul.
-        //public Player getTeamPlayer();
-        //public List<string> getBenchId();
-        //public List<string> getCourtId();
+        public Player getPlayer(string playerId)
+        {
+            return players.Single(player => player.Id.Equals(playerId));
+        }
+
+        public bool playerOnCourt(string playerId)
+        {
+            return onCourt.Contains(getPlayer(playerId));
+        }
+
+        public bool registerFoul(string playerId)
+        {
+            return getPlayer(playerId).addFoul();
+        }
+
+        public bool makeSubstitution(string playerIdIn, string playerIdOut)
+        {
+            return makeSubstitution(getPlayer(playerIdIn), getPlayer(playerIdOut));
+        }
+
+        public List<Player> getBench()
+        {
+            List<Player> newList = new List<Player>();
+            newList.AddRange(players.Except(onCourt));
+            return newList; 
+        }
+
+        public List<Player> getOncourt()
+        {
+            return new List<Player>(onCourt);
+        }
 
     }
 }

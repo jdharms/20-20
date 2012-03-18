@@ -19,10 +19,11 @@ namespace _20
     class Alpaca
     {
         string token;
-        string secret = "gPIpZC5lxC9X3vEBZAydWCX4HKWHP7RPU1S2KP2U";
-        string key = "bb5a7d5f935000f490320164827abba009029cd1";
+        private string secret = "gPIpZC5lxC9X3vEBZAydWCX4HKWHP7RPU1S2KP2U";
+        private string key = "bb5a7d5f935000f490320164827abba009029cd1";
 
         private string username;
+        public string Username { get { return username; } }
         private string password;
         private bool authenticated;
         DateTime lastAuthed;
