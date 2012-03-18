@@ -11,6 +11,8 @@ namespace _20
 {
     public partial class GameForm : Form
     {
+        Alpaca pac;
+
         public GameForm()
         {
             InitializeComponent();
