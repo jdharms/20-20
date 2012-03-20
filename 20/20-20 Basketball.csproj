@@ -53,6 +53,7 @@
     <Compile Include="AckResponse.cs" />
     <Compile Include="Alpaca.cs" />
     <Compile Include="Context.cs" />
+    <Compile Include="Event.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameDataResponse.cs" />
     <Compile Include="GameForm.cs">
