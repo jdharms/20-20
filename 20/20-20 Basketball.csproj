@@ -52,8 +52,12 @@
   <ItemGroup>
     <Compile Include="AckResponse.cs" />
     <Compile Include="Alpaca.cs" />
+    <Compile Include="Events\DeleteEvent.cs" />
+    <Compile Include="Events\JumpballEvent.cs" />
+    <Compile Include="Events\SubstitutionEvent.cs" />
     <Compile Include="Context.cs" />
-    <Compile Include="Event.cs" />
+    <Compile Include="Events\Event.cs" />
+    <Compile Include="Events\TurnoverEvent.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameDataResponse.cs" />
     <Compile Include="GameForm.cs">
