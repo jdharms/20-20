@@ -31,13 +31,13 @@ namespace _20.Events
 
         // Converts this class to a Json serialized 
         // returns a Json serialized object
-        public string serialize()
+        public override string serialize()
         {
             return JsonConvert.SerializeObject(new { gameID = pac.GameID, committedBy = committedBy, drewBy = drewBy, foulType = foulType, ejected = ejected, location = location, context = pac.generateContext() });
         }
 
         // Adds fouls to the correct person
-        public void resolve()
+        public override void resolve()
         {
             // If the person was a team, just adds foul
             if (pac.HomeTeam.teamPlayer.Id == committedBy)
@@ -81,7 +81,7 @@ namespace _20.Events
         }
 
         // Remoes the fouls that were previously assigned
-        public void unresolve()
+        public override void unresolve()
         {
             // If the foul was by the team, remove from team
             if (pac.HomeTeam.teamPlayer.Id == committedBy)

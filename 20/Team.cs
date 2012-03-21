@@ -20,7 +20,7 @@ namespace _20
         public int Score { get { return score; } set { score = value; } }
 
         private int teamFouls;
-        public int TeamFouls { get { return teamFouls; } set { teamFouls = value; } } 
+        public int TeamFouls { get { return teamFouls; } set { teamFouls = value; } }
 
         private int timeoutsUsed;
         public int TimeoutsUsed { get { return timeoutsUsed; } set { timeoutsUsed = value; } }
