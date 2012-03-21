@@ -34,23 +34,5 @@ namespace _20.Events
             // Empty method. Does not change model
         }
 
-        // Has the values expected for the response
-        private class GameEndEventResponse
-        {
-            public string time;
-            public string request;
-            public string result;
-            public Dictionary<string, string> response;
-        }
-
-        // Has the values for the error response
-        private class GameEndEventErrorResponse
-        {
-            public string time;
-            public string request;
-            public string result;
-            public List<object> errors;
-        }
-
     }
 }

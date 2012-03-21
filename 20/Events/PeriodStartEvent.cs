@@ -42,23 +42,5 @@ namespace _20.Events
             pac.Period = period;
         }
 
-        // Has the values expected for the response
-        private class PeriodStartEventResponse
-        {
-            public string time;
-            public string request;
-            public string result;
-            public Dictionary<string, string> response;
-        }
-
-        // Has the values for the error response
-        private class PeriodStartEventErrorResponse
-        {
-            public string time;
-            public string request;
-            public string result;
-            public List<object> errors;
-        }
-
     }
 }

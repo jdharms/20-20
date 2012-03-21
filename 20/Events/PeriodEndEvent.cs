@@ -34,23 +34,5 @@ namespace _20.Events
             // Empty Method
         }
 
-        // Has the values expected for the response
-        private class PeriodEndEventResponse
-        {
-            public string time;
-            public string request;
-            public string result;
-            public Dictionary<string, string> response;
-        }
-
-        // Has the values for the error response
-        private class PeriodEndEventErrorResponse
-        {
-            public string time;
-            public string request;
-            public string result;
-            public List<object> errors;
-        }
-
     }
 }

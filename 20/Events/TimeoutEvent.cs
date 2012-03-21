@@ -12,7 +12,7 @@ namespace _20.Events
         private string inputTeam;
         private string inputType;
 
-
+        // The input is an alpaca, the team, and the type of timeout (can "team", "offical", or "media")
         public TimeoutEvent(Alpaca pac, string inputTeam, string inputType)
             : base(pac)
         {
@@ -30,16 +30,27 @@ namespace _20.Events
         // Not a soul found in these parts
         public void resolve()
         {
+            // The only place timeouts are being tracked is in the team
             if (inputType == "team")
             {
+                // If the team is the home id, change their timeouts
                 if (inputTeam == pac.HomeTeam.Id)
                 {
-                    int timeoutsLeft = pac.HomeTeam.TimeOutsLeft;
-                    timeoutsLeft--;
-                    pac.HomeTeam.TimeOutsLeft = timeoutsLeft;
+                    // Sets a variable equal to the timeouts
+                    int timeoutsUsed = pac.HomeTeam.TimeoutsUsed;
+                    // Adds one more to it
+                    timeoutsUsed++;
+                    // And sets the team's value to the new value
+                    pac.HomeTeam.TimeoutsUsed = timeoutsUsed;
                 }
+                // else change the Away Team's timeouts
                 else{
-
+                    // Sets a variable equal to the timeouts
+                    int timeoutsUsed = pac.AwayTeam.TimeoutsUsed;
+                    // Adds one more to it
+                    timeoutsUsed++;
+                    // And sets the team's value to the new value
+                    pac.HomeTeam.TimeoutsUsed = timeoutsUsed;
                 }
             }
         }
@@ -47,25 +58,39 @@ namespace _20.Events
         // Not here either
         public void unresolve()
         {
-            // Empty Method
-        }
+            // Only change it back if it was team. As only values from team
+            // Are used
+            if (inputType == "team")
+            {
+                // If it was the Home Team
+                if (inputTeam == pac.HomeTeam.Id)
+                {
+                    // sets a variable to the timeouts
+                    int timeoutsUsed = pac.HomeTeam.TimeoutsUsed;
+                    // decriment it
+                    timeoutsUsed--;
+                    // If it is less than zero, set it to zero
+                    if (timeoutsUsed < 0)
+                        timeoutsUsed = 0;
+                    // Sets the value to the new value
+                    pac.HomeTeam.TimeoutsUsed = timeoutsUsed;
+                }
+                // If it was the Away Team
+                else
+                {
+                    // Sets a variable to the timeouts
+                    int timeoutsUsed = pac.AwayTeam.TimeoutsUsed;
+                    //decriment it
+                    timeoutsUsed--;
+                    // If it is less than zero, set it to zero
+                    if (timeoutsUsed < 0)
+                        timeoutsUsed = 0;
+                    // Sets the value to the new value
+                    pac.AwayTeam.TimeoutsUsed = timeoutsUsed;
+                }
 
-        // Has the values expected for the response
-        private class TimeoutEventResponse
-        {
-            public string time;
-            public string request;
-            public string result;
-            public Dictionary<string, string> response;
-        }
 
-        // Has the values for the error response
-        private class TimeoutEventErrorResponse
-        {
-            public string time;
-            public string request;
-            public string result;
-            public List<object> errors;
+            }
         }
 
     }
