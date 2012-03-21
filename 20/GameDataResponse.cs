@@ -60,7 +60,7 @@ namespace _20
         //TODO: Response needs to be changed from a Dictionary<string, TeamData>
         //to a Dictionary<string, string>.  Individual teams can be parsed,
         //followed by any gameSetupData.
-        public Dictionary<string, string> response;
+        public Dictionary<string, TeamData> response;
         private Dictionary<string, string> gameSetupData;
 
         [JsonIgnore]
@@ -89,8 +89,10 @@ namespace _20
         //rather inconvenient dictionary that they're packaged in.
         public void flatten()
         {
-            awayTeamData = JsonConvert.DeserializeObject<TeamData>(response["awayTeam"]);
-            homeTeamData = JsonConvert.DeserializeObject<TeamData>(response["homeTeam"]);
+            //awayTeamData = JsonConvert.DeserializeObject<TeamData>(response["awayTeam"]);
+            //homeTeamData = JsonConvert.DeserializeObject<TeamData>(response["homeTeam"]);
+            awayTeamData = response["awayTeam"];
+            homeTeamData = response["homeTeam"];
 
             //if (response.ContainsKey("gameSetupData"))
            // {

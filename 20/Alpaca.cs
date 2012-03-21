@@ -35,6 +35,7 @@ namespace _20
         public Team AwayTeam { get; set; }
         public Team HomeTeam { get; set; }
         private string gid;
+        private List<Event> eventLog;
 
         public string GameID
         {
@@ -209,8 +210,10 @@ namespace _20
 
                 using (var streamReader = new StreamReader(response.GetResponseStream()))
                 {
-                    var responseText = streamReader.ReadToEnd();
-                    Console.WriteLine(responseText);
+                    string responseText = streamReader.ReadToEnd();
+                    //Console.WriteLine(responseText);
+
+                    /* We need to deserialize & parse any game setup data into events. */
                     GameDataResponse gameResponse = JsonConvert.DeserializeObject<GameDataResponse>(responseText);
                     gameResponse.flatten();
                     //gameResponse is the useful data from this call.  It has team names, player names, player numbers.
@@ -228,7 +231,7 @@ namespace _20
 
         public bool post(Event e)
         {
-            var url = generateUrl(e.ApiCall, GameID);
+            var url = generateUrl(e.ApiCall);
             WebRequest request = WebRequest.Create(url);
 
             string payload = e.serialize();
@@ -386,7 +389,10 @@ namespace _20
         public static string generateTimestamp()
         {
             DateTime now = DateTime.Now;
-            return XmlConvert.ToString(now, XmlDateTimeSerializationMode.Utc).Replace("Z", "+0000");
+           // return XmlConvert.ToString(now, XmlDateTimeSerializationMode.Utc).Replace("Z", "-0000");
+            string str = XmlConvert.ToString(now, XmlDateTimeSerializationMode.Local);
+            return str.Remove(str.Length - 3, 1);
+
         }
 
         private string generateTimestamp(DateTime time)
