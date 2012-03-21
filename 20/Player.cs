@@ -69,5 +69,10 @@ namespace _20
             return true;
         }
 
+        public void removeFoul()
+        {
+            fouls--;
+        }
+
     }
 }
