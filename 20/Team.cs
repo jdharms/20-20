@@ -127,7 +127,7 @@ namespace _20
         public bool useTimeout()
         {
             return (timeoutsUsed-- > 0);
-        }K
+        }
 
         public Player getPlayer(string playerId)
         {
