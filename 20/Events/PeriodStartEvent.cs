@@ -27,10 +27,14 @@ namespace _20.Events
         {
             int period = pac.Period;
             if (period == null)
+            {
                 period = 0;
-            period++;
+            }
             if (period <= 0)
-                period = 1;
+            {
+                period = 0;
+            }
+            period++;
             pac.Period = period;
         }
 

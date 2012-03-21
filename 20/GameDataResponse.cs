@@ -87,16 +87,15 @@ namespace _20
 
         //This method takes the two TeamData objects out of the 
         //rather inconvenient dictionary that they're packaged in.
-        [OnSerialized]
         public void flatten()
         {
             awayTeamData = JsonConvert.DeserializeObject<TeamData>(response["awayTeam"]);
             homeTeamData = JsonConvert.DeserializeObject<TeamData>(response["homeTeam"]);
 
-            if (response.ContainsKey("gameSetupData"))
-            {
-                gameSetupData = JsonConvert.DeserializeObject<Dictionary<string, string>>(response["gameSetupData"]);
-            }
+            //if (response.ContainsKey("gameSetupData"))
+           // {
+            //    gameSetupData = JsonConvert.DeserializeObject<Dictionary<string, string>>(response["gameSetupData"]);
+            //}
 
         }
     }

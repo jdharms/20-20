@@ -210,7 +210,7 @@ namespace _20
                 using (var streamReader = new StreamReader(response.GetResponseStream()))
                 {
                     var responseText = streamReader.ReadToEnd();
-                    authenticated = true;
+                    Console.WriteLine(responseText);
                     GameDataResponse gameResponse = JsonConvert.DeserializeObject<GameDataResponse>(responseText);
                     gameResponse.flatten();
                     //gameResponse is the useful data from this call.  It has team names, player names, player numbers.

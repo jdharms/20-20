@@ -255,6 +255,19 @@ errors: [
             lineups.pack(Alpaca.generateTimestamp());
             //string eventId = pac.setGameData(lineups);
             //Console.WriteLine(eventId);
+
+            PeriodStartEvent e0 = new PeriodStartEvent(pac);
+            MadeShotEvent e1 = new MadeShotEvent(pac, "4f46b4dde4b063589e20e5c6", "4f46b4bde4b0b074044d891c", null, "dunk", 2, true, false, new Point(40, 40));
+            MissedShotEvent e2 = new MissedShotEvent(pac, "4f46b657e4b0b074044d8920", "4f46b620e4b0acf74eee5e21", null, "jump-shot", 3, false, new Point(100, 80));
+            ReboundEvent e3 = new ReboundEvent(pac, "4f46b4fde4b063589e20e5c8", "defensive", new Point(30, 30));
+            SubstitutionEvent e4 = new SubstitutionEvent(pac, "4f46b5a6e4b0acf74eee5e1c", "4f46b4fde4b063589e20e5c8", "4f46b4bde4b0b074044d891c");
+
+            pac.post(e0);
+            pac.post(e1);
+            pac.post(e2);
+            pac.post(e3);
+            pac.post(e4);
+
         }
 
 
