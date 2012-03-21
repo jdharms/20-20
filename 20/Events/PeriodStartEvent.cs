@@ -12,7 +12,7 @@ namespace _20.Events
         public PeriodStartEvent(Alpaca pac)
             : base(pac)
         {
-            //empty constructor
+            apiCall = "periodStart";
         }
 
         // Converts this class to a Json serialized 

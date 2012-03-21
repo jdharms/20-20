@@ -27,6 +27,7 @@ namespace _20.Events
             this.points = pointsAttempted;
             this.fastBreak = fastBreakOpportunity;
             this.location = location;
+            apiCall = "missedShot";
         }
 
         public override string serialize()

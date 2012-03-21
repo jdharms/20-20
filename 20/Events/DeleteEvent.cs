@@ -16,6 +16,7 @@ namespace _20.Events
         {
             this.eventToDelete = eventToDelete;
             deletionId = eventToDelete.EventId;
+            apiCall = "deleteEvent/" + eventToDelete.EventId;
         }
 
         public override void resolve()

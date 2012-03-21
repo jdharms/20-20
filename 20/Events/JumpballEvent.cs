@@ -21,6 +21,7 @@ namespace _20.Events
             this.awayPlayerId = awayPlayerId;
             this.winner = winner;
             this.location = location;
+            apiCall = "jumpBall";
         }
 
         public override void resolve()
