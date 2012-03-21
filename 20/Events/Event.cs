@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
+using System.Drawing;
 
 namespace _20.Events
 {
@@ -26,11 +27,6 @@ namespace _20.Events
         }
 
         /// <summary>
-        /// Serialize the event into a JSON object. 
-        /// </summary>
-        /// <returns> The serialized event object as a string </returns>
-        public abstract string serialize();
-        /// <summary>
         /// Resolves any actions that need to be performed by the event
         /// </summary>
         public abstract void resolve();
@@ -38,6 +34,11 @@ namespace _20.Events
         /// Undoes any resolved events. 
         /// </summary>
         public abstract void unresolve();
+        /// <summary>
+        /// Serialize the event into a JSON object. 
+        /// </summary>
+        /// <returns> The serialized event object as a string </returns>
+        public abstract string serialize();
 
         /// <summary>
         /// Takes in a jason response string and does one of two things.
@@ -85,6 +86,17 @@ namespace _20.Events
             {
                 return error;
             }
+        }
+
+        /// <summary>
+        /// Converts a Point to a two-element array
+        /// </summary>
+        /// <param name="p">The point to convert</param>
+        /// <returns>A two-element array</returns>
+        protected int[] convertPointToArray(Point p)
+        {
+            int[] location = {p.X, p.Y};
+            return location;
         }
 
         /****************************************************

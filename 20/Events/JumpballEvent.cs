@@ -35,14 +35,13 @@ namespace _20.Events
 
         public override string serialize()
         {
-            int[] locationArray = { location.X, location.Y };
             return JsonConvert.SerializeObject(new
             {
                 gameId = pac.GameID,
                 homePlayer = homePlayerId,
                 awayPlayer = awayPlayerId,
                 winner = winner,
-                location = locationArray,
+                location = convertPointToArray(location),
                 context = pac.generateContext()
             });
         }
