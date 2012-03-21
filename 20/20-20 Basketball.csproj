@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="AckResponse.cs" />
     <Compile Include="Alpaca.cs" />
+    <Compile Include="Events\GameEndEvent.cs" />
     <Compile Include="Events\DeleteEvent.cs" />
     <Compile Include="Events\JumpballEvent.cs" />
     <Compile Include="Events\MadeShotEvent.cs" />
