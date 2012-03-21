@@ -17,7 +17,7 @@ namespace _20
         public Player teamPlayer;
 
         private int score;
-        public int Score { get { return score; } } 
+        public int Score { get { return score; } set { score = value; } }
 
         private int teamFouls;
         public int TeamFouls { get { return teamFouls; } } 
