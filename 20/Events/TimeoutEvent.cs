@@ -23,13 +23,13 @@ namespace _20.Events
 
         // Converts this class to a Json serialized 
         // returns a Json serialized object
-        public string serialize()
+        public override string serialize()
         {
             return JsonConvert.SerializeObject(new { gameID = pac.GameID, timeoutTeam = inputTeam, timeoutType = inputType, context = pac.generateContext() });
         }
 
         // Not a soul found in these parts
-        public void resolve()
+        public override void resolve()
         {
             // The only place timeouts are being tracked is in the team
             if (inputType == "team")
@@ -57,7 +57,7 @@ namespace _20.Events
         }
 
         // Not here either
-        public void unresolve()
+        public override void unresolve()
         {
             // Only change it back if it was team. As only values from team
             // Are used
