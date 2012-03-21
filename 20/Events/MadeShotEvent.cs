@@ -7,8 +7,6 @@ using Newtonsoft.Json;
 
 namespace _20.Events
 {
-    public enum ShotType { jumpshot, layup, dunk, tipin, freethrow };
-
     class MadeShotEvent : Event
     {
         string shooter;

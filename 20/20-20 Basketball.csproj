@@ -58,6 +58,7 @@
     <Compile Include="Events\DeleteEvent.cs" />
     <Compile Include="Events\JumpballEvent.cs" />
     <Compile Include="Events\MadeShotEvent.cs" />
+    <Compile Include="Events\MissedShotEvent.cs" />
     <Compile Include="Events\SubstitutionEvent.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Events\Event.cs" />
