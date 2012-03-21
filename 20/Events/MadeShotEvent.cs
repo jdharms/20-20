@@ -48,7 +48,6 @@ namespace _20.Events
 
         public override string serialize()
         {
-            int[] locArray = {location.X, location.Y};
             return JsonConvert.SerializeObject(new
             {
                 gameId = pac.GameID,
@@ -58,7 +57,7 @@ namespace _20.Events
                 pointsScored = points,
                 fastBreakOpportunity = fastBreak,
                 goaltending = goaltending,
-                location = locArray,
+                location = convertPointToArray(location),
                 context = pac.generateContext()
             }
             );
