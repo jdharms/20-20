@@ -23,6 +23,7 @@ namespace _20.Events
             this.forcedBy = forcedBy;
             this.turnoverType = turnoverType;
             this.location = location;
+            apiCall = "turnover";
         }
 
         public override void resolve()

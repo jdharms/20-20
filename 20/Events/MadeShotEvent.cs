@@ -30,6 +30,7 @@ namespace _20.Events
             this.fastBreak = fastBreakOpportunity;
             this.goaltending = goaltending;
             this.location = location;
+            apiCall = "madeShot";
         }
 
         public override void resolve()

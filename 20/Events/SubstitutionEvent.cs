@@ -20,6 +20,7 @@ namespace _20.Events
             this.idGoingIn = idGoingIn;
             this.idGoingOut = idGoingOut;
             this.teamId = teamId;
+            apiCall = "substitution";
         }
 
         /// <summary>
