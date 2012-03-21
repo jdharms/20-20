@@ -183,7 +183,29 @@ namespace _20
         {
             //Ask for exiting player
             //Ask for entering player
-
+            string firstTest = @"{
+time: "" 2011-09-10t12:47:21.231+0000"",
+request: ""substitution"",
+result: ""okay"",  
+response: { eventId: ""4eea69ce03648afad2835366"" }
+}";
+            string secondTest = @"{
+time: "" 2011-09-10T12:47:21.231-0000"",
+request: ""login"",
+result: ""error"",
+errors: [
+    {
+        field: ""password"",
+        type: ""INVALID"",
+        message: ""The password must be at least six characters.""
+    },
+    ""The server encountered an internal error.""
+]
+}
+";
+            SubstitutionEvent subEvent = new SubstitutionEvent(new Alpaca(), "1", "2", "3");
+            subEvent.deserialize(firstTest);
+            subEvent.deserialize(secondTest);
             //send sub event to server
         }
 
