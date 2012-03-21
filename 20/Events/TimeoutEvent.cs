@@ -25,7 +25,7 @@ namespace _20.Events
         // returns a Json serialized object
         public override string serialize()
         {
-            return JsonConvert.SerializeObject(new { gameID = pac.GameID, timeoutTeam = inputTeam, timeoutType = inputType, context = pac.generateContext() });
+            return JsonConvert.SerializeObject(new { gameId = pac.GameID, timeoutTeam = inputTeam, timeoutType = inputType, context = pac.generateContext() });
         }
 
         // Not a soul found in these parts
