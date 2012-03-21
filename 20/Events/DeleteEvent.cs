@@ -16,7 +16,9 @@ namespace _20.Events
         {
             this.eventToDelete = eventToDelete;
             deletionId = eventToDelete.EventId;
-            apiCall = "deleteEvent/" + eventToDelete.EventId;
+            apiCall = "deleteEvent/" + deletionId;
+            Console.WriteLine("i will delete: " + deletionId);
+
         }
 
         public override void resolve()
