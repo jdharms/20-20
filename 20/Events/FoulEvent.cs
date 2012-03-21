@@ -33,7 +33,9 @@ namespace _20.Events
         // returns a Json serialized object
         public override string serialize()
         {
-            return JsonConvert.SerializeObject(new { gameId = pac.GameID, committedBy = committedBy, drewBy = drewBy, foulType = foulType, ejected = ejected, location = location, context = pac.generateContext() });
+            return JsonConvert.SerializeObject(new { gameId = pac.GameID, committedBy = committedBy, drewBy = drewBy, foulType = foulType, ejected = ejected, location = location, context = pac.generateContext() },
+                Formatting.None,
+                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
         }
 
         // Adds fouls to the correct person

@@ -39,13 +39,15 @@ namespace _20.Events
         public override string serialize()
         {
             return JsonConvert.SerializeObject(new 
-            { 
-                gameId=pac.GameID,
-                commitedBy=commitedBy,
-                forcedBy=forcedBy,
-                location=convertPointToArray(location),
-                context=pac.generateContext()
-            });
+                { 
+                    gameId=pac.GameID,
+                    commitedBy=commitedBy,
+                    forcedBy=forcedBy,
+                    location=convertPointToArray(location),
+                    context=pac.generateContext()
+                },
+                Formatting.None,
+                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
         }
     }
 }

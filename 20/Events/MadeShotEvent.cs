@@ -58,7 +58,9 @@ namespace _20.Events
                 goaltending = goaltending,
                 location = convertPointToArray(location),
                 context = pac.generateContext()
-            }
+            }, 
+            Formatting.None,
+            new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }
             );
         }
 

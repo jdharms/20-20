@@ -218,7 +218,9 @@ namespace _20
                     gameResponse.flatten();
                     //gameResponse is the useful data from this call.  It has team names, player names, player numbers.
                     Console.WriteLine(gameResponse);
-                    Console.WriteLine(responseText);
+
+                    //this is a lot of information... printing it all slows down the thread!  turn on only if necessary.
+                    //Console.WriteLine(responseText);
                     return gameResponse;
                 }
             }
@@ -236,7 +238,16 @@ namespace _20
 
             string payload = e.serialize();
 
+            Console.WriteLine("-------------------");
+            Console.WriteLine(url);
+            Console.WriteLine(payload);
+            Console.WriteLine("------------------");
+
             request.Method = "POST";
+            if (e is DeleteEvent)
+            {
+                request.Method = "DELETE";
+            }
             request.ContentType = "application/json";
             request.ContentLength = payload.Length;
             using ( var streamWriter = new StreamWriter(request.GetRequestStream()))
@@ -391,6 +402,8 @@ namespace _20
             DateTime now = DateTime.Now;
            // return XmlConvert.ToString(now, XmlDateTimeSerializationMode.Utc).Replace("Z", "-0000");
             string str = XmlConvert.ToString(now, XmlDateTimeSerializationMode.Local);
+            str = XmlConvert.ToString(now, "yyyy-MM-ddTHH:mm:ssssszzz");
+
             return str.Remove(str.Length - 3, 1);
 
         }
