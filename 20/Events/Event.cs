@@ -49,7 +49,7 @@ namespace _20.Events
         /// </summary>
         /// <param name="json">The response from sending the jason object</param>
         /// <returns>false if it was an error response, otherwise true</returns>
-        public bool deserialize(string json)
+        public virtual bool deserialize(string json)
         {
             try
             {

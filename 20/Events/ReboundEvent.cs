@@ -22,19 +22,19 @@ namespace _20.Events
 
         // Converts this class to a Json serialized 
         // returns a Json serialized object
-        public string serialize()
+        public override string serialize()
         {
             return JsonConvert.SerializeObject(new { gameID = pac.GameID, rebounder = rebounder, reboundType = reboundType, location = location, context = pac.generateContext() });
         }
 
         // Nothing For the moment
-        public void resolve()
+        public override void resolve()
         {
             // Now it's a ghost town
         }
 
         // You wanted something here
-        public void unresolve()
+        public override void unresolve()
         {
             // But nothing is here
         }

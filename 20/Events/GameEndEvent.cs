@@ -17,19 +17,19 @@ namespace _20.Events
             
         // Converts this class to a Json serialized 
         // returns a Json serialized object
-        public string serialize()
+        public override string serialize()
         {
             return JsonConvert.SerializeObject(new { gameID = pac.GameID, context = pac.generateContext() });
         }
 
         // NOTHING HERE
-        public void resolve()
+        public override void resolve()
         {
             // Empty method. Does not change model
         }
 
         // OR HERE
-        public void unresolve()
+        public override void unresolve()
         {
             // Empty method. Does not change model
         }

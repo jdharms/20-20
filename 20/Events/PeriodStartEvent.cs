@@ -17,13 +17,13 @@ namespace _20.Events
 
         // Converts this class to a Json serialized 
         // returns a Json serialized object
-        public string serialize()
+        public override string serialize()
         {
             return JsonConvert.SerializeObject(new { gameID = pac.GameID, period = pac.Period, context = pac.generateContext() });
         }
 
         // Adds one to the value for period in Alpaca
-        public void resolve()
+        public override void resolve()
         {
             int period = pac.Period;
             if (period == null)
@@ -35,7 +35,7 @@ namespace _20.Events
         }
 
         // ASubtracts one to the value for period in Alpaca
-        public void unresolve()
+        public override void unresolve()
         {
             int period = pac.Period;
             period--;
