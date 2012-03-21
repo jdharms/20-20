@@ -346,5 +346,21 @@ namespace _20
             return XmlConvert.ToString(time, XmlDateTimeSerializationMode.Utc).Replace("Z", "+0000");
         }
 
+        public Team getTeamById(string teamId)
+        {
+            if(HomeTeam.Id.Equals(teamId))
+            {
+                return HomeTeam;
+            }
+            else
+            {
+                return AwayTeam;
+            }
+        }
+
+        public Context generateContext()
+        {
+            return new Context(HomeTeam.Score, AwayTeam.Score);
+        }
     }
 }

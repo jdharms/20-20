@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace _20
 {
@@ -13,11 +14,11 @@ namespace _20
     /// </summary>
     abstract class Event
     {
-        private string eventId;
+        protected string eventId;
         public string EventId { get { return eventId; } }
         public bool ReceivedByServer { get { return eventId != null; } }
 
-        private Alpaca pac;
+        protected Alpaca pac;
         
         public Event(Alpaca pac)
         {
@@ -43,6 +44,25 @@ namespace _20
         /// Undoes any resolved events. 
         /// </summary>
         public abstract void unresolve();
+
+        /// <summary>
+        /// Takes in a error as a string, and parses it out.
+        /// </summary>
+        /// <param name="error">The error to parse</param>
+        /// <returns>The string form of the error</returns>
+        protected string parseError(string error)
+        {
+
+            try
+            {
+                Dictionary<string, string> fieldError = JsonConvert.DeserializeObject<Dictionary<string, string>>(error);
+                return "field:" + fieldError["field"] + ", type:" + fieldError["type"] + ", message:" + fieldError["message"];
+            }
+            catch (Exception e)
+            {
+                return error;
+            }
+        }
 
     }
 }
