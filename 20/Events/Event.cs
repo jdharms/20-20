@@ -53,7 +53,7 @@ namespace _20.Events
             {
                 EventResponse response = JsonConvert.DeserializeObject<EventResponse>(json);
                 eventId = response.response["eventId"];
-                Console.WriteLine("Jumpball -- " + eventId);
+                Console.WriteLine("Event -- " + eventId);
                 return true;
             }
             catch (NullReferenceException e)
@@ -74,7 +74,7 @@ namespace _20.Events
         /// </summary>
         /// <param name="error">The error to parse</param>
         /// <returns>The string form of the error</returns>
-        private string parseError(string error)
+        protected string parseError(string error)
         {
 
             try
