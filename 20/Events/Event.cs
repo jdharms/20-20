@@ -15,6 +15,8 @@ namespace _20.Events
     /// </summary>
     abstract class Event
     {
+        protected string apiCall;
+        public string ApiCall { get { return apiCall; } }
         protected string eventId;
         public string EventId { get { return eventId; } }
         public bool ReceivedByServer { get { return eventId != null; } }

@@ -12,7 +12,7 @@ namespace _20.Events
         public GameEndEvent(Alpaca pac)
             : base(pac)
         {
-            //empty constructor
+            apiCall = "gameEnd";
         }
             
         // Converts this class to a Json serialized 

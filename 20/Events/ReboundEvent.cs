@@ -17,7 +17,7 @@ namespace _20.Events
         public ReboundEvent(Alpaca pac, string rebounder, string reboundType, Point location)
             : base(pac)
         {
-            //empty constructor
+            apiCall = "rebound";
         }
 
         // Converts this class to a Json serialized 

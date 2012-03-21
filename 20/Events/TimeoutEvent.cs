@@ -18,6 +18,7 @@ namespace _20.Events
         {
             this.inputTeam = inputTeam;
             this.inputType = inputType;
+            apiCall = "timeout";
         }
 
         // Converts this class to a Json serialized 

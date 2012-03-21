@@ -12,7 +12,7 @@ namespace _20.Events
         public PeriodEndEvent(Alpaca pac)
             : base(pac)
         {
-            //empty constructor
+            apiCall = "periodEnd";
         }
 
         // Converts this class to a Json serialized 

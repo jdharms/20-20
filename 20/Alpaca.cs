@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using Newtonsoft.Json;
 using System.IO;
 using System.Xml;
+using _20.Events;
 
 namespace _20
 {
@@ -225,6 +226,52 @@ namespace _20
             }
         }
 
+        public bool post(Event e)
+        {
+            var url = generateUrl(e.ApiCall, GameID);
+            WebRequest request = WebRequest.Create(url);
+
+            string payload = e.serialize();
+
+            request.Method = "POST";
+            request.ContentType = "application/json";
+            request.ContentLength = payload.Length;
+            using ( var streamWriter = new StreamWriter(request.GetRequestStream()))
+            {
+                streamWriter.Write(payload);
+            }
+
+            string responseText;
+            try
+            {
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                using (var streamReader = new StreamReader(response.GetResponseStream()))
+                {
+                    responseText = streamReader.ReadToEnd();
+                }
+            }
+            catch (WebException we)
+            {
+                using (var response = we.Response)
+                {
+                    using (Stream data = response.GetResponseStream())
+                    {
+                        responseText = new StreamReader(data).ReadToEnd();
+                    }
+                }
+            }
+            if (e.deserialize(responseText))
+            {
+                e.resolve();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public string setGameData(StartingLineups lineups)
         {
             var url = generateUrl("setGameData", GameID);
@@ -249,7 +296,6 @@ namespace _20
                 using (var streamReader = new StreamReader(response.GetResponseStream()))
                 {
                     var responseText = streamReader.ReadToEnd();
-                    authenticated = true;
                     AckResponse ack = JsonConvert.DeserializeObject<AckResponse>(responseText);
                     //TODO: Need to change this to a "try for key".  Error messages will 
                     //make it crash.
