@@ -69,5 +69,17 @@ namespace _20
             return true;
         }
 
+        /// <summary>
+        /// Removes a foul to the player.
+        /// </summary>
+        public void removeFoul()
+        {
+            if (--fouls <0)
+            {
+                fouls = 0;
+            }
+            return;
+        }
+
     }
 }

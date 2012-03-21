@@ -20,7 +20,7 @@ namespace _20
         public int Score { get { return score; } set { score = value; } }
 
         private int teamFouls;
-        public int TeamFouls { get { return teamFouls; } } 
+        public int TeamFouls { get { return teamFouls; } set { teamFouls = value; } } 
 
         private int timeoutsUsed;
         public int TimeoutsUsed { get { return timeoutsUsed; } set { timeoutsUsed = value; } }
@@ -127,7 +127,7 @@ namespace _20
         public bool useTimeout()
         {
             return (timeoutsUsed-- > 0);
-        }K
+        }
 
         public Player getPlayer(string playerId)
         {
@@ -142,6 +142,11 @@ namespace _20
         public bool registerFoul(string playerId)
         {
             return getPlayer(playerId).addFoul();
+        }
+
+        public void removeFoul(string playerId)
+        {
+            getPlayer(playerId).removeFoul();
         }
 
         public bool makeSubstitution(string playerIdIn, string playerIdOut)
