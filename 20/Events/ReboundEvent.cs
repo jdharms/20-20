@@ -18,13 +18,16 @@ namespace _20.Events
             : base(pac)
         {
             apiCall = "rebound";
+            this.rebounder = rebounder;
+            this.reboundType = reboundType;
+            this.location = location;
         }
 
         // Converts this class to a Json serialized 
         // returns a Json serialized object
         public override string serialize()
         {
-            return JsonConvert.SerializeObject(new { gameID = pac.GameID, rebounder = rebounder, reboundType = reboundType, location = location, context = pac.generateContext() });
+            return JsonConvert.SerializeObject(new { gameId = pac.GameID, rebounder = rebounder, reboundType = reboundType, location = convertPointToArray(location), context = pac.generateContext() });
         }
 
         // Nothing For the moment

@@ -213,8 +213,8 @@ errors: [
         {
             Alpaca pac = new Alpaca();
             List<Game> games = pac.getGames(new DateTime(2011, 1, 1), new DateTime(2013, 1, 1));
-            GameDataResponse gameData = pac.getGameData(games[1].gameId);
-            pac.GameID = games[1].gameId;
+            GameDataResponse gameData = pac.getGameData(games[0].gameId);
+            pac.GameID = games[0].gameId;
 
             StartingLineups lineups = new StartingLineups();
             TeamData awayTeam = gameData.AwayTeamData;
