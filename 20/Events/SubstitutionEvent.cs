@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace _20
+namespace _20.Events
 {
     /// <summary>
     /// The event the will handle substitutions.
@@ -63,64 +63,5 @@ namespace _20
             return JsonConvert.SerializeObject(new { gameId=pac.GameID, exitingPlayer=idGoingOut, enteringPlayer=idGoingIn, context=pac.generateContext()});
         }
 
-        /// <summary>
-        /// Takes in a jason response string and does one of two things.
-        ///     1. Retrieves the eventId and sets it.
-        ///     2. Retrieves the error string
-        /// </summary>
-        /// <param name="json">The response from sending the jason object</param>
-        /// <returns>false if it was an error response, otherwise true</returns>
-        public override bool deserialize(string json)
-        {
-            // try to convert it into a SubstitutionEventResponse...
-            try
-            {
-                //create the deserialized object into a SubstitutionEventResponse
-                SubstitutionEventResponse response = JsonConvert.DeserializeObject<SubstitutionEventResponse>(json);
-                Console.WriteLine("substution -- " + response.response["eventId"]);
-                //set the eventId from the response
-                eventId = response.response["eventId"];
-                //NO ERROR!!!! :) let the user of this function know
-                return true;
-            }
-            // if we got a NullReferenceException, that means that response.response["eventId"] did not exist
-            // so treat it as an error
-            catch (NullReferenceException e)
-            {
-                //create the deserialized object into a SubstitutionEventErrorResponse
-                SubstitutionEventErrorResponse response = JsonConvert.DeserializeObject<SubstitutionEventErrorResponse>(json);
-                //we now have a list of errors, go through each one
-                foreach (object error in response.errors)
-                {
-                    // call our own parseError(string) method, and let it handle the error
-                    string errorMessage = parseError(error.ToString());
-                    // pac.receiveError(errorMessage)
-                    Console.WriteLine("Error package -- " + errorMessage);
-                }
-                //too bad we got an error, tell the user of this function
-                return false;
-            }
-
-        }
-
-        /****************************************************
-            Reponse classes. Used to deserialize into
-        ****************************************************/
-
-        private class SubstitutionEventResponse
-        {
-            public string time;
-            public string request;
-            public string result;
-            public Dictionary<string, string> response;
-        }
-        
-        private class SubstitutionEventErrorResponse
-        {
-            public string time;
-            public string request;
-            public string result;
-            public List<object> errors;
-        }
     }
 }
