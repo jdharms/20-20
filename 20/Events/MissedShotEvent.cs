@@ -43,7 +43,9 @@ namespace _20.Events
                 fastBreakOpportunity = fastBreak,
                 location = locArray,
                 context = pac.generateContext()
-            }
+            },
+            Formatting.None,
+            new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }
             );
         }
 

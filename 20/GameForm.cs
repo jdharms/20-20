@@ -213,8 +213,8 @@ errors: [
         {
             Alpaca pac = new Alpaca();
             List<Game> games = pac.getGames(new DateTime(2011, 1, 1), new DateTime(2013, 1, 1));
-            GameDataResponse gameData = pac.getGameData(games[0].gameId);
-            pac.GameID = games[0].gameId;
+            GameDataResponse gameData = pac.getGameData(games[1].gameId);
+            pac.GameID = games[1].gameId;
 
             StartingLineups lineups = new StartingLineups();
             TeamData awayTeam = gameData.AwayTeamData;
@@ -267,6 +267,10 @@ errors: [
             pac.post(e2);
             pac.post(e3);
             pac.post(e4);
+
+            //Have to create delete event after event has been processed.
+            DeleteEvent ed = new DeleteEvent(pac, e4);
+            pac.post(ed);
 
         }
 
