@@ -22,8 +22,9 @@ namespace _20
         private int teamFouls;
         public int TeamFouls { get { return teamFouls; } } 
 
-        private int timeOutsLeft;
-        public int TimeOutsLeft { get { return timeOutsLeft; } }
+        private int timeoutsUsed;
+        public int TimeoutsUsed { get { return timeoutsUsed; } set { timeoutsUsed = value; } }
+        public int TimeoutsLeft { get { return 5 - timeoutsUsed; } }
         
         public Team(string id, string name, List<Player> players)
         {
@@ -31,7 +32,7 @@ namespace _20
             this.name = name;
             this.players = players;
             this.teamFouls = 0;
-            this.timeOutsLeft = 5;
+            this.timeoutsUsed = 5;
             this.score = 0;
             this.onCourt = new List<Player>();
 
@@ -120,13 +121,13 @@ namespace _20
 
         public bool hasTimeOutsRemaining()
         {
-            return (timeOutsLeft > 0);
+            return (timeoutsUsed > 0);
         }
 
         public bool useTimeout()
         {
-            return (timeOutsLeft-- > 0);
-        }
+            return (timeoutsUsed-- > 0);
+        }K
 
         public Player getPlayer(string playerId)
         {

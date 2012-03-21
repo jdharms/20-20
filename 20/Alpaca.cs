@@ -29,6 +29,8 @@ namespace _20
         private bool authenticated;
         DateTime lastAuthed;
 
+        public int Period { get; set; }
+
         public Team AwayTeam { get; set; }
         public Team HomeTeam { get; set; }
         private string gid;
