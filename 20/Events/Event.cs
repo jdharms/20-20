@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace _20
+namespace _20.Events
 {
     /// <summary>
     /// The Event abstract class. Any specific Events will extend this class and have to implement 4 methods:
@@ -31,12 +31,6 @@ namespace _20
         /// <returns> The serialized event object as a string </returns>
         public abstract string serialize();
         /// <summary>
-        /// Deserializes the json string.
-        /// </summary>
-        /// <param name="json"> The response of a json serialized object being sent to the server</param>
-        /// <returns> True if the response was an 'okay' response, otherwise false.</returns>
-        public abstract bool deserialize(string json);
-        /// <summary>
         /// Resolves any actions that need to be performed by the event
         /// </summary>
         public abstract void resolve();
@@ -46,11 +40,40 @@ namespace _20
         public abstract void unresolve();
 
         /// <summary>
+        /// Takes in a jason response string and does one of two things.
+        ///     1. Retrieves the eventId and sets it.
+        ///     2. Retrieves the error string
+        /// </summary>
+        /// <param name="json">The response from sending the jason object</param>
+        /// <returns>false if it was an error response, otherwise true</returns>
+        public bool deserialize(string json)
+        {
+            try
+            {
+                EventResponse response = JsonConvert.DeserializeObject<EventResponse>(json);
+                eventId = response.response["eventId"];
+                Console.WriteLine("Jumpball -- " + eventId);
+                return true;
+            }
+            catch (NullReferenceException e)
+            {
+                EventErrorResponse response = JsonConvert.DeserializeObject<EventErrorResponse>(json);
+                foreach (object error in response.errors)
+                {
+                    string errorMessage = parseError(error.ToString());
+                    Console.WriteLine(errorMessage);
+                }
+
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Takes in a error as a string, and parses it out.
         /// </summary>
         /// <param name="error">The error to parse</param>
         /// <returns>The string form of the error</returns>
-        protected string parseError(string error)
+        private string parseError(string error)
         {
 
             try
@@ -62,6 +85,25 @@ namespace _20
             {
                 return error;
             }
+        }
+
+        /****************************************************
+                Reponse classes. Used to deserialize into
+        ****************************************************/
+        private class EventResponse
+        {
+            public string time;
+            public string request;
+            public string result;
+            public Dictionary<string, string> response;
+        }
+
+        private class EventErrorResponse
+        {
+            public string time;
+            public string request;
+            public string result;
+            public List<object> errors;
         }
 
     }
