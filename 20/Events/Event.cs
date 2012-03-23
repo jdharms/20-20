@@ -13,12 +13,14 @@ namespace _20.Events
     ///     
     /// Every Event must take in a Alpaca object.
     /// </summary>
-    abstract class Event
+    abstract class Event : IComparable<Event>
     {
         protected string apiCall;
         public string ApiCall { get { return apiCall; } }
         protected string eventId;
         public string EventId { get { return eventId; } }
+        protected DateTime time;
+        public DateTime Time { get { return time; } set { time = value; } }
         public bool ReceivedByServer { get { return eventId != null; } }
 
         protected Alpaca pac;
@@ -26,6 +28,7 @@ namespace _20.Events
         public Event(Alpaca pac)
         {
             this.pac = pac;
+            this.time = DateTime.Now;
         }
 
         /// <summary>
@@ -120,5 +123,12 @@ namespace _20.Events
             public List<object> errors;
         }
 
+        public int CompareTo(Event other)
+        {
+            DateTime myTime = time;
+            DateTime otherTime = other.Time;
+
+            return time.CompareTo(otherTime);
+        }
     }
 }
