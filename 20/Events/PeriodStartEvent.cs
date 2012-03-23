@@ -46,5 +46,9 @@ namespace _20.Events
             pac.Period = period;
         }
 
+        public override string ToString()
+        {
+            return "Period " + pac.Period + " started.";
+        }
     }
 }

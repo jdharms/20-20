@@ -10,16 +10,16 @@ namespace _20.Events
     class TurnoverEvent : Event
     {
       
-        private string commitedBy;
+        private string committedBy;
         private string forcedBy;
         private string turnoverType;
         private Point location;
 
         
-        public TurnoverEvent(Alpaca pac, string commitedBy, string forcedBy, string turnoverType, Point location)
+        public TurnoverEvent(Alpaca pac, string committedBy, string forcedBy, string turnoverType, Point location)
             : base(pac)
         {
-            this.commitedBy = commitedBy;
+            this.committedBy = committedBy;
             this.forcedBy = forcedBy;
             this.turnoverType = turnoverType;
             this.location = location;
@@ -52,7 +52,31 @@ namespace _20.Events
 
         public override string ToString()
         {
-            return pac.getPlayer(commitedBy) + " turnover.";
+            Player committedBy = pac.getPlayer(this.committedBy);
+            Player forcedBy = pac.getPlayer(this.forcedBy);
+            string turnoverType = this.turnoverType;
+            string committedByString = "";
+            string forcedByString = "";
+
+            if (committedBy.TeamPlayer)
+            {
+                committedByString = pac.getTeamById(committedBy.TeamId).Name;
+            }
+            else
+            {
+                committedByString = committedBy.DisplayName; 
+            }
+
+            if (forcedBy.TeamPlayer)
+            {
+                forcedByString = pac.getTeamById(forcedBy.TeamId).Name;
+            }
+            else
+            {
+                forcedByString = forcedBy.DisplayName; 
+            }
+
+            return committedByString + " " + turnoverType + " turnover. Forced by " + forcedByString;
         }
         
     }
