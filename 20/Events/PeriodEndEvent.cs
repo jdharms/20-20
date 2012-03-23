@@ -34,5 +34,9 @@ namespace _20.Events
             // Empty Method
         }
 
+        public override string ToString()
+        {
+            return "Period " + pac.Period + " ended.";
+        }
     }
 }

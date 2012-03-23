@@ -46,5 +46,10 @@ namespace _20.Events
                 context = pac.generateContext()
             });
         }
+
+        public override string ToString()
+        {
+            return "Jumpball possesion goes to " + pac.getTeamById(pac.getPlayer(winner).TeamId);
+        }
     }
 }
