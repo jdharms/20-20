@@ -75,7 +75,7 @@ namespace _20.Events
             string playerIn = pac.getPlayer(this.idGoingIn).DisplayName;
             string playerOut = pac.getPlayer(this.idGoingOut).DisplayName;
 
-            return "Substitution by " + pac.getTeamById(pac.getPlayer(this.idGoingOut).TeamId).Name + ". " + playerIn " going in for " + playerOut;
+            return "Substitution by " + pac.getTeamById(pac.getPlayer(this.idGoingOut).TeamId).Name + ". " + playerIn + " going in for " + playerOut;
         }
     }
 }
