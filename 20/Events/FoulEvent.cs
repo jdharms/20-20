@@ -124,9 +124,36 @@ namespace _20.Events
                     pac.HomeTeam.TeamFouls = fouls;
                     pac.HomeTeam.removeFoul(committedBy);
                 }
-
             }
         }
 
+        public override string ToString()
+        {
+            Player drew = pac.getPlayer(drewBy);
+            Player committed = pac.getPlayer(committedBy);
+            string drewString = "";
+            string committedString = "";
+
+            if (drew.TeamPlayer)
+            {
+                drewString = pac.getTeamById(drew.TeamId).Name;
+            }
+            else
+            {
+                drewString = drew.DisplayName;
+            }
+
+            if (committed.TeamPlayer)
+            {
+                committedString = pac.getTeamById(committed.TeamId).Name;
+            }
+            else
+            {
+                committedString = committed.DisplayName;
+            }
+
+                
+            return char.ToUpper(foulType[0]) + foulType.Substring(1) + " foul on " + committedString + ". Drawn by " + drewString + ".";
+        }
     }
 }
