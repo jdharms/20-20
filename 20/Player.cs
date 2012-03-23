@@ -12,7 +12,6 @@ namespace _20
         private string lName;
         public string Name { get { return lName + ", " + fName + " " + mName; } }
 
-        private string displayName;
         public string DisplayName { get { return fName + " " + lName; } }
 
         private string id;
@@ -72,6 +71,11 @@ namespace _20
         public void removeFoul()
         {
             fouls--;
+        }
+
+        public override string ToString()
+        {
+            return DisplayName;
         }
 
     }

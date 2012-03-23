@@ -64,5 +64,10 @@ namespace _20.Events
             );
         }
 
+        public override string ToString()
+        {
+            return pac.getPlayer(shooter) + " made " + shot + ".";
+        }
+
     }
 }
