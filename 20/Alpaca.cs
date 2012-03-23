@@ -36,11 +36,35 @@ namespace _20
         public Team HomeTeam { get; set; }
         private string gid;
         private List<Event> eventLog;
+        public List<Event> EventLog { get { return eventLog; } }
 
         public string GameID
         {
             get { return gid; }
             set { gid = value; }
+        }
+
+        public delegate void StateChangeHandler();
+
+        private event StateChangeHandler onChange;
+
+        //OnStateChange allows a way for a Form to be notified when Alpaca changes the state of the game.
+        //forms can register a method with pac.OnStateChange += methodName.
+        public event StateChangeHandler OnStateChange
+        {
+            add
+            {
+                onChange += value;
+            }
+            remove
+            {
+                onChange -= value;
+            }
+        }
+
+        private void Notify()
+        {
+            onChange();
         }
 
         /// <summary>
@@ -71,8 +95,28 @@ namespace _20
             }
             lastAuthed = DateTime.Now;
 
+            eventLog = new List<Event>();
+
             Console.WriteLine(token);
         }
+
+        public Player getPlayer(string playerId)
+        {
+            if (HomeTeam == null || AwayTeam == null)
+            {
+                return null;
+            }
+            if (HomeTeam.getPlayer(playerId) != null)
+            {
+                return HomeTeam.getPlayer(playerId);
+            }
+            else if (AwayTeam.getPlayer(playerId) != null)
+            {
+                return AwayTeam.getPlayer(playerId);
+            }
+            return null;
+        }
+
 
 
         /// <summary>
@@ -278,6 +322,13 @@ namespace _20
             if (e.deserialize(responseText))
             {
                 e.resolve();
+                if (e is DeleteEvent)
+                {
+                    //We need to remove the deleted event.
+                }
+                eventLog.Add(e);
+                eventLog.Sort();
+                Notify();
                 return true;
             }
             else
@@ -408,9 +459,11 @@ namespace _20
 
         }
 
-        private string generateTimestamp(DateTime time)
+        public static string generateTimestamp(DateTime time)
         {
-            return XmlConvert.ToString(time, XmlDateTimeSerializationMode.Utc).Replace("Z", "+0000");
+            string str = XmlConvert.ToString(time, "yyyy-MM-ddTHH:mm:ssssszzz");
+
+            return str.Remove(str.Length - 3, 1);
         }
 
         public Team getTeamById(string teamId)

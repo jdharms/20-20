@@ -42,7 +42,7 @@
             this.homeScore = new System.Windows.Forms.Label();
             this.homeNameLabel = new System.Windows.Forms.Label();
             this.awayBox = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.awayScore = new System.Windows.Forms.Label();
             this.awayNameLabel = new System.Windows.Forms.Label();
             this.alpacaButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.courtBox)).BeginInit();
@@ -93,7 +93,10 @@
             this.historyBox.Size = new System.Drawing.Size(195, 615);
             this.historyBox.TabIndex = 7;
             this.historyBox.SelectedValueChanged += new System.EventHandler(this.historyBox_SelectedValueChanged);
+            this.historyBox.DragDrop += new System.Windows.Forms.DragEventHandler(this.historyBox_DragDrop);
+            this.historyBox.DragOver += new System.Windows.Forms.DragEventHandler(this.historyBox_DragOver);
             this.historyBox.Leave += new System.EventHandler(this.historyBox_Leave);
+            this.historyBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.historyBox_MouseDown);
             // 
             // substitutionButton
             // 
@@ -190,7 +193,7 @@
             // 
             // awayBox
             // 
-            this.awayBox.Controls.Add(this.label1);
+            this.awayBox.Controls.Add(this.awayScore);
             this.awayBox.Controls.Add(this.awayNameLabel);
             this.awayBox.Location = new System.Drawing.Point(492, 19);
             this.awayBox.Name = "awayBox";
@@ -199,16 +202,16 @@
             this.awayBox.TabStop = false;
             this.awayBox.Text = "Away";
             // 
-            // label1
+            // awayScore
             // 
-            this.label1.AutoSize = true;
-            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label1.Font = new System.Drawing.Font("Courier New", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(356, 25);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(108, 71);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "00";
+            this.awayScore.AutoSize = true;
+            this.awayScore.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.awayScore.Font = new System.Drawing.Font("Courier New", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.awayScore.Location = new System.Drawing.Point(356, 25);
+            this.awayScore.Name = "awayScore";
+            this.awayScore.Size = new System.Drawing.Size(108, 71);
+            this.awayScore.TabIndex = 2;
+            this.awayScore.Text = "00";
             // 
             // awayNameLabel
             // 
@@ -276,7 +279,7 @@
         private System.Windows.Forms.Label homeScore;
         private System.Windows.Forms.Label homeNameLabel;
         private System.Windows.Forms.GroupBox awayBox;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label awayScore;
         private System.Windows.Forms.Label awayNameLabel;
         private System.Windows.Forms.Button alpacaButton;
     }
