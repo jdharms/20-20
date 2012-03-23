@@ -41,7 +41,7 @@ namespace _20.Events
             return JsonConvert.SerializeObject(new 
                 { 
                     gameId=pac.GameID,
-                    commitedBy=commitedBy,
+                    commitedBy=committedBy,
                     forcedBy=forcedBy,
                     location=convertPointToArray(location),
                     context=pac.generateContext()
