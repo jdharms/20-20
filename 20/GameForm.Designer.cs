@@ -93,10 +93,7 @@
             this.historyBox.Size = new System.Drawing.Size(195, 615);
             this.historyBox.TabIndex = 7;
             this.historyBox.SelectedValueChanged += new System.EventHandler(this.historyBox_SelectedValueChanged);
-            this.historyBox.DragDrop += new System.Windows.Forms.DragEventHandler(this.historyBox_DragDrop);
-            this.historyBox.DragOver += new System.Windows.Forms.DragEventHandler(this.historyBox_DragOver);
             this.historyBox.Leave += new System.EventHandler(this.historyBox_Leave);
-            this.historyBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.historyBox_MouseDown);
             // 
             // substitutionButton
             // 
