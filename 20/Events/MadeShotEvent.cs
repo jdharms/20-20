@@ -18,6 +18,11 @@ namespace _20.Events
         Point location;
         string teamId;
 
+        //toString variables
+        string shooterName;
+        string assistName;
+        string shotValue;
+
         public MadeShotEvent(Alpaca pac, string shooterId, string teamId, string assistId, string shotType, int pointsScored, bool fastBreakOpportunity,
                         bool goaltending, Point location)
             : base(pac)
@@ -31,6 +36,10 @@ namespace _20.Events
             this.goaltending = goaltending;
             this.location = location;
             apiCall = "madeShot";
+
+            shooterName = pac.getPlayer(shooterId).DisplayName;
+            assistName = (assistId != null) ? pac.getPlayer(assistId).DisplayName : "";
+            shotValue = (points == 3) ? "Three Point " : "";
         }
 
         public override void resolve()
@@ -66,7 +75,16 @@ namespace _20.Events
 
         public override string ToString()
         {
-            return pac.getPlayer(shooter) + " made " + shot + ".";
+            string assistString;
+            if (assistName.Equals(""))
+            {
+                assistString = "";
+            }
+            else
+            {
+                assistString = " Assisted by " + assistName;
+            }
+            return pac.getPlayer(shooter) + " made " + shotValue + shot + "." + assistString;
         }
 
     }
