@@ -49,5 +49,11 @@ namespace _20.Events
                 Formatting.None,
                 new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
         }
+
+        public override string ToString()
+        {
+            return pac.getPlayer(commitedBy) + " turnover.";
+        }
+        
     }
 }

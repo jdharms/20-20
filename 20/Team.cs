@@ -11,6 +11,7 @@ namespace _20
         private string id;
         public string Id { get { return id; } }
         private string name;
+        public string Name { get { return name; } }
 
         private List<Player> players;
         private List<Player> onCourt; 
@@ -131,7 +132,7 @@ namespace _20
 
         public Player getPlayer(string playerId)
         {
-            return players.Single(player => player.Id.Equals(playerId));
+            return players.SingleOrDefault(player => player.Id.Equals(playerId));
         }
 
         public bool playerOnCourt(string playerId)

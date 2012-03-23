@@ -23,6 +23,23 @@ namespace _20
         {
         }
 
+        void onStateChange()
+        {
+            //populate all form controls.    
+            Console.WriteLine("Updating form...");
+
+            homeNameLabel.Text = pac.HomeTeam.Name;
+            awayNameLabel.Text = pac.AwayTeam.Name;
+
+            homeScore.Text = pac.HomeTeam.Score.ToString();
+            awayScore.Text = pac.AwayTeam.Score.ToString();
+
+            historyBox.DataSource = pac.EventLog;
+            ((CurrencyManager)historyBox.BindingContext[pac.EventLog]).Refresh();
+            this.Invalidate();
+
+        }
+
         private void courtBox_MouseDown(object sender, MouseEventArgs e)
         {
             const int imageBorder = 2;
@@ -40,10 +57,6 @@ namespace _20
 
             if (loc.X < 0) loc.X = 0;
             if (loc.Y < 0) loc.Y = 0;
-
-            Console.WriteLine("Click registered:");
-            Console.WriteLine("\t" + loc.ToString());
-            Console.WriteLine("\t" + currButton.ToString());
         }
 
         private void historyBox_SelectedValueChanged(object sender, EventArgs e)
@@ -183,35 +196,14 @@ namespace _20
         {
             //Ask for exiting player
             //Ask for entering player
-            string firstTest = @"{
-time: "" 2011-09-10t12:47:21.231+0000"",
-request: ""substitution"",
-result: ""okay"",  
-response: { eventId: ""4eea69ce03648afad2835366"" }
-}";
-            string secondTest = @"{
-time: "" 2011-09-10T12:47:21.231-0000"",
-request: ""login"",
-result: ""error"",
-errors: [
-    {
-        field: ""password"",
-        type: ""INVALID"",
-        message: ""The password must be at least six characters.""
-    },
-    ""The server encountered an internal error.""
-]
-}
-";
-            SubstitutionEvent subEvent = new SubstitutionEvent(new Alpaca(), "1", "2", "3");
-            subEvent.deserialize(firstTest);
-            subEvent.deserialize(secondTest);
+
             //send sub event to server
         }
 
         private void alpacaButton_Click(object sender, EventArgs e)
         {
-            Alpaca pac = new Alpaca();
+            pac = new Alpaca();
+            pac.OnStateChange += onStateChange;
             List<Game> games = pac.getGames(new DateTime(2011, 1, 1), new DateTime(2013, 1, 1));
             GameDataResponse gameData = pac.getGameData(games[1].gameId);
             pac.GameID = games[1].gameId;

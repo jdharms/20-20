@@ -17,5 +17,12 @@ namespace _20
             this.awayScore = awayScore;
             time = Alpaca.generateTimestamp();
         }
+
+        public Context(int homeScore, int awayScore, DateTime time)
+        {
+            this.homeScore = homeScore;
+            this.awayScore = awayScore;
+            this.time = Alpaca.generateTimestamp(time);
+        }
     }
 }
