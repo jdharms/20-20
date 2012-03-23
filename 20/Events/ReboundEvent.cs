@@ -14,6 +14,8 @@ namespace _20.Events
         string reboundType;
         Point location;
 
+        string rebounderName;
+
         public ReboundEvent(Alpaca pac, string rebounder, string reboundType, Point location)
             : base(pac)
         {
@@ -21,6 +23,8 @@ namespace _20.Events
             this.rebounder = rebounder;
             this.reboundType = reboundType;
             this.location = location;
+
+            rebounderName = pac.getPlayer(rebounder).DisplayName;
         }
 
         // Converts this class to a Json serialized 
@@ -42,6 +46,11 @@ namespace _20.Events
         public override void unresolve()
         {
             // But nothing is here
+        }
+
+        public override string ToString()
+        {
+            return rebounderName + " " + reboundType + " rebound.";
         }
 
     }

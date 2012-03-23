@@ -34,5 +34,10 @@ namespace _20.Events
             // Empty method. Does not change model
         }
 
+        public override string ToString()
+        {
+            return "End game";
+        }
+
     }
 }

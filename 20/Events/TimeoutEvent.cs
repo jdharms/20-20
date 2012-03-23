@@ -12,6 +12,8 @@ namespace _20.Events
         private string inputTeam;
         private string inputType;
 
+        private string teamName;
+
         // The input is an alpaca, the team, and the type of timeout (can "team", "offical", or "media")
         public TimeoutEvent(Alpaca pac, string inputTeam, string inputType)
             : base(pac)
@@ -19,6 +21,14 @@ namespace _20.Events
             this.inputTeam = inputTeam;
             this.inputType = inputType;
             apiCall = "timeout";
+            if (inputTeam != null)
+            {
+                teamName = pac.getTeamById(inputTeam).Name;
+            }
+            else
+            {
+                teamName = inputType;
+            }
         }
 
         // Converts this class to a Json serialized 
@@ -31,7 +41,6 @@ namespace _20.Events
 
         }
 
-        // Not a soul found in these parts
         public override void resolve()
         {
             // The only place timeouts are being tracked is in the team
@@ -59,7 +68,6 @@ namespace _20.Events
             }
         }
 
-        // Not here either
         public override void unresolve()
         {
             // Only change it back if it was team. As only values from team
@@ -92,9 +100,12 @@ namespace _20.Events
                     // Sets the value to the new value
                     pac.AwayTeam.TimeoutsUsed = timeoutsUsed;
                 }
-
-
             }
+        }
+
+        public override string ToString()
+        {
+            return teamName + " timeout.";
         }
 
     }
