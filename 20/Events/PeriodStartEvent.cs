@@ -19,7 +19,11 @@ namespace _20.Events
         // returns a Json serialized object
         public override string serialize()
         {
-            return JsonConvert.SerializeObject(new { eventtype = "periodstart", gameId = pac.GameID, period = pac.Period + 1, context = pac.generateContext() });
+            return JsonConvert.SerializeObject(new { 
+                gameId = pac.GameID, 
+                period = pac.Period + 1, 
+                context = context 
+            });
         }
 
         // Adds one to the value for period in Alpaca

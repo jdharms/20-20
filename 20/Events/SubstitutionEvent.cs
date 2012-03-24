@@ -66,7 +66,7 @@ namespace _20.Events
                 gameId=pac.GameID, 
                 exitingPlayer=idGoingOut, 
                 enteringPlayer=idGoingIn, 
-                context=pac.generateContext()
+                context=context
             });
         }
 
