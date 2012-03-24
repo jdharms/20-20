@@ -263,6 +263,16 @@ namespace _20
                     //gameResponse is the useful data from this call.  It has team names, player names, player numbers.
                     Console.WriteLine(gameResponse);
 
+                    HomeTeam = gameResponse.HomeTeam();
+                    AwayTeam = gameResponse.AwayTeam();
+                    eventLog = gameResponse.Events(this);
+
+                    foreach (Player p in HomeTeam.getOncourt())
+                    {
+                        Console.WriteLine("Found Player: ");
+                        Console.WriteLine(p);
+                    }
+
                     //this is a lot of information... printing it all slows down the thread!  turn on only if necessary.
                     //Console.WriteLine(responseText);
                     return gameResponse;
@@ -325,10 +335,14 @@ namespace _20
                 if (e is DeleteEvent)
                 {
                     //We need to remove the deleted event.
+                    Notify();
                 }
-                eventLog.Add(e);
-                eventLog.Sort();
-                Notify();
+                else
+                {
+                    eventLog.Add(e);
+                    eventLog.Sort();
+                    Notify();
+                }
                 return true;
             }
             else
