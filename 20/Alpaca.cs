@@ -266,14 +266,13 @@ namespace _20
                     HomeTeam = gameResponse.HomeTeam();
                     AwayTeam = gameResponse.AwayTeam();
                     eventLog = gameResponse.Events(this);
-                    Console.WriteLine(HomeTeam.Name);
+
+                    foreach (Event e in eventLog)
+                    {
+                        e.resolve();
+                    }
                     Notify();
 
-                    foreach (Player p in HomeTeam.getOncourt())
-                    {
-                        Console.WriteLine("Found Player: ");
-                        Console.WriteLine(p);
-                    }
 
                     //this is a lot of information... printing it all slows down the thread!  turn on only if necessary.
                     //Console.WriteLine(responseText);

@@ -141,37 +141,120 @@ namespace _20
                 }
                 else if (eventType.Equals("missedShot"))
                 {
-                    //
+                    string shooter = dict["shooter"].ToString();
+                    object blocked;
+                    dict.TryGetValue("blockedBy", out blocked);
+
+                    string blockedBy = null;
+                    if (blocked != null)
+                        blockedBy = blocked.ToString();
+
+                    string shotType = dict["shotType"].ToString();
+                    int pointsAttempted = int.Parse(dict["pointsAttempted"].ToString());
+                    bool fastBreak = bool.Parse(dict["fastBreakOpportunity"].ToString());
+                    int[] location = JsonConvert.DeserializeObject<int[]>(dict["location"].ToString());
+                    Point locPt = new Point(location[0], location[1]);
+
+                    e = new MissedShotEvent(pac, shooter, pac.getPlayer(shooter).TeamId, blockedBy, shotType, pointsAttempted, fastBreak, locPt);
+
                 }
                 else if (eventType.Equals("jumpBall"))
                 {
-                    //
+                    string homePlayer = dict["homePlayer"].ToString();
+                    string awayPlayer = dict["awayPlayer"].ToString();
+                    string winner = dict["winner"].ToString();
+                    int[] location = JsonConvert.DeserializeObject<int[]>(dict["location"].ToString());
+                    Point locPt = new Point(location[0], location[1]);
+
+                    e = new JumpballEvent(pac, homePlayer, awayPlayer, winner, locPt);
+
                 }
                 else if (eventType.Equals("rebound"))
                 {
-                    //
+                    object rebound;
+                    dict.TryGetValue("rebounder", out rebound);
+
+                    string rebounder = null;
+                    if (rebound != null)
+                    {
+                        rebounder = rebound.ToString();
+                    }
+
+                    string reboundType = dict["reboundType"].ToString();
+
+                    int[] location = JsonConvert.DeserializeObject<int[]>(dict["location"].ToString());
+                    Point locPt = new Point(location[0], location[1]);
+
+                    e = new ReboundEvent(pac, rebounder, reboundType, locPt);
+
                 }
                 else if (eventType.Equals("substitution"))
                 {
-                    //
+                    string exitingPlayer = dict["exitingPlayer"].ToString();
+                    string enteringPlayer = dict["enteringPlayer"].ToString();
+
+                    e = new SubstitutionEvent(pac, enteringPlayer, exitingPlayer, pac.getPlayer(enteringPlayer).TeamId);
                 }
                 else if (eventType.Equals("turnover"))
                 {
-                    //
+                    string committedBy = dict["committedBy"].ToString();
+                    object forced;
+                    dict.TryGetValue("forcedBy", out forced);
+
+                    string forcedBy = null;
+                    if (forced != null)
+                    {
+                        forcedBy = forced.ToString();
+                    }
+
+                    string turnoverType = dict["turnoverType"].ToString();
+                    int[] location = JsonConvert.DeserializeObject<int[]>(dict["location"].ToString());
+                    Point locPt = new Point(location[0], location[1]);
+
+                    e = new TurnoverEvent(pac, committedBy, forcedBy, turnoverType, locPt);
                 }
                 else if (eventType.Equals("timeout"))
                 {
-                    //
+                    object team;
+
+                    dict.TryGetValue("timeoutTeam", out team);
+
+                    string timeoutTeam = null;
+                    if (team != null)
+                    {
+                        timeoutTeam = team.ToString();
+                    }
+
+                    string timeoutType = dict["timeoutType"].ToString();
+
+                    e = new TimeoutEvent(pac, timeoutTeam, timeoutType);
+
                 }
                 else if (eventType.Equals("foul"))
                 {
-                    //
+                    string committedBy = dict["committedBy"].ToString();
+
+                    object drew;
+                    dict.TryGetValue("drewBy", out drew);
+
+                    string drewBy = null;
+                    if (drew != null)
+                    {
+                        drewBy = drew.ToString();
+                    }
+
+                    string foulType = dict["foulType"].ToString();
+                    bool ejected = bool.Parse(dict["ejected"].ToString());
+                    int[] location = JsonConvert.DeserializeObject<int[]>(dict["location"].ToString());
+                    Point locPt = new Point(location[0], location[1]);
+
+                    e = new FoulEvent(pac, pac.getPlayer(committedBy).TeamId, committedBy, drewBy, foulType, ejected, locPt);
+
                 }
 
                 if (e != null)
                 {
                     e.setContext(context);
-                    e.resolve();
                     events.Add(e);
                 }
             }
