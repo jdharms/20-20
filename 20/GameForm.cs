@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using _20.Events;
+using System.Threading;
 
 namespace _20
 {
@@ -209,60 +210,65 @@ namespace _20
             pac.GameID = games[1].gameId;
 
             StartingLineups lineups = new StartingLineups();
-            TeamData awayTeam = gameData.AwayTeamData;
-            TeamData homeTeam = gameData.HomeTeamData;
+//            TeamData awayTeam = gameData.AwayTeamData;
+//            TeamData homeTeam = gameData.HomeTeamData;
 
-            List<Player> homePlayers = new List<Player>();
-            foreach (PlayerData playerData in homeTeam.players)
-            {
-                Player p = new Player(playerData.playerId, playerData.nameArray(), playerData.jerseyNumber, playerData.teamId, playerData.isTeamPlayer);
-                homePlayers.Add(p);
-            }
-            Team home = new Team(homeTeam.teamId, homeTeam.teamName, homePlayers);
+//            List<Player> homePlayers = new List<Player>();
+//            foreach (PlayerData playerData in homeTeam.players)
+//            {
+//                Player p = new Player(playerData.playerId, playerData.nameArray(), playerData.jerseyNumber, homeTeam.teamId, playerData.isTeamPlayer);
+//                homePlayers.Add(p);
+//            }
+//            Team home = new Team(homeTeam.teamId, homeTeam.teamName, homePlayers);
 
-            List<Player> awayPlayers = new List<Player>();
-            foreach (PlayerData playerData in awayTeam.players)
-            {
-                Player p = new Player(playerData.playerId, playerData.nameArray(), playerData.jerseyNumber, playerData.teamId, playerData.isTeamPlayer);
-                awayPlayers.Add(p);
-            }
-            Team away = new Team(awayTeam.teamId, awayTeam.teamName, awayPlayers);
+//            List<Player> awayPlayers = new List<Player>();
+//            foreach (PlayerData playerData in awayTeam.players)
+//            {
+//                Player p = new Player(playerData.playerId, playerData.nameArray(), playerData.jerseyNumber, awayTeam.teamId, playerData.isTeamPlayer);
+//                awayPlayers.Add(p);
+//            }
+//            Team away = new Team(awayTeam.teamId, awayTeam.teamName, awayPlayers);
 
-            pac.HomeTeam = home;
-            pac.AwayTeam = away;
+////            pac.HomeTeam = home;
+// //           pac.AwayTeam = away;
 
-            List<Player> homeCourt = new List<Player>();
-            List<Player> awayCourt = new List<Player>();
+//            List<Player> homeCourt = new List<Player>();
+//            List<Player> awayCourt = new List<Player>();
 
-            IEnumerable<PlayerData> awayFive =  awayTeam.players.Take(5);
-            IEnumerable<PlayerData> homeFive =  homeTeam.players.Take(5);
-            foreach (PlayerData playerData in awayFive)
-            {
-                lineups.addStarter(false, playerData.playerId);
-            }
-            foreach (PlayerData playerData in homeFive)
-            {
-                lineups.addStarter(true, playerData.playerId);
-            }
-            lineups.pack(Alpaca.generateTimestamp());
+//            IEnumerable<PlayerData> awayFive =  awayTeam.players.Take(5);
+//            IEnumerable<PlayerData> homeFive =  homeTeam.players.Take(5);
+//            foreach (PlayerData playerData in awayFive)
+//            {
+//                lineups.addStarter(false, playerData.playerId);
+//            }
+//            foreach (PlayerData playerData in homeFive)
+//            {
+//                lineups.addStarter(true, playerData.playerId);
+//            }
+//            lineups.pack(Alpaca.generateTimestamp());
             //string eventId = pac.setGameData(lineups);
             //Console.WriteLine(eventId);
 
             PeriodStartEvent e0 = new PeriodStartEvent(pac);
+            Thread.Sleep(100);
             MadeShotEvent e1 = new MadeShotEvent(pac, "4f46b4dde4b063589e20e5c6", "4f46b4bde4b0b074044d891c", null, "dunk", 2, true, false, new Point(40, 40));
+            Thread.Sleep(100);
             MissedShotEvent e2 = new MissedShotEvent(pac, "4f46b657e4b0b074044d8920", "4f46b620e4b0acf74eee5e21", null, "jump-shot", 3, false, new Point(100, 80));
+            Thread.Sleep(100);
             ReboundEvent e3 = new ReboundEvent(pac, "4f46b4fde4b063589e20e5c8", "defensive", new Point(30, 30));
+            Thread.Sleep(100);
             SubstitutionEvent e4 = new SubstitutionEvent(pac, "4f46b5a6e4b0acf74eee5e1c", "4f46b4fde4b063589e20e5c8", "4f46b4bde4b0b074044d891c");
+            Thread.Sleep(100);
 
             pac.post(e0);
-            pac.post(e1);
-            pac.post(e2);
-            pac.post(e3);
-            pac.post(e4);
+            //pac.post(e1);
+            //pac.post(e2);
+            //pac.post(e3);
+            //pac.post(e4);
 
-            //Have to create delete event after event has been processed.
-            DeleteEvent ed = new DeleteEvent(pac, e4);
-            pac.post(ed);
+            ////Have to create delete event after event has been processed.
+            //DeleteEvent ed = new DeleteEvent(pac, e4);
+            //pac.post(ed);
 
         }
 

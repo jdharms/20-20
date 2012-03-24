@@ -18,10 +18,11 @@ namespace _20.Events
         protected string apiCall;
         public string ApiCall { get { return apiCall; } }
         protected string eventId;
-        public string EventId { get { return eventId; } }
+        public string EventId { get { return eventId; } set { eventId = value; } }
         protected DateTime time;
         public DateTime Time { get { return time; } set { time = value; } }
         public bool ReceivedByServer { get { return eventId != null; } }
+        protected Context context;
 
         protected Alpaca pac;
         
@@ -29,6 +30,12 @@ namespace _20.Events
         {
             this.pac = pac;
             this.time = DateTime.Now;
+            this.context = pac.generateContext();
+        }
+
+        public void setContext(Context context)
+        {
+            this.context = context;
         }
 
         /// <summary>
