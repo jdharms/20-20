@@ -11,6 +11,10 @@ namespace _20
         public int homeScore;
         public int awayScore;
 
+        public Context()
+        {
+        }
+
         public Context(int homeScore, int awayScore)
         {
             this.homeScore = homeScore;
