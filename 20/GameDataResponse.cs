@@ -5,6 +5,7 @@ using System.Text;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using _20.Events;
+using System.Drawing;
 
 namespace _20
 {
@@ -116,15 +117,27 @@ namespace _20
                 }
                 else if (eventType.Equals("madeShot"))
                 {
-                    /*
-                    string shooter = dict["shooter"];
-                    string assistedBy;  
-                    dict.TryGetValue("assistedBy", out assistedBy); 
-                    string shotType = dict["shotType"];
-                    int 
+                    
+                    string shooter = dict["shooter"].ToString();
+                    object assisted;  
+                    dict.TryGetValue("assistedBy", out assisted);
 
-                    e = new MadeShotEvent(pac, dict["shooter"], pac.getPlayer
-                    */
+                    string assistedBy = null;
+                    if (assisted != null) 
+                        assistedBy = assisted.ToString();
+                    string shotType = dict["shotType"].ToString();
+                    int pointsScored = int.Parse(dict["pointsScored"].ToString());
+                    bool fastBreak = bool.Parse(dict["fastBreakOpportunity"].ToString());
+                    bool goaltending = bool.Parse(dict["goaltending"].ToString());
+                    int[] location = JsonConvert.DeserializeObject<int[]>(dict["location"].ToString());
+                    Point locPt = new Point(location[0], location[1]);
+
+                    Console.WriteLine("made shot");
+                    Console.WriteLine(shooter);
+                    Console.WriteLine(location[0] + " " + location[1]);
+
+                    e = new MadeShotEvent(pac, shooter, pac.getPlayer(shooter).TeamId, assistedBy, shotType, pointsScored, fastBreak,
+                        goaltending, locPt);
                 }
                 else if (eventType.Equals("missedShot"))
                 {
@@ -157,6 +170,7 @@ namespace _20
 
                 if (e != null)
                 {
+                    e.setContext(context);
                     e.resolve();
                     events.Add(e);
                 }
