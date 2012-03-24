@@ -63,7 +63,7 @@ namespace _20.Events
                 pointsAttempted = points,
                 fastBreakOpportunity = fastBreak,
                 location = locArray,
-                context = pac.generateContext()
+                context = context 
             },
             Formatting.None,
             new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }

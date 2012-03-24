@@ -43,7 +43,7 @@ namespace _20.Events
                 awayPlayer = awayPlayerId,
                 winner = winner,
                 location = convertPointToArray(location),
-                context = pac.generateContext()
+                context = context 
             });
         }
 
