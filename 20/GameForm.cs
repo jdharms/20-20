@@ -24,7 +24,7 @@ namespace _20
         {
         }
 
-        void onStateChange()
+        void update()
         {
             //populate all form controls.    
             Console.WriteLine("Updating form...");
@@ -204,50 +204,33 @@ namespace _20
         private void alpacaButton_Click(object sender, EventArgs e)
         {
             pac = new Alpaca();
-            pac.OnStateChange += onStateChange;
+            pac.OnStateChange += update;
             List<Game> games = pac.getGames(new DateTime(2011, 1, 1), new DateTime(2013, 1, 1));
-            GameDataResponse gameData = pac.getGameData(games[1].gameId);
-            pac.GameID = games[1].gameId;
+            GameDataResponse gameData = pac.getGameData(games[2].gameId);
+            pac.GameID = games[2].gameId;
 
-            StartingLineups lineups = new StartingLineups();
-//            TeamData awayTeam = gameData.AwayTeamData;
-//            TeamData homeTeam = gameData.HomeTeamData;
+            //StartingLineups lineups = new StartingLineups();
 
-//            List<Player> homePlayers = new List<Player>();
-//            foreach (PlayerData playerData in homeTeam.players)
-//            {
-//                Player p = new Player(playerData.playerId, playerData.nameArray(), playerData.jerseyNumber, homeTeam.teamId, playerData.isTeamPlayer);
-//                homePlayers.Add(p);
-//            }
-//            Team home = new Team(homeTeam.teamId, homeTeam.teamName, homePlayers);
+            //List<Player> hs = new List<Player>();
+            //List<Player> aw = new List<Player>();
 
-//            List<Player> awayPlayers = new List<Player>();
-//            foreach (PlayerData playerData in awayTeam.players)
-//            {
-//                Player p = new Player(playerData.playerId, playerData.nameArray(), playerData.jerseyNumber, awayTeam.teamId, playerData.isTeamPlayer);
-//                awayPlayers.Add(p);
-//            }
-//            Team away = new Team(awayTeam.teamId, awayTeam.teamName, awayPlayers);
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    Player p = pac.HomeTeam.getBench()[i];
+            //    Player v = pac.AwayTeam.getBench()[i];
 
-////            pac.HomeTeam = home;
-// //           pac.AwayTeam = away;
+            //    hs.Add(p);
+            //    aw.Add(v);
 
-//            List<Player> homeCourt = new List<Player>();
-//            List<Player> awayCourt = new List<Player>();
+            //    lineups.addStarter(true, p.Id);
+            //    lineups.addStarter(false, v.Id);
+            //}
 
-//            IEnumerable<PlayerData> awayFive =  awayTeam.players.Take(5);
-//            IEnumerable<PlayerData> homeFive =  homeTeam.players.Take(5);
-//            foreach (PlayerData playerData in awayFive)
-//            {
-//                lineups.addStarter(false, playerData.playerId);
-//            }
-//            foreach (PlayerData playerData in homeFive)
-//            {
-//                lineups.addStarter(true, playerData.playerId);
-//            }
-//            lineups.pack(Alpaca.generateTimestamp());
-            //string eventId = pac.setGameData(lineups);
-            //Console.WriteLine(eventId);
+            //pac.HomeTeam.setPlayersOnCourt(hs);
+            //pac.AwayTeam.setPlayersOnCourt(aw);
+
+            //lineups.pack(Alpaca.generateTimestamp());
+            //pac.setGameData(lineups);
 
             PeriodStartEvent e0 = new PeriodStartEvent(pac);
             Thread.Sleep(100);
@@ -260,7 +243,7 @@ namespace _20
             SubstitutionEvent e4 = new SubstitutionEvent(pac, "4f46b5a6e4b0acf74eee5e1c", "4f46b4fde4b063589e20e5c8", "4f46b4bde4b0b074044d891c");
             Thread.Sleep(100);
 
-            pac.post(e0);
+            //pac.post(e0);
             //pac.post(e1);
             //pac.post(e2);
             //pac.post(e3);

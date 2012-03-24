@@ -266,6 +266,8 @@ namespace _20
                     HomeTeam = gameResponse.HomeTeam();
                     AwayTeam = gameResponse.AwayTeam();
                     eventLog = gameResponse.Events(this);
+                    Console.WriteLine(HomeTeam.Name);
+                    Notify();
 
                     foreach (Player p in HomeTeam.getOncourt())
                     {

@@ -31,7 +31,9 @@ namespace _20.Events
         // returns a Json serialized object
         public override string serialize()
         {
-            return JsonConvert.SerializeObject(new { 
+            return JsonConvert.SerializeObject(new
+            {
+                apiCall = apiCall,
                 gameId = pac.GameID, 
                 rebounder = rebounder, 
                 reboundType = reboundType, 

@@ -65,7 +65,7 @@ namespace _20
     {
         public Dictionary<string, List<string>> homeTeam;
         public Dictionary<string, List<string>> awayTeam;
-
+        
         public List<Dictionary<string, Object>> gameEvents;
 
         public void setOnCourt(Team team, bool isHome)
@@ -92,11 +92,14 @@ namespace _20
         public List<Event> getEvents(Alpaca pac)
         {
             List<Event> events = new List<Event>();
+            if (gameEvents == null)
+                return events;
 
             foreach(Dictionary<string, object> dict in gameEvents)
             {
-                Event e;
-                string eventType = dict["event"].ToString();
+                Event e = null;
+                string eventType = dict["apiCall"].ToString();
+                Console.WriteLine("Found eventType: " + eventType);
                 Context context = JsonConvert.DeserializeObject<Context>(dict["context"].ToString());
                 if (eventType.Equals("gameEnd"))
                 {
@@ -151,6 +154,12 @@ namespace _20
                 {
                     //
                 }
+
+                if (e != null)
+                {
+                    e.resolve();
+                    events.Add(e);
+                }
             }
             return events;
         }
@@ -188,14 +197,20 @@ namespace _20
         public Team HomeTeam()
         {
             Team home = new Team(homeTeamData.teamId, homeTeamData.teamName, homeTeamData.getPlayers());
-            gameSetupData.setOnCourt(home, true);
+            if (gameSetupData.homeTeam != null)
+            {
+                gameSetupData.setOnCourt(home, true);
+            }
             return home;
         }
 
         public Team AwayTeam()
         {
             Team away = new Team(awayTeamData.teamId, awayTeamData.teamName, awayTeamData.getPlayers());
-            gameSetupData.setOnCourt(away, false);
+            if (gameSetupData.awayTeam != null)
+            {
+                gameSetupData.setOnCourt(away, false);
+            }
             return away;
         }
 
