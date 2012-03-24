@@ -66,7 +66,7 @@ namespace _20.Events
                 fastBreakOpportunity = fastBreak,
                 goaltending = goaltending,
                 location = convertPointToArray(location),
-                context = pac.generateContext()
+                context = context 
             }, 
             Formatting.None,
             new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }
