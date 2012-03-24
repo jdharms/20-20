@@ -56,6 +56,7 @@ namespace _20.Events
             int[] locArray = { location.X, location.Y };
             return JsonConvert.SerializeObject(new
             {
+                apiCall = apiCall,
                 gameId = pac.GameID,
                 shooter = shooter,
                 blockedBy = blocker,
