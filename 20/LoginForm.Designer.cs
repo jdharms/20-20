@@ -34,6 +34,7 @@
             this.passwordBox = new System.Windows.Forms.TextBox();
             this.submitButton = new System.Windows.Forms.Button();
             this.failedLoginLabel = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             label1 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -73,7 +74,7 @@
             // 
             // submitButton
             // 
-            this.submitButton.Location = new System.Drawing.Point(16, 116);
+            this.submitButton.Location = new System.Drawing.Point(172, 26);
             this.submitButton.Name = "submitButton";
             this.submitButton.Size = new System.Drawing.Size(100, 23);
             this.submitButton.TabIndex = 4;
@@ -93,13 +94,24 @@
             this.failedLoginLabel.Text = "Bad username or password.";
             this.failedLoginLabel.Visible = false;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(172, 63);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(100, 23);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "Close";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.closeButton_click);
+            // 
             // LoginForm
             // 
             this.AcceptButton = this.submitButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(323, 174);
+            this.ClientSize = new System.Drawing.Size(323, 122);
             this.ControlBox = false;
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.failedLoginLabel);
             this.Controls.Add(this.submitButton);
             this.Controls.Add(this.passwordBox);
@@ -121,5 +133,6 @@
         private System.Windows.Forms.TextBox passwordBox;
         private System.Windows.Forms.Button submitButton;
         private System.Windows.Forms.Label failedLoginLabel;
+        private System.Windows.Forms.Button button1;
     }
 }
