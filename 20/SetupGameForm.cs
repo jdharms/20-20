@@ -11,16 +11,21 @@ namespace _20
 {
     public partial class SetupGameForm : Form
     {
-        public List<Player> homeTeam;
-        public List<Player> awayTeam;
-        public List<Player> homeStarters;
-        public List<Player> awayStarters;
+        public BindingList<Player> homeTeam;
+        public BindingList<Player> awayTeam;
+        public BindingList<Player> homeStarters;
+        public BindingList<Player> awayStarters;
         public string homeTeamName;
         public string awayTeamName;
 
         public SetupGameForm()
         {
             InitializeComponent();
+
+        }
+
+        private void SetupGameForm_Load(object sender, EventArgs e)
+        {
             homeTeamGroupBox.Text = homeTeamName;
             homeStartersLabel.Text = homeTeamName + " starters";
             homeTeamListBox.DataSource = homeTeam;
@@ -31,36 +36,17 @@ namespace _20
             awayTeamListBox.DataSource = awayTeam;
             awayStartersListBox.DataSource = awayStarters;
 
-            submitButton.Visible = false;
-        }
-
-        private void homeTeamListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Player p = (Player)homeTeamListBox.SelectedItem;
-            if (homeStarters.Count < 5)
-            {
-                homeStarters.Add(p);
-                homeTeam.Remove(p);
-            }
-
-            trySubmitEnable();
-        }
-
-        private void awayTeamListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Player p = (Player)awayTeamListBox.SelectedItem;
-            if (awayStarters.Count < 5)
-            {
-                awayStarters.Add(p);
-                awayTeam.Remove(p);
-            }
-
-            trySubmitEnable();
+            unselectListBoxes();
+            submitButton.Enabled = false;
         }
 
         private void submitButton_Click(object sender, EventArgs e)
         {
-            Close();
+            if (MessageBox.Show("Submit lineups?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                //this branch runs if the result of the confirmation is "OK"
+                this.Close();
+            }
         }
 
         private void exitButton_Click(object sender, EventArgs e)
@@ -68,30 +54,79 @@ namespace _20
             Environment.Exit(0);
         }
 
-        private void homeStartersListBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void homeTeamListBox_Click(object sender, EventArgs e)
+        {
+            Player p = (Player)homeTeamListBox.SelectedItem;
+            if (p != null && homeStarters.Count < 5)
+            {
+                homeTeam.Remove(p);
+                homeStarters.Add(p);
+            }
+
+            unselectListBoxes();
+            trySubmitEnable();
+        }
+
+        private void awayTeamListBox_Click(object sender, EventArgs e)
+        {
+            Player p = (Player)awayTeamListBox.SelectedItem;
+            if (p != null && awayStarters.Count < 5)
+            {
+                awayTeam.Remove(p);
+                awayStarters.Add(p);
+            }
+
+            unselectListBoxes();
+            trySubmitEnable();
+        }
+
+        private void homeStartersListBox_Click(object sender, EventArgs e)
         {
             Player p = (Player)homeStartersListBox.SelectedItem;
-            homeTeam.Add(p);
-            homeStarters.Remove(p);
+            if (p != null)
+            {
+                homeTeam.Add(p);
+                homeStarters.Remove(p);
+            }
+            unselectListBoxes();
 
             trySubmitEnable();
         }
 
-        private void awayStartersListBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void awayStartersListBox_Click(object sender, EventArgs e)
         {
             Player p = (Player)awayStartersListBox.SelectedItem;
-            awayTeam.Add(p);
-            awayStarters.Remove(p);
+            if (p != null)
+            {
+                awayTeam.Add(p);
+                awayStarters.Remove(p);
+            }
+            unselectListBoxes();
 
             trySubmitEnable();
         }
 
         private void trySubmitEnable()
         {
+
             if (homeStarters.Count == 5 && awayStarters.Count == 5)
             {
-                submitButton.Visible = true;
+                submitButton.Enabled = true;
+            }
+            else
+            {
+                submitButton.Enabled = false;
             }
         }
+
+        private void unselectListBoxes()
+        {
+            homeTeamListBox.ClearSelected();
+            awayTeamListBox.ClearSelected();
+            homeStartersListBox.ClearSelected();
+            awayStartersListBox.ClearSelected();
+        }
+
+        
     }
 }

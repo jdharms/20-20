@@ -53,7 +53,6 @@
             this.homeTeamGroupBox.TabIndex = 0;
             this.homeTeamGroupBox.TabStop = false;
             this.homeTeamGroupBox.Text = "Home Team";
-            this.homeTeamGroupBox.UseWaitCursor = true;
             // 
             // homeStartersLabel
             // 
@@ -64,7 +63,6 @@
             this.homeStartersLabel.Size = new System.Drawing.Size(157, 20);
             this.homeStartersLabel.TabIndex = 2;
             this.homeStartersLabel.Text = "Home Team Starters";
-            this.homeStartersLabel.UseWaitCursor = true;
             // 
             // homeStartersListBox
             // 
@@ -80,9 +78,9 @@
             this.homeStartersListBox.Location = new System.Drawing.Point(6, 378);
             this.homeStartersListBox.Name = "homeStartersListBox";
             this.homeStartersListBox.Size = new System.Drawing.Size(241, 104);
+            this.homeStartersListBox.Sorted = true;
             this.homeStartersListBox.TabIndex = 1;
-            this.homeStartersListBox.UseWaitCursor = true;
-            this.homeStartersListBox.SelectedIndexChanged += new System.EventHandler(this.homeStartersListBox_SelectedIndexChanged);
+            this.homeStartersListBox.Click += new System.EventHandler(this.homeStartersListBox_Click);
             // 
             // homeTeamListBox
             // 
@@ -91,6 +89,13 @@
             this.homeTeamListBox.ItemHeight = 20;
             this.homeTeamListBox.Items.AddRange(new object[] {
             "Player 1",
+            "Player 10",
+            "Player 11",
+            "Player 12",
+            "Player 13",
+            "Player 14",
+            "Player 15",
+            "Player 16",
             "Player 2",
             "Player 3",
             "Player 4",
@@ -98,20 +103,13 @@
             "Player 6",
             "Player 7",
             "Player 8",
-            "Player 9",
-            "Player 10",
-            "Player 11",
-            "Player 12",
-            "Player 13",
-            "Player 14",
-            "Player 15",
-            "Player 16"});
+            "Player 9"});
             this.homeTeamListBox.Location = new System.Drawing.Point(6, 19);
             this.homeTeamListBox.Name = "homeTeamListBox";
             this.homeTeamListBox.Size = new System.Drawing.Size(241, 324);
+            this.homeTeamListBox.Sorted = true;
             this.homeTeamListBox.TabIndex = 0;
-            this.homeTeamListBox.UseWaitCursor = true;
-            this.homeTeamListBox.SelectedIndexChanged += new System.EventHandler(this.homeTeamListBox_SelectedIndexChanged);
+            this.homeTeamListBox.Click += new System.EventHandler(this.homeTeamListBox_Click);
             // 
             // submitButton
             // 
@@ -129,18 +127,12 @@
             this.awayStartersListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.awayStartersListBox.FormattingEnabled = true;
             this.awayStartersListBox.ItemHeight = 20;
-            this.awayStartersListBox.Items.AddRange(new object[] {
-            "Starter 1",
-            "Starter 2",
-            "Starter 3",
-            "Starter 4",
-            "Starter 5"});
             this.awayStartersListBox.Location = new System.Drawing.Point(6, 378);
             this.awayStartersListBox.Name = "awayStartersListBox";
             this.awayStartersListBox.Size = new System.Drawing.Size(241, 104);
+            this.awayStartersListBox.Sorted = true;
             this.awayStartersListBox.TabIndex = 1;
-            this.awayStartersListBox.UseWaitCursor = true;
-            this.awayStartersListBox.SelectedIndexChanged += new System.EventHandler(this.awayStartersListBox_SelectedIndexChanged);
+            this.awayStartersListBox.Click += new System.EventHandler(this.awayStartersListBox_Click);
             // 
             // awayTeamGroupBox
             // 
@@ -153,7 +145,6 @@
             this.awayTeamGroupBox.TabIndex = 3;
             this.awayTeamGroupBox.TabStop = false;
             this.awayTeamGroupBox.Text = "Away Team";
-            this.awayTeamGroupBox.UseWaitCursor = true;
             // 
             // awayStartersLabel
             // 
@@ -164,7 +155,6 @@
             this.awayStartersLabel.Size = new System.Drawing.Size(152, 20);
             this.awayStartersLabel.TabIndex = 2;
             this.awayStartersLabel.Text = "Away Team Starters";
-            this.awayStartersLabel.UseWaitCursor = true;
             // 
             // awayTeamListBox
             // 
@@ -173,6 +163,13 @@
             this.awayTeamListBox.ItemHeight = 20;
             this.awayTeamListBox.Items.AddRange(new object[] {
             "Player 1",
+            "Player 10",
+            "Player 11",
+            "Player 12",
+            "Player 13",
+            "Player 14",
+            "Player 15",
+            "Player 16",
             "Player 2",
             "Player 3",
             "Player 4",
@@ -180,20 +177,13 @@
             "Player 6",
             "Player 7",
             "Player 8",
-            "Player 9",
-            "Player 10",
-            "Player 11",
-            "Player 12",
-            "Player 13",
-            "Player 14",
-            "Player 15",
-            "Player 16"});
+            "Player 9"});
             this.awayTeamListBox.Location = new System.Drawing.Point(6, 19);
             this.awayTeamListBox.Name = "awayTeamListBox";
             this.awayTeamListBox.Size = new System.Drawing.Size(241, 324);
+            this.awayTeamListBox.Sorted = true;
             this.awayTeamListBox.TabIndex = 0;
-            this.awayTeamListBox.UseWaitCursor = true;
-            this.awayTeamListBox.SelectedIndexChanged += new System.EventHandler(this.awayTeamListBox_SelectedIndexChanged);
+            this.awayTeamListBox.Click += new System.EventHandler(this.awayTeamListBox_Click);
             // 
             // exitButton
             // 
@@ -218,6 +208,7 @@
             this.Controls.Add(this.homeTeamGroupBox);
             this.Name = "SetupGameForm";
             this.Text = "Setup Game";
+            this.Load += new System.EventHandler(this.SetupGameForm_Load);
             this.homeTeamGroupBox.ResumeLayout(false);
             this.homeTeamGroupBox.PerformLayout();
             this.awayTeamGroupBox.ResumeLayout(false);

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace _20
 {
-    public class Player
+    public class Player : IComparable<Player>
     {
         private string fName;
         private string mName;
@@ -75,8 +75,20 @@ namespace _20
 
         public override string ToString()
         {
-            return DisplayName;
+            return (jersey < 10 ? "0" : "" ) + jersey + "\t" + DisplayName;
         }
 
+
+        public int CompareTo(Player other)
+        {
+            int me = jersey;
+            int them = other.jersey;
+
+            if (me < them)
+                return -1;
+            else if (me == them)
+                return 0;
+            return 1;
+        }
     }
 }

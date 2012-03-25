@@ -85,7 +85,7 @@ namespace _20.Events
             {
                 assistString = " Assisted by " + assistName;
             }
-            return pac.getPlayer(shooter) + " made " + shotValue + shot + "." + assistString;
+            return pac.getPlayer(shooter).DisplayName + " made " + shotValue + shot + "." + assistString;
         }
 
     }

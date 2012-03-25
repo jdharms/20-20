@@ -159,7 +159,7 @@ namespace _20
 
         public List<Player> getOncourt()
         {
-            return new List<Player>(onCourt);
+            return onCourt;
         }
 
         public void removeFoul(string playerId)
