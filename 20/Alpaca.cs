@@ -14,12 +14,13 @@ using System.Windows.Forms;
 namespace _20
 {
     public delegate bool acceptCredentials(string username, string password);
+    public delegate List<Game> GameGetter(DateTime start, DateTime end);
 
     /// <summary>
     /// A wrapper class for the ESPN AlPS api.
     /// Here's a comment for a sample commit/push/pull.
     /// </summary>
-    class Alpaca
+    public class Alpaca
     {
         string token;
         private string secret = "gPIpZC5lxC9X3vEBZAydWCX4HKWHP7RPU1S2KP2U";
@@ -99,6 +100,7 @@ namespace _20
             eventLog = new List<Event>();
 
             GameSelectForm selectForm = new GameSelectForm();
+            selectForm.getGames = new GameGetter(this.getGames);
             while (true)
             {
                 selectForm.ShowDialog();
@@ -112,7 +114,7 @@ namespace _20
                 Console.Write(selectForm.from);
                 Console.Write(selectForm.to);
                 Console.Write(games.Count);
-                selectForm.gameBox.DataSource = games;
+                //selectForm.gameBox.DataSource = games;
             }
 
             getGameData(gid);
