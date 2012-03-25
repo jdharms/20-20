@@ -5,7 +5,7 @@ using System.Text;
 
 namespace _20
 {
-    class Context
+    public class Context
     {
         public string time;
         public int homeScore;
