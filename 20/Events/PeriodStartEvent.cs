@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 namespace _20.Events
 {
     // The event will handle the start of a period
-    class PeriodStartEvent : Event
+    public class PeriodStartEvent : Event
     {
         int period;
 

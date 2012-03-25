@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 namespace _20.Events
 {
     // The event will handle the end of the game
-    class GameEndEvent : Event 
+    public class GameEndEvent : Event 
     {
         public GameEndEvent(Alpaca pac)
             : base(pac)

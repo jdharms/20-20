@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 namespace _20.Events
 {
     // The event will handle fouls
-    class FoulEvent : Event
+    public class FoulEvent : Event
     {
         string committedBy;
         string drewBy;

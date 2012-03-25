@@ -9,7 +9,7 @@ namespace _20.Events
     /// <summary>
     /// The event the will handle substitutions.
     /// </summary>
-    class SubstitutionEvent : Event
+    public class SubstitutionEvent : Event
     {
         private string idGoingIn;
         private string idGoingOut;
