@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace _20.Events
 {
-    class DeleteEvent : Event
+    public class DeleteEvent : Event
     {
         private Event eventToDelete;
         private string deletionId;

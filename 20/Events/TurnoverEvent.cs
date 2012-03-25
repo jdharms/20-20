@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace _20.Events
 {
-    class TurnoverEvent : Event
+    public class TurnoverEvent : Event
     {
       
         private string committedBy;

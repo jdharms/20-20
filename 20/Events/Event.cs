@@ -13,7 +13,7 @@ namespace _20.Events
     ///     
     /// Every Event must take in a Alpaca object.
     /// </summary>
-    abstract class Event : IComparable<Event>
+    public abstract class Event : IComparable<Event>
     {
         protected string apiCall;
         public string ApiCall { get { return apiCall; } }

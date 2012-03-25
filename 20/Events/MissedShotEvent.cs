@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace _20.Events
 {
-    class MissedShotEvent : Event
+    public class MissedShotEvent : Event
     {
         string shooter;
         string blocker;

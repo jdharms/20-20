@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace _20.Events
 {
-    class MadeShotEvent : Event
+    public class MadeShotEvent : Event
     {
         string shooter;
         string assist;
