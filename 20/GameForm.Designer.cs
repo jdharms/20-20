@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.courtBox = new System.Windows.Forms.PictureBox();
+            this.components = new System.ComponentModel.Container();
             this.reboundButton = new System.Windows.Forms.Button();
             this.periodStartButton = new System.Windows.Forms.Button();
             this.historyBox = new System.Windows.Forms.ListBox();
@@ -39,27 +39,18 @@
             this.turnoverButton = new System.Windows.Forms.Button();
             this.foulButton = new System.Windows.Forms.Button();
             this.homeBox = new System.Windows.Forms.GroupBox();
-            this.homeScore = new System.Windows.Forms.Label();
             this.homeNameLabel = new System.Windows.Forms.Label();
             this.awayBox = new System.Windows.Forms.GroupBox();
             this.awayScore = new System.Windows.Forms.Label();
             this.awayNameLabel = new System.Windows.Forms.Label();
             this.alpacaButton = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.courtBox)).BeginInit();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.homeScore = new System.Windows.Forms.Label();
+            this.courtBox = new System.Windows.Forms.PictureBox();
             this.homeBox.SuspendLayout();
             this.awayBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.courtBox)).BeginInit();
             this.SuspendLayout();
-            // 
-            // courtBox
-            // 
-            this.courtBox.Image = global::_20.Properties.Resources.BasketballCourt;
-            this.courtBox.Location = new System.Drawing.Point(12, 124);
-            this.courtBox.Name = "courtBox";
-            this.courtBox.Size = new System.Drawing.Size(944, 504);
-            this.courtBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.courtBox.TabIndex = 0;
-            this.courtBox.TabStop = false;
-            this.courtBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.courtBox_MouseDown);
             // 
             // reboundButton
             // 
@@ -90,10 +81,11 @@
             "Event 3"});
             this.historyBox.Location = new System.Drawing.Point(962, 12);
             this.historyBox.Name = "historyBox";
-            this.historyBox.Size = new System.Drawing.Size(195, 615);
+            this.historyBox.Size = new System.Drawing.Size(262, 615);
             this.historyBox.TabIndex = 7;
             this.historyBox.SelectedValueChanged += new System.EventHandler(this.historyBox_SelectedValueChanged);
             this.historyBox.Leave += new System.EventHandler(this.historyBox_Leave);
+            this.historyBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.historyBox_MouseMove);
             // 
             // substitutionButton
             // 
@@ -167,17 +159,6 @@
             this.homeBox.TabStop = false;
             this.homeBox.Text = "Home";
             // 
-            // homeScore
-            // 
-            this.homeScore.AutoSize = true;
-            this.homeScore.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.homeScore.Font = new System.Drawing.Font("Courier New", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.homeScore.Location = new System.Drawing.Point(358, 27);
-            this.homeScore.Name = "homeScore";
-            this.homeScore.Size = new System.Drawing.Size(108, 71);
-            this.homeScore.TabIndex = 1;
-            this.homeScore.Text = "00";
-            // 
             // homeNameLabel
             // 
             this.homeNameLabel.AutoSize = true;
@@ -230,11 +211,37 @@
             this.alpacaButton.UseVisualStyleBackColor = true;
             this.alpacaButton.Click += new System.EventHandler(this.alpacaButton_Click);
             // 
+            // toolTip1
+            // 
+            this.toolTip1.Popup += new System.Windows.Forms.PopupEventHandler(this.toolTip1_Popup);
+            // 
+            // homeScore
+            // 
+            this.homeScore.AutoSize = true;
+            this.homeScore.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.homeScore.Font = new System.Drawing.Font("Courier New", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.homeScore.Location = new System.Drawing.Point(358, 27);
+            this.homeScore.Name = "homeScore";
+            this.homeScore.Size = new System.Drawing.Size(108, 71);
+            this.homeScore.TabIndex = 1;
+            this.homeScore.Text = "00";
+            // 
+            // courtBox
+            // 
+            this.courtBox.Image = global::_20.Properties.Resources.BasketballCourt;
+            this.courtBox.Location = new System.Drawing.Point(12, 124);
+            this.courtBox.Name = "courtBox";
+            this.courtBox.Size = new System.Drawing.Size(944, 504);
+            this.courtBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.courtBox.TabIndex = 0;
+            this.courtBox.TabStop = false;
+            this.courtBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.courtBox_MouseDown);
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1173, 730);
+            this.ClientSize = new System.Drawing.Size(1236, 730);
             this.Controls.Add(this.alpacaButton);
             this.Controls.Add(this.awayBox);
             this.Controls.Add(this.homeBox);
@@ -251,11 +258,11 @@
             this.Name = "GameForm";
             this.Text = "20-20 Basketball";
             this.Load += new System.EventHandler(this.GameForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.courtBox)).EndInit();
             this.homeBox.ResumeLayout(false);
             this.homeBox.PerformLayout();
             this.awayBox.ResumeLayout(false);
             this.awayBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.courtBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -279,6 +286,7 @@
         private System.Windows.Forms.Label awayScore;
         private System.Windows.Forms.Label awayNameLabel;
         private System.Windows.Forms.Button alpacaButton;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

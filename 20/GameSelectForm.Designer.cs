@@ -130,6 +130,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "GameSelectForm";
             this.Text = "Select Game";
+            this.Load += new System.EventHandler(this.GameSelectForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

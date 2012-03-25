@@ -14,6 +14,7 @@ namespace _20
     public partial class GameForm : Form
     {
         Alpaca pac;
+        Point currPoint;
 
         public GameForm()
         {
@@ -22,6 +23,9 @@ namespace _20
 
         private void GameForm_Load(object sender, EventArgs e)
         {
+            pac = new Alpaca();
+            pac.OnStateChange += update;
+            GameDataResponse gameData = pac.getGameData(pac.GameID);
         }
 
         void update()
@@ -43,6 +47,7 @@ namespace _20
 
         private void courtBox_MouseDown(object sender, MouseEventArgs e)
         {
+            courtBox.Refresh();
             const int imageBorder = 2;
 
             MouseButtons currButton = e.Button;
@@ -58,6 +63,14 @@ namespace _20
 
             if (loc.X < 0) loc.X = 0;
             if (loc.Y < 0) loc.Y = 0;
+
+            currPoint = loc;
+
+            Graphics g = courtBox.CreateGraphics();
+            using (Pen p = new Pen(Color.Red, 4))
+            {
+                g.DrawEllipse(p, e.X - 5, e.Y - 5, 10, 10);
+            }
         }
 
         private void historyBox_SelectedValueChanged(object sender, EventArgs e)
@@ -196,63 +209,123 @@ namespace _20
         private void substitutionButton_Click(object sender, EventArgs e)
         {
             //Ask for exiting player
+            SelectPlayer exiting = new SelectPlayer();
+            exiting.home = pac.HomeTeam.getOncourt();
+            exiting.away = pac.AwayTeam.getOncourt();
+            exiting.ShowDialog();
+            Player exitPlayer = exiting.selected;
+
             //Ask for entering player
+            SelectPlayer entering = new SelectPlayer();
+            entering.home = pac.HomeTeam.getBench();
+            entering.away = pac.AwayTeam.getBench();
+            entering.ShowDialog();
+            Player enteringPlayer = entering.selected;
 
             //send sub event to server
+            SubstitutionEvent ev = new SubstitutionEvent(pac, enteringPlayer.Id, exitPlayer.Id, enteringPlayer.TeamId);
+            pac.post(ev);
         }
 
         private void alpacaButton_Click(object sender, EventArgs e)
         {
-            pac = new Alpaca();
-            pac.OnStateChange += update;
-            List<Game> games = pac.getGames(new DateTime(2011, 1, 1), new DateTime(2013, 1, 1));
-            GameDataResponse gameData = pac.getGameData(games[2].gameId);
-            pac.GameID = games[2].gameId;
+            //pac = new Alpaca();
+            //pac.OnStateChange += update;
+            //List<Game> games = pac.getGames(new DateTime(2011, 1, 1), new DateTime(2013, 1, 1));
+            //GameDataResponse gameData = pac.getGameData(games[2].gameId);
+            //pac.GameID = games[2].gameId;
 
-            //StartingLineups lineups = new StartingLineups();
+            ////StartingLineups lineups = new StartingLineups();
 
-            //List<Player> hs = new List<Player>();
-            //List<Player> aw = new List<Player>();
+            ////List<Player> hs = new List<Player>();
+            ////List<Player> aw = new List<Player>();
 
-            //for (int i = 0; i < 5; i++)
-            //{
-            //    Player p = pac.HomeTeam.getBench()[i];
-            //    Player v = pac.AwayTeam.getBench()[i];
+            ////for (int i = 0; i < 5; i++)
+            ////{
+            ////    Player p = pac.HomeTeam.getBench()[i];
+            ////    Player v = pac.AwayTeam.getBench()[i];
 
-            //    hs.Add(p);
-            //    aw.Add(v);
+            ////    hs.Add(p);
+            ////    aw.Add(v);
 
-            //    lineups.addStarter(true, p.Id);
-            //    lineups.addStarter(false, v.Id);
-            //}
+            ////    lineups.addStarter(true, p.Id);
+            ////    lineups.addStarter(false, v.Id);
+            ////}
 
-            //pac.HomeTeam.setPlayersOnCourt(hs);
-            //pac.AwayTeam.setPlayersOnCourt(aw);
+            ////pac.HomeTeam.setPlayersOnCourt(hs);
+            ////pac.AwayTeam.setPlayersOnCourt(aw);
 
-            //lineups.pack(Alpaca.generateTimestamp());
-            //pac.setGameData(lineups);
+            ////lineups.pack(Alpaca.generateTimestamp());
+            ////pac.setGameData(lineups);
 
-            PeriodStartEvent e0 = new PeriodStartEvent(pac);
-            Thread.Sleep(100);
-            MadeShotEvent e1 = new MadeShotEvent(pac, "4f46b4dde4b063589e20e5c6", "4f46b4bde4b0b074044d891c", null, "dunk", 2, true, false, new Point(40, 40));
-            Thread.Sleep(100);
-            MissedShotEvent e2 = new MissedShotEvent(pac, "4f46b657e4b0b074044d8920", "4f46b620e4b0acf74eee5e21", null, "jump-shot", 3, false, new Point(100, 80));
-            Thread.Sleep(100);
-            ReboundEvent e3 = new ReboundEvent(pac, "4f46b4fde4b063589e20e5c8", "defensive", new Point(30, 30));
-            Thread.Sleep(100);
-            SubstitutionEvent e4 = new SubstitutionEvent(pac, "4f46b5a6e4b0acf74eee5e1c", "4f46b4fde4b063589e20e5c8", "4f46b4bde4b0b074044d891c");
-            Thread.Sleep(100);
+            //PeriodStartEvent e0 = new PeriodStartEvent(pac);
+            //Thread.Sleep(100);
+            //MadeShotEvent e1 = new MadeShotEvent(pac, "4f46b4dde4b063589e20e5c6", "4f46b4bde4b0b074044d891c", null, "dunk", 2, true, false, new Point(40, 40));
+            //Thread.Sleep(100);
+            //MissedShotEvent e2 = new MissedShotEvent(pac, "4f46b657e4b0b074044d8920", "4f46b620e4b0acf74eee5e21", null, "jump-shot", 3, false, new Point(100, 80));
+            //Thread.Sleep(100);
+            //ReboundEvent e3 = new ReboundEvent(pac, "4f46b4fde4b063589e20e5c8", "defensive", new Point(30, 30));
+            //Thread.Sleep(100);
+            //SubstitutionEvent e4 = new SubstitutionEvent(pac, "4f46b5a6e4b0acf74eee5e1c", "4f46b4fde4b063589e20e5c8", "4f46b4bde4b0b074044d891c");
+            //Thread.Sleep(100);
 
-            //pac.post(e0);
-            //pac.post(e1);
-            //pac.post(e2);
-            //pac.post(e3);
-            //pac.post(e4);
+            //Console.WriteLine(Alpaca.generateTimestamp());
+            //Thread.Sleep(10);
+            //Console.WriteLine(Alpaca.generateTimestamp());
+            //Thread.Sleep(10);
+            //Console.WriteLine(Alpaca.generateTimestamp());
+            //Thread.Sleep(10);
+            //Console.WriteLine(Alpaca.generateTimestamp());
+            //Thread.Sleep(10);
+            //Console.WriteLine(Alpaca.generateTimestamp());
+            //Thread.Sleep(10);
+            //Console.WriteLine(Alpaca.generateTimestamp());
 
-            ////Have to create delete event after event has been processed.
-            //DeleteEvent ed = new DeleteEvent(pac, e4);
-            //pac.post(ed);
+            //SelectPlayer sp = new SelectPlayer();
+            //sp.home = pac.HomeTeam.getOncourt();
+            //sp.away = pac.AwayTeam.getOncourt();
+            //sp.Show();
 
+            ////pac.post(e0);
+            ////pac.post(e1);
+            ////pac.post(e2);
+            ////pac.post(e3);
+            ////pac.post(e4);
+
+            //////Have to create delete event after event has been processed.
+            ////DeleteEvent ed = new DeleteEvent(pac, e4);
+            ////pac.post(ed);
+
+        }
+
+        private void courtBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolTip1_Popup(object sender, PopupEventArgs e)
+        {
+
+        }
+
+        private void historyBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (pac != null && pac.EventLog != null)
+            {
+                int index = historyBox.IndexFromPoint(e.Location);
+
+                if (index != -1 && index < pac.EventLog.Count)
+                {
+                    if (toolTip1.GetToolTip(historyBox) != pac.EventLog[index].ToString())
+                    {
+                        toolTip1.SetToolTip(historyBox, pac.EventLog[index].ToString());
+                    }
+                }
+                else
+                {
+                    toolTip1.SetToolTip(historyBox, "");
+                }
+            }
         }
 
 
