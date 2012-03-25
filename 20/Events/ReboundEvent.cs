@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 namespace _20.Events
 {
     // The event will handle rebounds
-    class ReboundEvent : Event
+    public class ReboundEvent : Event
     {
         string rebounder;
         string reboundType;

@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace _20.Events
 {
-    class JumpballEvent : Event
+    public class JumpballEvent : Event
     {
         private string homePlayerId;
         private string awayPlayerId;
