@@ -15,13 +15,14 @@ namespace _20
         public string selectedGameId = "";
         public DateTime from;
         public DateTime to;
-        public ListBox gameBox;
+        public List<Game> games;
+
+        public GameGetter getGames;
 
         public GameSelectForm()
         {
             InitializeComponent();
-            gameBox = this.gameListBox;
-            gameBox.DataSource = new List<Game>();
+            gameListBox.DataSource = games;
             fromDatePicker.Value = new DateTime(2012, 1, 1);
             toDatePicker.Value = new DateTime(2012, 4, 1);
         }
@@ -30,15 +31,24 @@ namespace _20
         {
             from = fromDatePicker.Value;
             to = toDatePicker.Value.AddDays(1);
-            Close();
+
+            games = getGames(from, to);
+            foreach (Game g in games)
+            {
+                Console.WriteLine("in form:");
+                Console.WriteLine(g);
+            }
+            gameListBox.DataSource = games;
+            gameListBox.Refresh();
+            gameListBox.Invalidate();
         }
 
         private void selectGameButton_Click(object sender, EventArgs e)
         {
-            if ((Game)gameBox.SelectedItem != null)
+            if ((Game)gameListBox.SelectedItem != null)
             {
                 selected = true;
-                selectedGameId = ((Game)gameBox.SelectedItem).gameId;
+                selectedGameId = ((Game)gameListBox.SelectedItem).gameId;
                 Close();
             }
             else
@@ -57,6 +67,11 @@ namespace _20
             from = DateTime.Today;
             to = from.AddDays(1); 
             Close();
+        }
+
+        private void GameSelectForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

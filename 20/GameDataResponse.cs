@@ -9,7 +9,7 @@ using System.Drawing;
 
 namespace _20
 {
-    class PlayerData
+    public class PlayerData
     {
         public string playerId;
         public Dictionary<string, string> name;
@@ -33,7 +33,7 @@ namespace _20
         }
     }
 
-    class TeamData
+    public class TeamData
     {
         public string teamName;
         public string teamId;
@@ -62,7 +62,7 @@ namespace _20
         }
     }
 
-    class GameSetupData
+    public class GameSetupData
     {
         public Dictionary<string, List<string>> homeTeam;
         public Dictionary<string, List<string>> awayTeam;
@@ -263,7 +263,7 @@ namespace _20
     }
 
 
-    class GameDataResponse
+    public class GameDataResponse
     {
         public string time;
         public string request;
