@@ -36,6 +36,7 @@
             this.gameListBox = new System.Windows.Forms.ListBox();
             this.selectGameButton = new System.Windows.Forms.Button();
             this.exitButton = new System.Windows.Forms.Button();
+            this.searchTodayButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // FromLabel
@@ -77,7 +78,7 @@
             // 
             // searchGameButton
             // 
-            this.searchGameButton.Location = new System.Drawing.Point(109, 64);
+            this.searchGameButton.Location = new System.Drawing.Point(33, 64);
             this.searchGameButton.Name = "searchGameButton";
             this.searchGameButton.Size = new System.Drawing.Size(156, 27);
             this.searchGameButton.TabIndex = 4;
@@ -113,12 +114,23 @@
             this.exitButton.UseVisualStyleBackColor = true;
             this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
             // 
+            // searchTodayButton
+            // 
+            this.searchTodayButton.Location = new System.Drawing.Point(199, 64);
+            this.searchTodayButton.Name = "searchTodayButton";
+            this.searchTodayButton.Size = new System.Drawing.Size(156, 27);
+            this.searchTodayButton.TabIndex = 8;
+            this.searchTodayButton.Text = "Search Today\'s Games";
+            this.searchTodayButton.UseVisualStyleBackColor = true;
+            this.searchTodayButton.Click += new System.EventHandler(this.searchTodayButton_Click);
+            // 
             // GameSelectForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(394, 248);
             this.ControlBox = false;
+            this.Controls.Add(this.searchTodayButton);
             this.Controls.Add(this.exitButton);
             this.Controls.Add(this.selectGameButton);
             this.Controls.Add(this.gameListBox);
@@ -130,7 +142,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "GameSelectForm";
             this.Text = "Select Game";
-            this.Load += new System.EventHandler(this.GameSelectForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -146,5 +157,6 @@
         private System.Windows.Forms.ListBox gameListBox;
         private System.Windows.Forms.Button selectGameButton;
         private System.Windows.Forms.Button exitButton;
+        private System.Windows.Forms.Button searchTodayButton;
     }
 }
