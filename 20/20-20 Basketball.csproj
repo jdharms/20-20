@@ -66,6 +66,12 @@
     <Compile Include="Events\Event.cs" />
     <Compile Include="Events\TimeoutEvent.cs" />
     <Compile Include="Events\TurnoverEvent.cs" />
+    <Compile Include="GameSelectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GameSelectForm.Designer.cs">
+      <DependentUpon>GameSelectForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Game.cs" />
     <Compile Include="GameDataResponse.cs" />
     <Compile Include="GameForm.cs">
@@ -87,6 +93,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StartingLineups.cs" />
     <Compile Include="Team.cs" />
+    <EmbeddedResource Include="GameSelectForm.resx">
+      <DependentUpon>GameSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GameForm.resx">
       <DependentUpon>GameForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Xml;
 using _20.Events;
+using System.Windows.Forms;
 
 namespace _20
 {
@@ -96,6 +97,27 @@ namespace _20
             lastAuthed = DateTime.Now;
 
             eventLog = new List<Event>();
+
+            GameSelectForm selectForm = new GameSelectForm();
+            while (true)
+            {
+                selectForm.ShowDialog();
+                if (selectForm.selected)
+                {
+                    gid = selectForm.selectedGameId;
+                    break;
+                }
+
+                List<Game> games = getGames(selectForm.from, selectForm.to);
+                Console.Write(selectForm.from);
+                Console.Write(selectForm.to);
+                Console.Write(games.Count);
+                selectForm.gameBox.DataSource = games;
+            }
+
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new GameForm());
 
             Console.WriteLine(token);
         }
@@ -468,7 +490,7 @@ namespace _20
             DateTime now = DateTime.Now;
            // return XmlConvert.ToString(now, XmlDateTimeSerializationMode.Utc).Replace("Z", "-0000");
             string str = XmlConvert.ToString(now, XmlDateTimeSerializationMode.Local);
-            str = XmlConvert.ToString(now, "yyyy-MM-ddTHH:mm:ssssszzz");
+            str = XmlConvert.ToString(now, "yyyy-MM-ddTHH:mm:ss.fffzzz");
 
             return str.Remove(str.Length - 3, 1);
 
@@ -476,7 +498,7 @@ namespace _20
 
         public static string generateTimestamp(DateTime time)
         {
-            string str = XmlConvert.ToString(time, "yyyy-MM-ddTHH:mm:ssssszzz");
+            string str = XmlConvert.ToString(time, "yyyy-MM-ddTHH:mm:ss.fffzzz");
 
             return str.Remove(str.Length - 3, 1);
         }
