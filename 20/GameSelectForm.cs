@@ -29,7 +29,7 @@ namespace _20
         private void searchGamesButton_click(object sender, EventArgs e)
         {
             from = fromDatePicker.Value;
-            to = toDatePicker.Value;
+            to = toDatePicker.Value.AddDays(1);
             Close();
         }
 
@@ -50,6 +50,13 @@ namespace _20
         private void exitButton_Click(object sender, EventArgs e)
         {
             Environment.Exit(0);
+        }
+
+        private void searchTodayButton_Click(object sender, EventArgs e)
+        {
+            from = DateTime.Today;
+            to = from.AddDays(1); 
+            Close();
         }
     }
 }
