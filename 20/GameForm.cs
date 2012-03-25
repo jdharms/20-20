@@ -328,6 +328,11 @@ namespace _20
             }
         }
 
+        private void courtBox_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
 
     }
 }

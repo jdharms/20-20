@@ -66,6 +66,12 @@
     <Compile Include="Events\Event.cs" />
     <Compile Include="Events\TimeoutEvent.cs" />
     <Compile Include="Events\TurnoverEvent.cs" />
+    <Compile Include="SetupGameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SetupGameForm.Designer.cs">
+      <DependentUpon>SetupGameForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="GameSelectForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -120,6 +126,9 @@
     </Compile>
     <EmbeddedResource Include="SelectPlayer.resx">
       <DependentUpon>SelectPlayer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SetupGameForm.resx">
+      <DependentUpon>SetupGameForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
