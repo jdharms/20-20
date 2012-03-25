@@ -33,9 +33,16 @@ namespace _20
 
         private void selectGameButton_Click(object sender, EventArgs e)
         {
-            selected = true;
-            selectedGameId = ((Game) gameBox.SelectedItem).gameId;
-            Close();
+            if ((Game)gameBox.SelectedItem != null)
+            {
+                selected = true;
+                selectedGameId = ((Game)gameBox.SelectedItem).gameId;
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Please select a game"); 
+            }
         }
 
         private void exitButton_Click(object sender, EventArgs e)
