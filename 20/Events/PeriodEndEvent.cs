@@ -9,6 +9,8 @@ namespace _20.Events
     // The event will handle the end of a period
     class PeriodEndEvent : Event
     {
+        int period;
+
         public PeriodEndEvent(Alpaca pac)
             : base(pac)
         {
@@ -31,7 +33,7 @@ namespace _20.Events
         // Not a soul found in these parts
         public override void resolve()
         {
-            // Empty Method
+            period = pac.Period;
         }
 
         // Not here either
@@ -42,7 +44,7 @@ namespace _20.Events
 
         public override string ToString()
         {
-            return "Period " + pac.Period + " ended.";
+            return "Period " + period + " ended.";
         }
     }
 }

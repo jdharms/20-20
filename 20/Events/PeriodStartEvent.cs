@@ -9,6 +9,8 @@ namespace _20.Events
     // The event will handle the start of a period
     class PeriodStartEvent : Event
     {
+        int period;
+
         public PeriodStartEvent(Alpaca pac)
             : base(pac)
         {
@@ -31,17 +33,12 @@ namespace _20.Events
         // Adds one to the value for period in Alpaca
         public override void resolve()
         {
-            int period = pac.Period;
-            if (period == null)
-            {
-                period = 0;
-            }
+            period = pac.Period;
             if (period <= 0)
             {
                 period = 0;
             }
-            period++;
-            pac.Period = period;
+            pac.Period = period + 1;
         }
 
         // ASubtracts one to the value for period in Alpaca
@@ -54,7 +51,7 @@ namespace _20.Events
 
         public override string ToString()
         {
-            return "Period " + pac.Period + " started.";
+            return "Period " + period + " started.";
         }
     }
 }
