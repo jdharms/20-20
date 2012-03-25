@@ -6,7 +6,7 @@ using System.Xml;
 
 namespace _20
 {
-    class Game
+    public class Game
     {
         public Dictionary<string, string> homeTeam;
         public Dictionary<string, string> awayTeam;
