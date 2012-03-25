@@ -22,6 +22,8 @@ namespace _20
             InitializeComponent();
             gameBox = this.gameListBox;
             gameBox.DataSource = new List<Game>();
+            fromDatePicker.Value = new DateTime(2012, 1, 1);
+            toDatePicker.Value = new DateTime(2012, 4, 1);
         }
 
         private void searchGamesButton_click(object sender, EventArgs e)
