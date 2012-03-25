@@ -10,6 +10,7 @@ using System.IO;
 using System.Xml;
 using _20.Events;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace _20
 {
@@ -66,7 +67,10 @@ namespace _20
 
         private void Notify()
         {
-            onChange();
+            if (onChange != null)
+            {
+                onChange();
+            }
         }
 
         /// <summary>
@@ -85,6 +89,7 @@ namespace _20
             while (!authenticated)
             {
                 child.login = new acceptCredentials(this.login);
+                child.StartPosition = FormStartPosition.CenterScreen;
                 child.ShowDialog();
 
                 username = child.Username;
@@ -103,6 +108,7 @@ namespace _20
             selectForm.getGames = new GameGetter(this.getGames);
             while (true)
             {
+                selectForm.StartPosition = FormStartPosition.CenterScreen;
                 selectForm.ShowDialog();
                 if (selectForm.selected)
                 {
@@ -119,10 +125,53 @@ namespace _20
 
             getGameData(gid);
 
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new GameForm());
+            // if one is empty, both are empty
+            if (HomeTeam.getOncourt() == null || HomeTeam.getOncourt().Count == 0)
+            {
+                SetupGameForm setup = new SetupGameForm();
+                setup.homeTeam = new BindingList<Player>();
+                foreach (Player p in HomeTeam.getBench())
+                {
+                    if (!p.TeamPlayer)
+                    {
+                        setup.homeTeam.Add(p);
+                    }
+                }
 
+                setup.awayTeam = new BindingList<Player>();
+                foreach (Player p in AwayTeam.getBench())
+                {
+                    if (!p.TeamPlayer)
+                    {
+                        setup.awayTeam.Add(p);
+                    }
+                }
+                setup.homeStarters = new BindingList<Player>(); 
+                setup.awayStarters = new BindingList<Player>(); 
+                setup.homeTeamName = HomeTeam.Name;
+                setup.awayTeamName = AwayTeam.Name;
+                setup.StartPosition = FormStartPosition.CenterScreen;
+                setup.ShowDialog();
+
+                HomeTeam.setPlayersOnCourt(setup.homeStarters.ToList<Player>());
+                AwayTeam.setPlayersOnCourt(setup.awayStarters.ToList<Player>());
+
+                StartingLineups s = new StartingLineups();
+
+                foreach (Player p in HomeTeam.getOncourt())
+                {
+                    s.addStarter(true, p.Id);
+                }
+
+                foreach (Player p in AwayTeam.getOncourt())
+                {
+                    s.addStarter(false, p.Id);
+                }
+
+                setGameData(s);
+            }
+
+            
             Console.WriteLine(token);
         }
 

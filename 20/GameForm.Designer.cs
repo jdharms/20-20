@@ -39,13 +39,13 @@
             this.turnoverButton = new System.Windows.Forms.Button();
             this.foulButton = new System.Windows.Forms.Button();
             this.homeBox = new System.Windows.Forms.GroupBox();
+            this.homeScore = new System.Windows.Forms.Label();
             this.homeNameLabel = new System.Windows.Forms.Label();
             this.awayBox = new System.Windows.Forms.GroupBox();
             this.awayScore = new System.Windows.Forms.Label();
             this.awayNameLabel = new System.Windows.Forms.Label();
             this.alpacaButton = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.homeScore = new System.Windows.Forms.Label();
             this.courtBox = new System.Windows.Forms.PictureBox();
             this.homeBox.SuspendLayout();
             this.awayBox.SuspendLayout();
@@ -159,6 +159,17 @@
             this.homeBox.TabStop = false;
             this.homeBox.Text = "Home";
             // 
+            // homeScore
+            // 
+            this.homeScore.AutoSize = true;
+            this.homeScore.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.homeScore.Font = new System.Drawing.Font("Courier New", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.homeScore.Location = new System.Drawing.Point(358, 27);
+            this.homeScore.Name = "homeScore";
+            this.homeScore.Size = new System.Drawing.Size(108, 71);
+            this.homeScore.TabIndex = 1;
+            this.homeScore.Text = "00";
+            // 
             // homeNameLabel
             // 
             this.homeNameLabel.AutoSize = true;
@@ -215,17 +226,6 @@
             // 
             this.toolTip1.Popup += new System.Windows.Forms.PopupEventHandler(this.toolTip1_Popup);
             // 
-            // homeScore
-            // 
-            this.homeScore.AutoSize = true;
-            this.homeScore.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.homeScore.Font = new System.Drawing.Font("Courier New", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.homeScore.Location = new System.Drawing.Point(358, 27);
-            this.homeScore.Name = "homeScore";
-            this.homeScore.Size = new System.Drawing.Size(108, 71);
-            this.homeScore.TabIndex = 1;
-            this.homeScore.Text = "00";
-            // 
             // courtBox
             // 
             this.courtBox.Image = global::_20.Properties.Resources.BasketballCourt;
@@ -235,6 +235,7 @@
             this.courtBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.courtBox.TabIndex = 0;
             this.courtBox.TabStop = false;
+            this.courtBox.Click += new System.EventHandler(this.courtBox_Click_1);
             this.courtBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.courtBox_MouseDown);
             // 
             // GameForm
