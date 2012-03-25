@@ -5,7 +5,7 @@ using System.Text;
 
 namespace _20
 {
-    class Player
+    public class Player
     {
         private string fName;
         private string mName;
