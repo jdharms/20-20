@@ -69,7 +69,7 @@ namespace _20
             Graphics g = courtBox.CreateGraphics();
             using (Pen p = new Pen(Color.Red, 4))
             {
-                g.DrawEllipse(p, e.X, e.Y, 10, 10);
+                g.DrawEllipse(p, e.X - 5, e.Y - 5, 10, 10);
             }
         }
 

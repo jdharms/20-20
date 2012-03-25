@@ -115,9 +115,11 @@ namespace _20
                 selectForm.gameBox.DataSource = games;
             }
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new GameForm());
+            getGameData(gid);
+
+            //Application.EnableVisualStyles();
+            //Application.SetCompatibleTextRenderingDefault(false);
+            //Application.Run(new GameForm());
 
             Console.WriteLine(token);
         }
