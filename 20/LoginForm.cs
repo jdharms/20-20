@@ -69,5 +69,9 @@ namespace _20
             }
         }
 
+        private void closeButton_click(object sender, EventArgs e)
+        {
+            Environment.Exit(0);
+        }
     }
 }
