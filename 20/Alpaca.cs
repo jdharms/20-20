@@ -119,10 +119,34 @@ namespace _20
 
             getGameData(gid);
 
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new GameForm());
+            // if one is empty, both are empty
+            if (HomeTeam.getOncourt() == null || HomeTeam.getOncourt().Count == 0)
+            {
+                SetupGameForm setup = new SetupGameForm();
+                setup.homeTeam = HomeTeam.getBench(); 
+                setup.awayTeam = AwayTeam.getBench();
+                setup.homeStarters = HomeTeam.getOncourt();
+                setup.awayStarters = AwayTeam.getOncourt(); 
+                setup.homeTeamName = HomeTeam.Name;
+                setup.awayTeamName = AwayTeam.Name;
+                setup.ShowDialog();
 
+                StartingLineups s = new StartingLineups();
+
+                foreach (Player p in HomeTeam.getOncourt())
+                {
+                    s.addStarter(true, p.Id);
+                }
+
+                foreach (Player p in AwayTeam.getOncourt())
+                {
+                    s.addStarter(false, p.Id);
+                }
+
+                setGameData(s);
+            }
+
+            
             Console.WriteLine(token);
         }
 
