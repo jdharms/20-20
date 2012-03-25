@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace _20
 {
-    class StartingLineups
+    public class StartingLineups
     {
         public string time;
         public Dictionary<string, List<string>> homeTeam;

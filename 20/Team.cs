@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 
 namespace _20
 {
-    class Team
+    public class Team
     {
         private string id;
         public string Id { get { return id; } }
