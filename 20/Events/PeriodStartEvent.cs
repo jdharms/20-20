@@ -25,7 +25,7 @@ namespace _20.Events
             {
                 apiCall = apiCall,
                 gameId = pac.GameID, 
-                period = pac.Period + 1, 
+                period = pac.Period, 
                 context = context 
             });
         }
@@ -34,24 +34,19 @@ namespace _20.Events
         public override void resolve()
         {
             period = pac.Period;
-            if (period <= 0)
-            {
-                period = 0;
-            }
-            pac.Period = period + 1;
+            pac.InsidePeriod = true;
         }
 
         // ASubtracts one to the value for period in Alpaca
         public override void unresolve()
         {
-            int period = pac.Period;
-            period--;
-            pac.Period = period;
+            pac.Period--;
+            pac.InsidePeriod = false;
         }
 
         public override string ToString()
         {
-            return "Period " + period + " started.";
+            return (period > 2 ? "Overtime " + (period - 2) : "Period " + period ) + " started.";
         }
     }
 }

@@ -30,13 +30,13 @@ namespace _20.Events
         // NOTHING HERE
         public override void resolve()
         {
-            // Empty method. Does not change model
+            pac.GameEnded = true;
         }
 
         // OR HERE
         public override void unresolve()
         {
-            // Empty method. Does not change model
+            pac.GameEnded = false;
         }
 
         public override string ToString()

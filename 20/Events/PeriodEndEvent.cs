@@ -34,17 +34,19 @@ namespace _20.Events
         public override void resolve()
         {
             period = pac.Period;
+            pac.Period++;
+            pac.InsidePeriod = false;
         }
 
         // Not here either
         public override void unresolve()
         {
-            // Empty Method
+            pac.InsidePeriod = true;
         }
 
         public override string ToString()
         {
-            return "Period " + period + " ended.";
+            return (period > 2 ? "Overtime " + (period - 2) : "Period " + period) + " ended.";
         }
     }
 }
