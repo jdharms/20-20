@@ -63,13 +63,14 @@ namespace _20
         {
             pac = new Alpaca();
             pac.OnStateChange += update;
-            GameDataResponse gameData = pac.getGameData(pac.GameID);
+            //GameDataResponse gameData = pac.getGameData(pac.GameID);
             for (int i = 0; i < awayPlayerLabels.Count; i++)
             {
-                homePlayerLabels[i].ContextMenuStrip = contextMenuStrip1;
-                awayPlayerLabels[i].ContextMenuStrip = contextMenuStrip1;
+                homePlayerLabels[i].ContextMenuStrip = subContextMenuStrip;
+                awayPlayerLabels[i].ContextMenuStrip = subContextMenuStrip;
             }
-            
+
+            update();
         }
 
         void update()
@@ -86,6 +87,14 @@ namespace _20
             historyBox.DataSource = pac.EventLog;
             ((CurrencyManager)historyBox.BindingContext[pac.EventLog]).Refresh();
 
+            foreach(Control c in this.Controls)
+            {
+                if (c != historyBox && c!= deleteEventButton)
+                {
+                    c.Enabled = !pac.GameEnded;
+                }
+            }
+
             List<Player> homeOnCourt = pac.HomeTeam.getOncourt();
             for (int i = 0; i < homeOnCourt.Count; i++)
             {
@@ -97,9 +106,30 @@ namespace _20
             {
                 awayPlayerLabels[i].Text = awayOnCourt[i].Jersey + "";
             }
+            string perOrOver = pac.Period > 2 ? "Overtime" : "Period";
+
+            if (!pac.InsidePeriod)
+            {
+                periodStartButton.Text = perOrOver + " Start";
+            }
+            else
+            { 
+                periodStartButton.Text = perOrOver + " End";
+            }
+
+            firstSelectedPlayer = secondSelectedPlayer = null;
+            firstSelectedLabel = secondSelectedLabel = null;
+            firstSelectedContext = secondSelectedContext = null;
+
+            for (int i = 0; i < homePlayerContexts.Count; i++)
+            {
+                homePlayerContexts[i].Text = "";
+                awayPlayerContexts[i].Text = "";
+                homePlayerLabels[i].ForeColor = Color.Black;
+                awayPlayerLabels[i].ForeColor = Color.Black;
+            }
 
             this.Invalidate();
-
         }
 
         private void courtBox_MouseDown(object sender, MouseEventArgs e)
@@ -162,6 +192,9 @@ namespace _20
             {
                 //this branch runs if the result of the confirmation is "OK"
                 Console.WriteLine("Deleting...");
+
+                DeleteEvent del = new DeleteEvent(pac, pac.EventLog[pac.EventLog.Count - 1]);
+                pac.post(del);
             }
             else
             {
@@ -223,10 +256,37 @@ namespace _20
          */
         private void periodStartButton_Click(object sender, EventArgs e)
         {
-            //Determine if we're entering/exiting a period,
-            //and which period.
+            Event ev = null;
+            if (pac.Period >= 2 && (pac.HomeTeam.Score != pac.AwayTeam.Score) && pac.InsidePeriod)
+            {
+                ev = new PeriodEndEvent(pac);
+                pac.post(ev);
+                ev = new GameEndEvent(pac);
+                pac.post(ev);
+                return;
+            }
+            else
+            {
+                //Determine if we're entering/exiting a period,
+                //and which period.
+                Button button = (Button)sender;
+                string perOrOver = pac.Period > 2 ? "Overtime" : "Period";
+                if (button.Text.Contains("Start"))
+                {
+                    ev = new PeriodStartEvent(pac);
+                    
+                    button.Text = perOrOver + " End";
+                }
+                else
+                {
+                    ev = new PeriodEndEvent(pac);
+                    button.Text = perOrOver + " Start";
+                }
+            }
 
             //send appropriate event to server
+            pac.post(ev);
+
         }
 
         /*
@@ -243,19 +303,6 @@ namespace _20
                 //ejected?
 
             //send foul event
-        }
-
-        /*
-         * Stub author: Daniel
-         * 
-         * Purpose: Handles clicks to timeout button
-         */
-        private void timeoutButton_Click(object sender, EventArgs e)
-        {
-            //ask for type of timeout
-            //ask for team (if necessary)
-
-            //send timeout event to server
         }
 
         private void toolTip1_Popup(object sender, PopupEventArgs e)
@@ -418,13 +465,13 @@ namespace _20
             if (currButton == System.Windows.Forms.MouseButtons.Right)
             {
 
-                contextMenuStrip1.Items.Clear();
+                subContextMenuStrip.Items.Clear();
                 List<Player> onCourt = null;
                 List<Player> bench = null;
                 Player senderPlayer = null;
                 int senderNumber = int.Parse(((Label)sender).Text);
 
-                if (homePlayerLabels.Contains((Label)sender))
+                if ((sender is Label && homePlayerLabels.Contains((Label)sender))) 
                 {
                     onCourt = pac.HomeTeam.getOncourt();
                     bench = pac.HomeTeam.getBench();
@@ -455,7 +502,7 @@ namespace _20
 
                 subInItem.DropDownItems.AddRange(playerMenu);
 
-                contextMenuStrip1.Items.Add(subInItem);
+                subContextMenuStrip.Items.Add(subInItem);
             }
         }
 
@@ -482,14 +529,40 @@ namespace _20
 
             SubstitutionEvent subEvent = new SubstitutionEvent(pac, subInPlayer.Id, subOutPlayer.Id, subInPlayer.TeamId);
 
-            //TODO: post this event...leave unposted for now.
             if (MessageBox.Show("Sub in " + subInPlayer.DisplayName + " for " + subOutPlayer.DisplayName + "?", 
                 "", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                Console.WriteLine(subEvent);
-                subEvent.resolve();
-                update();
+                pac.post(subEvent);
             }
         }
+
+        private void timeout_Click(object sender, EventArgs e)
+        {
+
+            TimeoutEvent timeoutEvent = null;
+            if(sender.ToString().Equals("Home Timeout"))
+            {
+                timeoutEvent = new TimeoutEvent(pac, pac.HomeTeam.Id, "team");
+            }
+            else if (sender.ToString().Equals("Away Timeout"))
+            {
+                timeoutEvent = new TimeoutEvent(pac, pac.AwayTeam.Id, "team");
+            }
+            else if (sender.ToString().Equals("Media Timeout"))
+            {
+                timeoutEvent = new TimeoutEvent(pac, null, "media");
+            }
+            else if (sender.ToString().Equals("Official Timeout"))
+            {
+                timeoutEvent = new TimeoutEvent(pac, null, "official");
+            }
+
+            if (MessageBox.Show("Call " + sender.ToString() + "?",
+                "", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                pac.post(timeoutEvent);
+            }
+        }
+
     }
 }

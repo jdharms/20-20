@@ -32,8 +32,11 @@ namespace _20
         private string password;
         private bool authenticated;
         DateTime lastAuthed;
+        public static bool LOCAL_POST = true;
 
         public int Period { get; set; }
+        public bool InsidePeriod { get; set; }
+        public bool GameEnded { get; set; }
 
         public Team AwayTeam { get; set; }
         public Team HomeTeam { get; set; }
@@ -85,6 +88,9 @@ namespace _20
         /// </summary>
         public Alpaca()
         {
+            Period = 1;
+            GameEnded = false;
+            InsidePeriod = false;
             LoginForm child = new LoginForm();
             while (!authenticated)
             {
@@ -171,7 +177,6 @@ namespace _20
                 setGameData(s);
             }
 
-            
             Console.WriteLine(token);
         }
 
@@ -363,6 +368,22 @@ namespace _20
 
         public bool post(Event e)
         {
+            if (LOCAL_POST)
+            {
+                Console.WriteLine("Local post: posting " + e);
+                e.EventId = DateTime.Now.ToString();
+                e.resolve();
+                if (e is DeleteEvent)
+                {
+                    eventLog.Remove(eventLog[eventLog.Count - 1]);
+                }
+                else
+                {
+                    eventLog.Add(e);
+                }
+                Notify();
+                return true;
+            }
             var url = generateUrl(e.ApiCall);
             WebRequest request = WebRequest.Create(url);
 
@@ -411,6 +432,10 @@ namespace _20
                 if (e is DeleteEvent)
                 {
                     //We need to remove the deleted event.
+                    Notify();
+                }
+                else if (e is GameEndEvent)
+                {
                     Notify();
                 }
                 else

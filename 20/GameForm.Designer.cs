@@ -32,7 +32,6 @@
             this.reboundButton = new System.Windows.Forms.Button();
             this.periodStartButton = new System.Windows.Forms.Button();
             this.historyBox = new System.Windows.Forms.ListBox();
-            this.timeoutButton = new System.Windows.Forms.Button();
             this.deleteEventButton = new System.Windows.Forms.Button();
             this.jumpBallButton = new System.Windows.Forms.Button();
             this.turnoverButton = new System.Windows.Forms.Button();
@@ -50,6 +49,10 @@
             this.homePlayer1Label = new System.Windows.Forms.Label();
             this.homeScore = new System.Windows.Forms.Label();
             this.homeNameLabel = new System.Windows.Forms.Label();
+            this.homeTimeoutContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.teamTimeoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mediaTimeoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.officialTimeoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.awayBox = new System.Windows.Forms.GroupBox();
             this.awayPlayer5Context = new System.Windows.Forms.GroupBox();
             this.awayPlayer5Label = new System.Windows.Forms.Label();
@@ -65,15 +68,20 @@
             this.awayPlayer2Label = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.courtBox = new System.Windows.Forms.PictureBox();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.subContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.helloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.awayTimeoutContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.homeBox.SuspendLayout();
             this.homePlayer5Context.SuspendLayout();
             this.homePlayer4Context.SuspendLayout();
             this.homePlayer3Context.SuspendLayout();
             this.homePlayer2Context.SuspendLayout();
             this.homePlayer1Context.SuspendLayout();
+            this.homeTimeoutContextMenuStrip.SuspendLayout();
             this.awayBox.SuspendLayout();
             this.awayPlayer5Context.SuspendLayout();
             this.awayPlayer4Context.SuspendLayout();
@@ -81,7 +89,8 @@
             this.awayPlayer1Context.SuspendLayout();
             this.awayPlayer2Context.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.courtBox)).BeginInit();
-            this.contextMenuStrip1.SuspendLayout();
+            this.subContextMenuStrip.SuspendLayout();
+            this.awayTimeoutContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // reboundButton
@@ -119,21 +128,11 @@
             this.historyBox.Leave += new System.EventHandler(this.historyBox_Leave);
             this.historyBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.historyBox_MouseMove);
             // 
-            // timeoutButton
-            // 
-            this.timeoutButton.Location = new System.Drawing.Point(182, 676);
-            this.timeoutButton.Name = "timeoutButton";
-            this.timeoutButton.Size = new System.Drawing.Size(164, 35);
-            this.timeoutButton.TabIndex = 9;
-            this.timeoutButton.Text = "Timeout";
-            this.timeoutButton.UseVisualStyleBackColor = true;
-            this.timeoutButton.Click += new System.EventHandler(this.timeoutButton_Click);
-            // 
             // deleteEventButton
             // 
             this.deleteEventButton.Location = new System.Drawing.Point(962, 633);
             this.deleteEventButton.Name = "deleteEventButton";
-            this.deleteEventButton.Size = new System.Drawing.Size(195, 31);
+            this.deleteEventButton.Size = new System.Drawing.Size(262, 31);
             this.deleteEventButton.TabIndex = 11;
             this.deleteEventButton.Text = "Delete Event";
             this.deleteEventButton.UseVisualStyleBackColor = true;
@@ -315,12 +314,43 @@
             // homeNameLabel
             // 
             this.homeNameLabel.AutoSize = true;
+            this.homeNameLabel.ContextMenuStrip = this.homeTimeoutContextMenuStrip;
             this.homeNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.homeNameLabel.Location = new System.Drawing.Point(6, 16);
             this.homeNameLabel.Name = "homeNameLabel";
             this.homeNameLabel.Size = new System.Drawing.Size(241, 31);
             this.homeNameLabel.TabIndex = 0;
             this.homeNameLabel.Text = "Home Team Name";
+            // 
+            // homeTimeoutContextMenuStrip
+            // 
+            this.homeTimeoutContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.teamTimeoutToolStripMenuItem,
+            this.mediaTimeoutToolStripMenuItem,
+            this.officialTimeoutToolStripMenuItem});
+            this.homeTimeoutContextMenuStrip.Name = "contextMenuStrip1";
+            this.homeTimeoutContextMenuStrip.Size = new System.Drawing.Size(161, 70);
+            // 
+            // teamTimeoutToolStripMenuItem
+            // 
+            this.teamTimeoutToolStripMenuItem.Name = "teamTimeoutToolStripMenuItem";
+            this.teamTimeoutToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.teamTimeoutToolStripMenuItem.Text = "Home Timeout";
+            this.teamTimeoutToolStripMenuItem.Click += new System.EventHandler(this.timeout_Click);
+            // 
+            // mediaTimeoutToolStripMenuItem
+            // 
+            this.mediaTimeoutToolStripMenuItem.Name = "mediaTimeoutToolStripMenuItem";
+            this.mediaTimeoutToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.mediaTimeoutToolStripMenuItem.Text = "Media Timeout";
+            this.mediaTimeoutToolStripMenuItem.Click += new System.EventHandler(this.timeout_Click);
+            // 
+            // officialTimeoutToolStripMenuItem
+            // 
+            this.officialTimeoutToolStripMenuItem.Name = "officialTimeoutToolStripMenuItem";
+            this.officialTimeoutToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.officialTimeoutToolStripMenuItem.Text = "Official Timeout";
+            this.officialTimeoutToolStripMenuItem.Click += new System.EventHandler(this.timeout_Click);
             // 
             // awayBox
             // 
@@ -398,6 +428,7 @@
             // awayNameLabel
             // 
             this.awayNameLabel.AutoSize = true;
+            this.awayNameLabel.ContextMenuStrip = this.awayTimeoutContextMenuStrip;
             this.awayNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.awayNameLabel.Location = new System.Drawing.Point(6, 16);
             this.awayNameLabel.Name = "awayNameLabel";
@@ -489,12 +520,12 @@
             this.courtBox.TabStop = false;
             this.courtBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.courtBox_MouseDown);
             // 
-            // contextMenuStrip1
+            // subContextMenuStrip
             // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.subContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.helloToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(103, 26);
+            this.subContextMenuStrip.Name = "contextMenuStrip1";
+            this.subContextMenuStrip.Size = new System.Drawing.Size(103, 26);
             // 
             // helloToolStripMenuItem
             // 
@@ -510,6 +541,36 @@
             this.wToolStripMenuItem.Size = new System.Drawing.Size(85, 22);
             this.wToolStripMenuItem.Text = "W";
             // 
+            // awayTimeoutContextMenuStrip
+            // 
+            this.awayTimeoutContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1,
+            this.toolStripMenuItem2,
+            this.toolStripMenuItem3});
+            this.awayTimeoutContextMenuStrip.Name = "contextMenuStrip1";
+            this.awayTimeoutContextMenuStrip.Size = new System.Drawing.Size(161, 70);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(160, 22);
+            this.toolStripMenuItem1.Text = "Away Timeout";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.timeout_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(160, 22);
+            this.toolStripMenuItem2.Text = "Media Timeout";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.timeout_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(160, 22);
+            this.toolStripMenuItem3.Text = "Official Timeout";
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.timeout_Click);
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -521,11 +582,10 @@
             this.Controls.Add(this.turnoverButton);
             this.Controls.Add(this.foulButton);
             this.Controls.Add(this.deleteEventButton);
-            this.Controls.Add(this.timeoutButton);
             this.Controls.Add(this.historyBox);
-            this.Controls.Add(this.periodStartButton);
             this.Controls.Add(this.reboundButton);
             this.Controls.Add(this.courtBox);
+            this.Controls.Add(this.periodStartButton);
             this.Name = "GameForm";
             this.Text = "20-20 Basketball";
             this.Load += new System.EventHandler(this.GameForm_Load);
@@ -536,6 +596,7 @@
             this.homePlayer3Context.ResumeLayout(false);
             this.homePlayer2Context.ResumeLayout(false);
             this.homePlayer1Context.ResumeLayout(false);
+            this.homeTimeoutContextMenuStrip.ResumeLayout(false);
             this.awayBox.ResumeLayout(false);
             this.awayBox.PerformLayout();
             this.awayPlayer5Context.ResumeLayout(false);
@@ -544,7 +605,8 @@
             this.awayPlayer1Context.ResumeLayout(false);
             this.awayPlayer2Context.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.courtBox)).EndInit();
-            this.contextMenuStrip1.ResumeLayout(false);
+            this.subContextMenuStrip.ResumeLayout(false);
+            this.awayTimeoutContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -555,7 +617,6 @@
         private System.Windows.Forms.Button reboundButton;
         private System.Windows.Forms.Button periodStartButton;
         private System.Windows.Forms.ListBox historyBox;
-        private System.Windows.Forms.Button timeoutButton;
         private System.Windows.Forms.Button deleteEventButton;
         private System.Windows.Forms.Button jumpBallButton;
         private System.Windows.Forms.Button turnoverButton;
@@ -587,9 +648,17 @@
         private System.Windows.Forms.Label awayPlayer1Label;
         private System.Windows.Forms.GroupBox awayPlayer2Context;
         private System.Windows.Forms.Label awayPlayer2Label;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ContextMenuStrip subContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem helloToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem wToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip homeTimeoutContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem teamTimeoutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mediaTimeoutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem officialTimeoutToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip awayTimeoutContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
     }
 }
 
