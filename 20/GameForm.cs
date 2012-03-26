@@ -15,10 +15,47 @@ namespace _20
     {
         Alpaca pac;
         Point currPoint;
+        private List<Label> homePlayerLabels;
+        private List<Label> awayPlayerLabels;
+        private List<GroupBox> homePlayerContexts;
+        private List<GroupBox> awayPlayerContexts;
+        private Player firstSelectedPlayer;
+        private GroupBox firstSelectedContext;
+        private Label firstSelectedLabel;
+        private Player secondSelectedPlayer;
+        private GroupBox secondSelectedContext;
+        private Label secondSelectedLabel;
 
         public GameForm()
         {
             InitializeComponent();
+            homePlayerLabels = new List<Label>();
+            homePlayerLabels.Add(homePlayer1Label);
+            homePlayerLabels.Add(homePlayer2Label);
+            homePlayerLabels.Add(homePlayer3Label);
+            homePlayerLabels.Add(homePlayer4Label);
+            homePlayerLabels.Add(homePlayer5Label);
+
+            homePlayerContexts = new List<GroupBox>();
+            homePlayerContexts.Add(homePlayer1Context);
+            homePlayerContexts.Add(homePlayer2Context);
+            homePlayerContexts.Add(homePlayer3Context);
+            homePlayerContexts.Add(homePlayer4Context);
+            homePlayerContexts.Add(homePlayer5Context);
+
+            awayPlayerLabels = new List<Label>();
+            awayPlayerLabels.Add(awayPlayer1Label);
+            awayPlayerLabels.Add(awayPlayer2Label);
+            awayPlayerLabels.Add(awayPlayer3Label);
+            awayPlayerLabels.Add(awayPlayer4Label);
+            awayPlayerLabels.Add(awayPlayer5Label);
+
+            awayPlayerContexts = new List<GroupBox>();
+            awayPlayerContexts.Add(awayPlayer1Context);
+            awayPlayerContexts.Add(awayPlayer2Context);
+            awayPlayerContexts.Add(awayPlayer3Context);
+            awayPlayerContexts.Add(awayPlayer4Context);
+            awayPlayerContexts.Add(awayPlayer5Context);
         }
 
         private void GameForm_Load(object sender, EventArgs e)
@@ -26,6 +63,7 @@ namespace _20
             pac = new Alpaca();
             pac.OnStateChange += update;
             GameDataResponse gameData = pac.getGameData(pac.GameID);
+            
         }
 
         void update()
@@ -41,6 +79,19 @@ namespace _20
 
             historyBox.DataSource = pac.EventLog;
             ((CurrencyManager)historyBox.BindingContext[pac.EventLog]).Refresh();
+
+            List<Player> homeOnCourt = pac.HomeTeam.getOncourt();
+            for (int i = 0; i < homeOnCourt.Count; i++)
+            {
+                homePlayerLabels[i].Text = homeOnCourt[i].Jersey + "";
+            }
+
+            List<Player> awayOnCourt = pac.AwayTeam.getOncourt();
+            for (int i = 0; i < awayOnCourt.Count; i++)
+            {
+                awayPlayerLabels[i].Text = awayOnCourt[i].Jersey + "";
+            }
+
             this.Invalidate();
 
         }
@@ -298,11 +349,6 @@ namespace _20
 
         }
 
-        private void courtBox_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void toolTip1_Popup(object sender, PopupEventArgs e)
         {
 
@@ -328,11 +374,133 @@ namespace _20
             }
         }
 
-        private void courtBox_Click_1(object sender, EventArgs e)
+        private void playerSelect_click(object sender, EventArgs e)
         {
+            List<Player> homeOnCourt = pac.HomeTeam.getOncourt();
+            List<Player> awayOnCourt = pac.AwayTeam.getOncourt();
+            Player thisSelected = null;
+            int i = -1;
+            bool isHome = false;
+            for (i = 0; i < homePlayerLabels.Count; i++)
+            {
+                if (sender == homePlayerLabels[i] || sender == homePlayerContexts[i])
+                {
+                    thisSelected = homeOnCourt[i];
+                    isHome = true;
+                    break;
+                }
+                else if(sender == awayPlayerLabels[i] || sender == awayPlayerContexts[i])
+                {
+                    thisSelected = awayOnCourt[i];
+                    isHome = false;
+                    break;
+                }
+            }
 
+            // if firstSelectedPlayer is null, then we have not set this and the second player
+            if (firstSelectedPlayer == null)
+            {
+                //set this current selection
+                firstSelectedPlayer = thisSelected;
+                if (isHome)
+                {
+                    firstSelectedContext = homePlayerContexts[i];
+                    firstSelectedLabel = homePlayerLabels[i];
+                }
+                else
+                {
+                    firstSelectedContext = awayPlayerContexts[i];
+                    firstSelectedLabel = awayPlayerLabels[i];
+                }
+
+                firstSelectedLabel.ForeColor = Color.Red;
+                firstSelectedContext.Text = "1st";
+            }
+            // the first player was selected, so check if we are unclicking it
+            else if (firstSelectedPlayer == thisSelected)
+            {
+                //unselect everything
+                firstSelectedPlayer = null;
+                secondSelectedPlayer = null;
+
+                if (firstSelectedContext != null)
+                {
+                    firstSelectedLabel.ForeColor = Color.Black;
+                    firstSelectedContext.Text = "";
+                    firstSelectedLabel = null;
+                    firstSelectedContext = null;
+                }
+
+                if (secondSelectedContext != null)
+                {
+                    secondSelectedLabel.ForeColor = Color.Black;
+                    secondSelectedContext.Text = "";
+                    secondSelectedLabel = null;
+                    secondSelectedContext = null;
+                }
+            }
+            //the first player has been selected, we are not unclicking the first, and the second has not been set
+            else if (secondSelectedPlayer == null)
+            {
+                secondSelectedPlayer = thisSelected;
+                if (isHome)
+                {
+                    secondSelectedLabel = homePlayerLabels[i];
+                    secondSelectedContext = homePlayerContexts[i];
+                }
+                else
+                {
+                    secondSelectedLabel = awayPlayerLabels[i];
+                    secondSelectedContext = awayPlayerContexts[i];
+                }
+
+                secondSelectedLabel.ForeColor = Color.Green;
+                secondSelectedContext.Text = "2nd";
+            }
+            // we have selected the second player and we are unclicking it
+            else if (secondSelectedPlayer == thisSelected)
+            {
+                secondSelectedPlayer = null;
+                if (secondSelectedContext != null)
+                {
+                    secondSelectedLabel.ForeColor = Color.Black;
+                    secondSelectedContext.Text = "";
+                    secondSelectedLabel = null;
+                    secondSelectedContext = null;
+                }
+
+            }
+            else
+            {
+                //undo previous second
+                if (secondSelectedContext != null)
+                {
+                    secondSelectedLabel.ForeColor = Color.Black;
+                    secondSelectedContext.Text = "";
+                    secondSelectedLabel = null;
+                    secondSelectedContext = null;
+                }
+
+                secondSelectedPlayer = thisSelected;
+
+                //applly to new selected
+                if (isHome)
+                {
+                    secondSelectedLabel = homePlayerLabels[i];
+                    secondSelectedContext = homePlayerContexts[i];
+                }
+                else
+                {
+                    secondSelectedLabel = awayPlayerLabels[i];
+                    secondSelectedContext = awayPlayerContexts[i];
+                }
+
+                secondSelectedLabel.ForeColor = Color.Green;
+                secondSelectedContext.Text = "2nd";
+            }
+
+            this.Refresh();
+            this.Invalidate();
         }
-
-
     }
 }

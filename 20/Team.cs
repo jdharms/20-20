@@ -154,11 +154,13 @@ namespace _20
         {
             List<Player> newList = new List<Player>();
             newList.AddRange(players.Except(onCourt));
+            newList.Sort();
             return newList; 
         }
 
         public List<Player> getOncourt()
         {
+            onCourt.Sort();
             return onCourt;
         }
 
