@@ -32,7 +32,6 @@
             this.reboundButton = new System.Windows.Forms.Button();
             this.periodStartButton = new System.Windows.Forms.Button();
             this.historyBox = new System.Windows.Forms.ListBox();
-            this.substitutionButton = new System.Windows.Forms.Button();
             this.timeoutButton = new System.Windows.Forms.Button();
             this.deleteEventButton = new System.Windows.Forms.Button();
             this.jumpBallButton = new System.Windows.Forms.Button();
@@ -64,9 +63,11 @@
             this.awayPlayer1Label = new System.Windows.Forms.Label();
             this.awayPlayer2Context = new System.Windows.Forms.GroupBox();
             this.awayPlayer2Label = new System.Windows.Forms.Label();
-            this.alpacaButton = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.courtBox = new System.Windows.Forms.PictureBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.helloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.wToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.homeBox.SuspendLayout();
             this.homePlayer5Context.SuspendLayout();
             this.homePlayer4Context.SuspendLayout();
@@ -80,6 +81,7 @@
             this.awayPlayer1Context.SuspendLayout();
             this.awayPlayer2Context.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.courtBox)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // reboundButton
@@ -116,16 +118,6 @@
             this.historyBox.SelectedValueChanged += new System.EventHandler(this.historyBox_SelectedValueChanged);
             this.historyBox.Leave += new System.EventHandler(this.historyBox_Leave);
             this.historyBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.historyBox_MouseMove);
-            // 
-            // substitutionButton
-            // 
-            this.substitutionButton.Location = new System.Drawing.Point(352, 676);
-            this.substitutionButton.Name = "substitutionButton";
-            this.substitutionButton.Size = new System.Drawing.Size(164, 35);
-            this.substitutionButton.TabIndex = 8;
-            this.substitutionButton.Text = "Substitution";
-            this.substitutionButton.UseVisualStyleBackColor = true;
-            this.substitutionButton.Click += new System.EventHandler(this.substitutionButton_Click);
             // 
             // timeoutButton
             // 
@@ -215,6 +207,7 @@
             this.homePlayer5Label.Text = "40";
             this.homePlayer5Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.homePlayer5Label.Click += new System.EventHandler(this.playerSelect_click);
+            this.homePlayer5Label.MouseDown += new System.Windows.Forms.MouseEventHandler(this.playerSelect_MouseDown);
             // 
             // homePlayer4Context
             // 
@@ -237,6 +230,7 @@
             this.homePlayer4Label.Text = "30";
             this.homePlayer4Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.homePlayer4Label.Click += new System.EventHandler(this.playerSelect_click);
+            this.homePlayer4Label.MouseDown += new System.Windows.Forms.MouseEventHandler(this.playerSelect_MouseDown);
             // 
             // homePlayer3Context
             // 
@@ -259,6 +253,7 @@
             this.homePlayer3Label.Text = "20";
             this.homePlayer3Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.homePlayer3Label.Click += new System.EventHandler(this.playerSelect_click);
+            this.homePlayer3Label.MouseDown += new System.Windows.Forms.MouseEventHandler(this.playerSelect_MouseDown);
             // 
             // homePlayer2Context
             // 
@@ -281,6 +276,7 @@
             this.homePlayer2Label.Text = "10";
             this.homePlayer2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.homePlayer2Label.Click += new System.EventHandler(this.playerSelect_click);
+            this.homePlayer2Label.MouseDown += new System.Windows.Forms.MouseEventHandler(this.playerSelect_MouseDown);
             // 
             // homePlayer1Context
             // 
@@ -303,6 +299,7 @@
             this.homePlayer1Label.Text = "01";
             this.homePlayer1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.homePlayer1Label.Click += new System.EventHandler(this.playerSelect_click);
+            this.homePlayer1Label.MouseDown += new System.Windows.Forms.MouseEventHandler(this.playerSelect_MouseDown);
             // 
             // homeScore
             // 
@@ -362,6 +359,7 @@
             this.awayPlayer5Label.Text = "40";
             this.awayPlayer5Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.awayPlayer5Label.Click += new System.EventHandler(this.playerSelect_click);
+            this.awayPlayer5Label.MouseDown += new System.Windows.Forms.MouseEventHandler(this.playerSelect_MouseDown);
             // 
             // awayScore
             // 
@@ -395,6 +393,7 @@
             this.awayPlayer4Label.Text = "30";
             this.awayPlayer4Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.awayPlayer4Label.Click += new System.EventHandler(this.playerSelect_click);
+            this.awayPlayer4Label.MouseDown += new System.Windows.Forms.MouseEventHandler(this.playerSelect_MouseDown);
             // 
             // awayNameLabel
             // 
@@ -427,6 +426,7 @@
             this.awayPlayer3Label.Text = "20";
             this.awayPlayer3Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.awayPlayer3Label.Click += new System.EventHandler(this.playerSelect_click);
+            this.awayPlayer3Label.MouseDown += new System.Windows.Forms.MouseEventHandler(this.playerSelect_MouseDown);
             // 
             // awayPlayer1Context
             // 
@@ -449,6 +449,7 @@
             this.awayPlayer1Label.Text = "01";
             this.awayPlayer1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.awayPlayer1Label.Click += new System.EventHandler(this.playerSelect_click);
+            this.awayPlayer1Label.MouseDown += new System.Windows.Forms.MouseEventHandler(this.playerSelect_MouseDown);
             // 
             // awayPlayer2Context
             // 
@@ -471,16 +472,7 @@
             this.awayPlayer2Label.Text = "10";
             this.awayPlayer2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.awayPlayer2Label.Click += new System.EventHandler(this.playerSelect_click);
-            // 
-            // alpacaButton
-            // 
-            this.alpacaButton.Location = new System.Drawing.Point(522, 676);
-            this.alpacaButton.Name = "alpacaButton";
-            this.alpacaButton.Size = new System.Drawing.Size(164, 35);
-            this.alpacaButton.TabIndex = 14;
-            this.alpacaButton.Text = "Testing";
-            this.alpacaButton.UseVisualStyleBackColor = true;
-            this.alpacaButton.Click += new System.EventHandler(this.alpacaButton_Click);
+            this.awayPlayer2Label.MouseDown += new System.Windows.Forms.MouseEventHandler(this.playerSelect_MouseDown);
             // 
             // toolTip1
             // 
@@ -497,18 +489,37 @@
             this.courtBox.TabStop = false;
             this.courtBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.courtBox_MouseDown);
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.helloToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(103, 26);
+            // 
+            // helloToolStripMenuItem
+            // 
+            this.helloToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.wToolStripMenuItem});
+            this.helloToolStripMenuItem.Name = "helloToolStripMenuItem";
+            this.helloToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.helloToolStripMenuItem.Text = "Hello";
+            // 
+            // wToolStripMenuItem
+            // 
+            this.wToolStripMenuItem.Name = "wToolStripMenuItem";
+            this.wToolStripMenuItem.Size = new System.Drawing.Size(85, 22);
+            this.wToolStripMenuItem.Text = "W";
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1236, 730);
-            this.Controls.Add(this.alpacaButton);
             this.Controls.Add(this.awayBox);
             this.Controls.Add(this.homeBox);
             this.Controls.Add(this.jumpBallButton);
             this.Controls.Add(this.turnoverButton);
             this.Controls.Add(this.foulButton);
-            this.Controls.Add(this.substitutionButton);
             this.Controls.Add(this.deleteEventButton);
             this.Controls.Add(this.timeoutButton);
             this.Controls.Add(this.historyBox);
@@ -533,6 +544,7 @@
             this.awayPlayer1Context.ResumeLayout(false);
             this.awayPlayer2Context.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.courtBox)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -543,7 +555,6 @@
         private System.Windows.Forms.Button reboundButton;
         private System.Windows.Forms.Button periodStartButton;
         private System.Windows.Forms.ListBox historyBox;
-        private System.Windows.Forms.Button substitutionButton;
         private System.Windows.Forms.Button timeoutButton;
         private System.Windows.Forms.Button deleteEventButton;
         private System.Windows.Forms.Button jumpBallButton;
@@ -555,7 +566,6 @@
         private System.Windows.Forms.GroupBox awayBox;
         private System.Windows.Forms.Label awayScore;
         private System.Windows.Forms.Label awayNameLabel;
-        private System.Windows.Forms.Button alpacaButton;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.GroupBox homePlayer1Context;
         private System.Windows.Forms.Label homePlayer1Label;
@@ -577,6 +587,9 @@
         private System.Windows.Forms.Label awayPlayer1Label;
         private System.Windows.Forms.GroupBox awayPlayer2Context;
         private System.Windows.Forms.Label awayPlayer2Label;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem helloToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem wToolStripMenuItem;
     }
 }
 

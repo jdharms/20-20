@@ -92,6 +92,7 @@
             this.failedLoginLabel.Size = new System.Drawing.Size(207, 20);
             this.failedLoginLabel.TabIndex = 5;
             this.failedLoginLabel.Text = "Bad username or password.";
+            this.failedLoginLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.failedLoginLabel.Visible = false;
             // 
             // button1
