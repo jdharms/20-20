@@ -568,6 +568,27 @@ namespace _20
             }
         }
 
+        public Player getPlayerByNumber(bool isHome, int number)
+        {
+            Team team = null;
+            if(isHome)
+            {
+                team = HomeTeam;
+            }
+            else
+            {
+                team = AwayTeam;
+            }
+           
+            foreach (Player p in team.Players) 
+            {
+                if (p.Jersey == number)
+                    return p;
+            }
+
+            return null;
+        }
+
         public Context generateContext()
         {
             return new Context(HomeTeam.Score, AwayTeam.Score);

@@ -25,6 +25,7 @@ namespace _20
         private Player secondSelectedPlayer;
         private GroupBox secondSelectedContext;
         private Label secondSelectedLabel;
+        private bool homeRightClicked;
 
         public GameForm()
         {
@@ -63,6 +64,11 @@ namespace _20
             pac = new Alpaca();
             pac.OnStateChange += update;
             GameDataResponse gameData = pac.getGameData(pac.GameID);
+            for (int i = 0; i < awayPlayerLabels.Count; i++)
+            {
+                homePlayerLabels[i].ContextMenuStrip = contextMenuStrip1;
+                awayPlayerLabels[i].ContextMenuStrip = contextMenuStrip1;
+            }
             
         }
 
@@ -252,103 +258,6 @@ namespace _20
             //send timeout event to server
         }
 
-        /*
-         * Stub author: Daniel
-         * 
-         * Purpose: Handles clicks to sub button
-         */
-        private void substitutionButton_Click(object sender, EventArgs e)
-        {
-            //Ask for exiting player
-            SelectPlayer exiting = new SelectPlayer();
-            exiting.home = pac.HomeTeam.getOncourt();
-            exiting.away = pac.AwayTeam.getOncourt();
-            exiting.ShowDialog();
-            Player exitPlayer = exiting.selected;
-
-            //Ask for entering player
-            SelectPlayer entering = new SelectPlayer();
-            entering.home = pac.HomeTeam.getBench();
-            entering.away = pac.AwayTeam.getBench();
-            entering.ShowDialog();
-            Player enteringPlayer = entering.selected;
-
-            //send sub event to server
-            SubstitutionEvent ev = new SubstitutionEvent(pac, enteringPlayer.Id, exitPlayer.Id, enteringPlayer.TeamId);
-            pac.post(ev);
-        }
-
-        private void alpacaButton_Click(object sender, EventArgs e)
-        {
-            //pac = new Alpaca();
-            //pac.OnStateChange += update;
-            //List<Game> games = pac.getGames(new DateTime(2011, 1, 1), new DateTime(2013, 1, 1));
-            //GameDataResponse gameData = pac.getGameData(games[2].gameId);
-            //pac.GameID = games[2].gameId;
-
-            ////StartingLineups lineups = new StartingLineups();
-
-            ////List<Player> hs = new List<Player>();
-            ////List<Player> aw = new List<Player>();
-
-            ////for (int i = 0; i < 5; i++)
-            ////{
-            ////    Player p = pac.HomeTeam.getBench()[i];
-            ////    Player v = pac.AwayTeam.getBench()[i];
-
-            ////    hs.Add(p);
-            ////    aw.Add(v);
-
-            ////    lineups.addStarter(true, p.Id);
-            ////    lineups.addStarter(false, v.Id);
-            ////}
-
-            ////pac.HomeTeam.setPlayersOnCourt(hs);
-            ////pac.AwayTeam.setPlayersOnCourt(aw);
-
-            ////lineups.pack(Alpaca.generateTimestamp());
-            ////pac.setGameData(lineups);
-
-            //PeriodStartEvent e0 = new PeriodStartEvent(pac);
-            //Thread.Sleep(100);
-            //MadeShotEvent e1 = new MadeShotEvent(pac, "4f46b4dde4b063589e20e5c6", "4f46b4bde4b0b074044d891c", null, "dunk", 2, true, false, new Point(40, 40));
-            //Thread.Sleep(100);
-            //MissedShotEvent e2 = new MissedShotEvent(pac, "4f46b657e4b0b074044d8920", "4f46b620e4b0acf74eee5e21", null, "jump-shot", 3, false, new Point(100, 80));
-            //Thread.Sleep(100);
-            //ReboundEvent e3 = new ReboundEvent(pac, "4f46b4fde4b063589e20e5c8", "defensive", new Point(30, 30));
-            //Thread.Sleep(100);
-            //SubstitutionEvent e4 = new SubstitutionEvent(pac, "4f46b5a6e4b0acf74eee5e1c", "4f46b4fde4b063589e20e5c8", "4f46b4bde4b0b074044d891c");
-            //Thread.Sleep(100);
-
-            //Console.WriteLine(Alpaca.generateTimestamp());
-            //Thread.Sleep(10);
-            //Console.WriteLine(Alpaca.generateTimestamp());
-            //Thread.Sleep(10);
-            //Console.WriteLine(Alpaca.generateTimestamp());
-            //Thread.Sleep(10);
-            //Console.WriteLine(Alpaca.generateTimestamp());
-            //Thread.Sleep(10);
-            //Console.WriteLine(Alpaca.generateTimestamp());
-            //Thread.Sleep(10);
-            //Console.WriteLine(Alpaca.generateTimestamp());
-
-            //SelectPlayer sp = new SelectPlayer();
-            //sp.home = pac.HomeTeam.getOncourt();
-            //sp.away = pac.AwayTeam.getOncourt();
-            //sp.Show();
-
-            ////pac.post(e0);
-            ////pac.post(e1);
-            ////pac.post(e2);
-            ////pac.post(e3);
-            ////pac.post(e4);
-
-            //////Have to create delete event after event has been processed.
-            ////DeleteEvent ed = new DeleteEvent(pac, e4);
-            ////pac.post(ed);
-
-        }
-
         private void toolTip1_Popup(object sender, PopupEventArgs e)
         {
 
@@ -501,6 +410,86 @@ namespace _20
 
             this.Refresh();
             this.Invalidate();
+        }
+
+        private void playerSelect_MouseDown(object sender, MouseEventArgs e)
+        {
+            MouseButtons currButton = e.Button;
+            if (currButton == System.Windows.Forms.MouseButtons.Right)
+            {
+
+                contextMenuStrip1.Items.Clear();
+                List<Player> onCourt = null;
+                List<Player> bench = null;
+                Player senderPlayer = null;
+                int senderNumber = int.Parse(((Label)sender).Text);
+
+                if (homePlayerLabels.Contains((Label)sender))
+                {
+                    onCourt = pac.HomeTeam.getOncourt();
+                    bench = pac.HomeTeam.getBench();
+                    senderPlayer = pac.getPlayerByNumber(true, senderNumber);
+                    homeRightClicked = true;
+                }
+                else
+                {
+                    onCourt = pac.AwayTeam.getOncourt();
+                    bench = pac.AwayTeam.getBench();
+                    senderPlayer = pac.getPlayerByNumber(false, senderNumber);
+                    homeRightClicked = false;
+                }
+
+                ToolStripMenuItem subInItem = new ToolStripMenuItem("Sub out #" + senderNumber + " (" + senderPlayer.DisplayName + ")");
+                ToolStripMenuItem[] playerMenu = new ToolStripMenuItem[bench.Count - 1];
+                int toolStripInd = 0;
+
+                for (int i = 0; i < bench.Count; i++)
+                {
+                    if (!bench[i].TeamPlayer)
+                    {
+                        playerMenu[toolStripInd] = new ToolStripMenuItem("with #" + bench[i].Jersey + " (" + bench[i].DisplayName + ")");
+                        playerMenu[toolStripInd].Click += new EventHandler(subPlayer_click);
+                        toolStripInd++;
+                    }
+                }
+
+                subInItem.DropDownItems.AddRange(playerMenu);
+
+                contextMenuStrip1.Items.Add(subInItem);
+            }
+        }
+
+        private void subPlayer_click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem subInItem = (ToolStripMenuItem)sender;
+            string subInItemText = subInItem.Text;
+            ToolStripMenuItem subOutItem = (ToolStripMenuItem) subInItem.OwnerItem; 
+            string subOutItemText = subOutItem.Text;
+
+            int inBeg = subInItemText.IndexOf("#") + 1;
+            int inLength = subInItemText.IndexOf(" (") - inBeg;
+            int outBeg = subOutItemText.IndexOf("#") + 1;
+            int outLength = subOutItemText.IndexOf(" (") - outBeg;
+
+            int subInNumber = int.Parse(subInItemText.Substring(inBeg, inLength));
+            int subOutNumber = int.Parse(subOutItemText.Substring(outBeg, outLength));
+
+            Player subInPlayer = null;
+            Player subOutPlayer = null;
+
+            subInPlayer = pac.getPlayerByNumber(homeRightClicked, subInNumber);
+            subOutPlayer = pac.getPlayerByNumber(homeRightClicked, subOutNumber);
+
+            SubstitutionEvent subEvent = new SubstitutionEvent(pac, subInPlayer.Id, subOutPlayer.Id, subInPlayer.TeamId);
+
+            //TODO: post this event...leave unposted for now.
+            if (MessageBox.Show("Sub in " + subInPlayer.DisplayName + " for " + subOutPlayer.DisplayName + "?", 
+                "", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                Console.WriteLine(subEvent);
+                subEvent.resolve();
+                update();
+            }
         }
     }
 }

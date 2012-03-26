@@ -14,6 +14,7 @@ namespace _20
         public string Name { get { return name; } }
 
         private List<Player> players;
+        public List<Player> Players { get { return players; } }
         private List<Player> onCourt; 
         public Player teamPlayer;
 
