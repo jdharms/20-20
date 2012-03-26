@@ -112,7 +112,7 @@ namespace _20.Events
 
         public override string ToString()
         {
-            return teamName + " timeout.";
+            return char.ToUpper(teamName[0]) + teamName.Substring(1) + " timeout.";
         }
 
     }
