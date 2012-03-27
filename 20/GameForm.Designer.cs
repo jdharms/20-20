@@ -40,6 +40,11 @@
             this.turnoverButton = new System.Windows.Forms.Button();
             this.foulButton = new System.Windows.Forms.Button();
             this.homeBox = new System.Windows.Forms.GroupBox();
+            this.homeTimeoutLabel = new System.Windows.Forms.Label();
+            this.homeTimeoutContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.teamTimeoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mediaTimeoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.officialTimeoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.homePlayer5Context = new System.Windows.Forms.GroupBox();
             this.homePlayer5Label = new System.Windows.Forms.Label();
             this.homePlayer4Context = new System.Windows.Forms.GroupBox();
@@ -52,21 +57,18 @@
             this.homePlayer1Label = new System.Windows.Forms.Label();
             this.homeScore = new System.Windows.Forms.Label();
             this.homeNameLabel = new System.Windows.Forms.Label();
-            this.homeTimeoutContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.teamTimeoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mediaTimeoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.officialTimeoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.awayBox = new System.Windows.Forms.GroupBox();
+            this.awayTimeoutLabel = new System.Windows.Forms.Label();
+            this.awayTimeoutContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.awayPlayer5Context = new System.Windows.Forms.GroupBox();
             this.awayPlayer5Label = new System.Windows.Forms.Label();
             this.awayScore = new System.Windows.Forms.Label();
             this.awayPlayer4Context = new System.Windows.Forms.GroupBox();
             this.awayPlayer4Label = new System.Windows.Forms.Label();
             this.awayNameLabel = new System.Windows.Forms.Label();
-            this.awayTimeoutContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.awayPlayer3Context = new System.Windows.Forms.GroupBox();
             this.awayPlayer3Label = new System.Windows.Forms.Label();
             this.awayPlayer1Context = new System.Windows.Forms.GroupBox();
@@ -95,20 +97,22 @@
             this.reboundContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem13 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem14 = new System.Windows.Forms.ToolStripMenuItem();
-            this.homeTimeoutLabel = new System.Windows.Forms.Label();
-            this.awayTimeoutLabel = new System.Windows.Forms.Label();
+            this.foulContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem12 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem15 = new System.Windows.Forms.ToolStripMenuItem();
+            this.technicalFoulToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.jumpBallContextMenuStrip.SuspendLayout();
             this.homeBox.SuspendLayout();
+            this.homeTimeoutContextMenuStrip.SuspendLayout();
             this.homePlayer5Context.SuspendLayout();
             this.homePlayer4Context.SuspendLayout();
             this.homePlayer3Context.SuspendLayout();
             this.homePlayer2Context.SuspendLayout();
             this.homePlayer1Context.SuspendLayout();
-            this.homeTimeoutContextMenuStrip.SuspendLayout();
             this.awayBox.SuspendLayout();
+            this.awayTimeoutContextMenuStrip.SuspendLayout();
             this.awayPlayer5Context.SuspendLayout();
             this.awayPlayer4Context.SuspendLayout();
-            this.awayTimeoutContextMenuStrip.SuspendLayout();
             this.awayPlayer3Context.SuspendLayout();
             this.awayPlayer1Context.SuspendLayout();
             this.awayPlayer2Context.SuspendLayout();
@@ -117,6 +121,7 @@
             this.madeShotContextMenuStrip.SuspendLayout();
             this.missedShotContextMenuStrip.SuspendLayout();
             this.reboundContextMenuStrip.SuspendLayout();
+            this.foulContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // reboundButton
@@ -150,7 +155,6 @@
             this.historyBox.Name = "historyBox";
             this.historyBox.Size = new System.Drawing.Size(262, 602);
             this.historyBox.TabIndex = 7;
-            this.historyBox.SelectedValueChanged += new System.EventHandler(this.historyBox_SelectedValueChanged);
             this.historyBox.Leave += new System.EventHandler(this.historyBox_Leave);
             this.historyBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.historyBox_MouseMove);
             // 
@@ -204,7 +208,7 @@
             this.turnoverButton.TabIndex = 2;
             this.turnoverButton.Text = "Turnover";
             this.turnoverButton.UseVisualStyleBackColor = true;
-            this.turnoverButton.Click += new System.EventHandler(this.turnoverButton_Click);
+            this.turnoverButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.turnoverButton_MouseDown);
             // 
             // foulButton
             // 
@@ -214,7 +218,7 @@
             this.foulButton.TabIndex = 6;
             this.foulButton.Text = "Foul";
             this.foulButton.UseVisualStyleBackColor = true;
-            this.foulButton.Click += new System.EventHandler(this.foulButton_Click);
+            this.foulButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.foul_MouseDown);
             // 
             // homeBox
             // 
@@ -232,6 +236,47 @@
             this.homeBox.TabIndex = 12;
             this.homeBox.TabStop = false;
             this.homeBox.Text = "Home";
+            // 
+            // homeTimeoutLabel
+            // 
+            this.homeTimeoutLabel.ContextMenuStrip = this.homeTimeoutContextMenuStrip;
+            this.homeTimeoutLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.homeTimeoutLabel.Location = new System.Drawing.Point(352, 16);
+            this.homeTimeoutLabel.Name = "homeTimeoutLabel";
+            this.homeTimeoutLabel.Size = new System.Drawing.Size(108, 25);
+            this.homeTimeoutLabel.TabIndex = 5;
+            this.homeTimeoutLabel.Text = "T.0. Left: 6";
+            this.homeTimeoutLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // homeTimeoutContextMenuStrip
+            // 
+            this.homeTimeoutContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.teamTimeoutToolStripMenuItem,
+            this.mediaTimeoutToolStripMenuItem,
+            this.officialTimeoutToolStripMenuItem});
+            this.homeTimeoutContextMenuStrip.Name = "contextMenuStrip1";
+            this.homeTimeoutContextMenuStrip.Size = new System.Drawing.Size(161, 70);
+            // 
+            // teamTimeoutToolStripMenuItem
+            // 
+            this.teamTimeoutToolStripMenuItem.Name = "teamTimeoutToolStripMenuItem";
+            this.teamTimeoutToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.teamTimeoutToolStripMenuItem.Text = "Home Timeout";
+            this.teamTimeoutToolStripMenuItem.Click += new System.EventHandler(this.timeout_Click);
+            // 
+            // mediaTimeoutToolStripMenuItem
+            // 
+            this.mediaTimeoutToolStripMenuItem.Name = "mediaTimeoutToolStripMenuItem";
+            this.mediaTimeoutToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.mediaTimeoutToolStripMenuItem.Text = "Media Timeout";
+            this.mediaTimeoutToolStripMenuItem.Click += new System.EventHandler(this.timeout_Click);
+            // 
+            // officialTimeoutToolStripMenuItem
+            // 
+            this.officialTimeoutToolStripMenuItem.Name = "officialTimeoutToolStripMenuItem";
+            this.officialTimeoutToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.officialTimeoutToolStripMenuItem.Text = "Official Timeout";
+            this.officialTimeoutToolStripMenuItem.Click += new System.EventHandler(this.timeout_Click);
             // 
             // homePlayer5Context
             // 
@@ -365,40 +410,10 @@
             this.homeNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.homeNameLabel.Location = new System.Drawing.Point(6, 16);
             this.homeNameLabel.Name = "homeNameLabel";
-            this.homeNameLabel.Size = new System.Drawing.Size(340, 40);
+            this.homeNameLabel.Size = new System.Drawing.Size(340, 32);
             this.homeNameLabel.TabIndex = 0;
             this.homeNameLabel.Text = "Home Team Name";
             this.homeNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // homeTimeoutContextMenuStrip
-            // 
-            this.homeTimeoutContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.teamTimeoutToolStripMenuItem,
-            this.mediaTimeoutToolStripMenuItem,
-            this.officialTimeoutToolStripMenuItem});
-            this.homeTimeoutContextMenuStrip.Name = "contextMenuStrip1";
-            this.homeTimeoutContextMenuStrip.Size = new System.Drawing.Size(161, 70);
-            // 
-            // teamTimeoutToolStripMenuItem
-            // 
-            this.teamTimeoutToolStripMenuItem.Name = "teamTimeoutToolStripMenuItem";
-            this.teamTimeoutToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.teamTimeoutToolStripMenuItem.Text = "Home Timeout";
-            this.teamTimeoutToolStripMenuItem.Click += new System.EventHandler(this.timeout_Click);
-            // 
-            // mediaTimeoutToolStripMenuItem
-            // 
-            this.mediaTimeoutToolStripMenuItem.Name = "mediaTimeoutToolStripMenuItem";
-            this.mediaTimeoutToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.mediaTimeoutToolStripMenuItem.Text = "Media Timeout";
-            this.mediaTimeoutToolStripMenuItem.Click += new System.EventHandler(this.timeout_Click);
-            // 
-            // officialTimeoutToolStripMenuItem
-            // 
-            this.officialTimeoutToolStripMenuItem.Name = "officialTimeoutToolStripMenuItem";
-            this.officialTimeoutToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.officialTimeoutToolStripMenuItem.Text = "Official Timeout";
-            this.officialTimeoutToolStripMenuItem.Click += new System.EventHandler(this.timeout_Click);
             // 
             // awayBox
             // 
@@ -416,6 +431,47 @@
             this.awayBox.TabIndex = 13;
             this.awayBox.TabStop = false;
             this.awayBox.Text = "Away";
+            // 
+            // awayTimeoutLabel
+            // 
+            this.awayTimeoutLabel.ContextMenuStrip = this.awayTimeoutContextMenuStrip;
+            this.awayTimeoutLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.awayTimeoutLabel.Location = new System.Drawing.Point(352, 16);
+            this.awayTimeoutLabel.Name = "awayTimeoutLabel";
+            this.awayTimeoutLabel.Size = new System.Drawing.Size(108, 25);
+            this.awayTimeoutLabel.TabIndex = 6;
+            this.awayTimeoutLabel.Text = "T.0. Left: 6";
+            this.awayTimeoutLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // awayTimeoutContextMenuStrip
+            // 
+            this.awayTimeoutContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1,
+            this.toolStripMenuItem2,
+            this.toolStripMenuItem3});
+            this.awayTimeoutContextMenuStrip.Name = "contextMenuStrip1";
+            this.awayTimeoutContextMenuStrip.Size = new System.Drawing.Size(161, 70);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(160, 22);
+            this.toolStripMenuItem1.Text = "Away Timeout";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.timeout_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(160, 22);
+            this.toolStripMenuItem2.Text = "Media Timeout";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.timeout_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(160, 22);
+            this.toolStripMenuItem3.Text = "Official Timeout";
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.timeout_Click);
             // 
             // awayPlayer5Context
             // 
@@ -480,40 +536,10 @@
             this.awayNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.awayNameLabel.Location = new System.Drawing.Point(6, 16);
             this.awayNameLabel.Name = "awayNameLabel";
-            this.awayNameLabel.Size = new System.Drawing.Size(340, 40);
+            this.awayNameLabel.Size = new System.Drawing.Size(340, 32);
             this.awayNameLabel.TabIndex = 1;
             this.awayNameLabel.Text = "Away Team Name";
             this.awayNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // awayTimeoutContextMenuStrip
-            // 
-            this.awayTimeoutContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1,
-            this.toolStripMenuItem2,
-            this.toolStripMenuItem3});
-            this.awayTimeoutContextMenuStrip.Name = "contextMenuStrip1";
-            this.awayTimeoutContextMenuStrip.Size = new System.Drawing.Size(161, 70);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(160, 22);
-            this.toolStripMenuItem1.Text = "Away Timeout";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.timeout_Click);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(160, 22);
-            this.toolStripMenuItem2.Text = "Media Timeout";
-            this.toolStripMenuItem2.Click += new System.EventHandler(this.timeout_Click);
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(160, 22);
-            this.toolStripMenuItem3.Text = "Official Timeout";
-            this.toolStripMenuItem3.Click += new System.EventHandler(this.timeout_Click);
             // 
             // awayPlayer3Context
             // 
@@ -583,10 +609,6 @@
             this.awayPlayer2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.awayPlayer2Label.Click += new System.EventHandler(this.playerSelect_click);
             this.awayPlayer2Label.MouseDown += new System.Windows.Forms.MouseEventHandler(this.playerSelect_MouseDown);
-            // 
-            // toolTip1
-            // 
-            this.toolTip1.Popup += new System.Windows.Forms.PopupEventHandler(this.toolTip1_Popup);
             // 
             // courtBox
             // 
@@ -752,28 +774,35 @@
             this.toolStripMenuItem14.Text = "Defensive Rebound";
             this.toolStripMenuItem14.Click += new System.EventHandler(this.rebound_Click);
             // 
-            // homeTimeoutLabel
+            // foulContextMenuStrip
             // 
-            this.homeTimeoutLabel.ContextMenuStrip = this.homeTimeoutContextMenuStrip;
-            this.homeTimeoutLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.homeTimeoutLabel.Location = new System.Drawing.Point(352, 16);
-            this.homeTimeoutLabel.Name = "homeTimeoutLabel";
-            this.homeTimeoutLabel.Size = new System.Drawing.Size(108, 25);
-            this.homeTimeoutLabel.TabIndex = 5;
-            this.homeTimeoutLabel.Text = "T.0. Left: 6";
-            this.homeTimeoutLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.homeTimeoutLabel.Click += new System.EventHandler(this.label1_Click);
+            this.foulContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem12,
+            this.toolStripMenuItem15,
+            this.technicalFoulToolStripMenuItem});
+            this.foulContextMenuStrip.Name = "madeShotContextMenuStrip";
+            this.foulContextMenuStrip.Size = new System.Drawing.Size(152, 70);
             // 
-            // awayTimeoutLabel
+            // toolStripMenuItem12
             // 
-            this.awayTimeoutLabel.ContextMenuStrip = this.awayTimeoutContextMenuStrip;
-            this.awayTimeoutLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.awayTimeoutLabel.Location = new System.Drawing.Point(352, 16);
-            this.awayTimeoutLabel.Name = "awayTimeoutLabel";
-            this.awayTimeoutLabel.Size = new System.Drawing.Size(108, 25);
-            this.awayTimeoutLabel.TabIndex = 6;
-            this.awayTimeoutLabel.Text = "T.0. Left: 6";
-            this.awayTimeoutLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toolStripMenuItem12.Name = "toolStripMenuItem12";
+            this.toolStripMenuItem12.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem12.Text = "Offensive Foul";
+            this.toolStripMenuItem12.Click += new System.EventHandler(this.foul_Click);
+            // 
+            // toolStripMenuItem15
+            // 
+            this.toolStripMenuItem15.Name = "toolStripMenuItem15";
+            this.toolStripMenuItem15.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem15.Text = "Defensive Foul";
+            this.toolStripMenuItem15.Click += new System.EventHandler(this.foul_Click);
+            // 
+            // technicalFoulToolStripMenuItem
+            // 
+            this.technicalFoulToolStripMenuItem.Name = "technicalFoulToolStripMenuItem";
+            this.technicalFoulToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.technicalFoulToolStripMenuItem.Text = "Technical Foul";
+            this.technicalFoulToolStripMenuItem.Click += new System.EventHandler(this.foul_Click);
             // 
             // GameForm
             // 
@@ -782,12 +811,12 @@
             this.ClientSize = new System.Drawing.Size(1236, 730);
             this.Controls.Add(this.missedShotButton);
             this.Controls.Add(this.madeShotButton);
-            this.Controls.Add(this.awayBox);
-            this.Controls.Add(this.homeBox);
             this.Controls.Add(this.deleteEventButton);
             this.Controls.Add(this.courtBox);
             this.Controls.Add(this.reboundButton);
             this.Controls.Add(this.jumpBallButton);
+            this.Controls.Add(this.awayBox);
+            this.Controls.Add(this.homeBox);
             this.Controls.Add(this.turnoverButton);
             this.Controls.Add(this.foulButton);
             this.Controls.Add(this.periodStartButton);
@@ -798,16 +827,16 @@
             this.Load += new System.EventHandler(this.GameForm_Load);
             this.jumpBallContextMenuStrip.ResumeLayout(false);
             this.homeBox.ResumeLayout(false);
+            this.homeTimeoutContextMenuStrip.ResumeLayout(false);
             this.homePlayer5Context.ResumeLayout(false);
             this.homePlayer4Context.ResumeLayout(false);
             this.homePlayer3Context.ResumeLayout(false);
             this.homePlayer2Context.ResumeLayout(false);
             this.homePlayer1Context.ResumeLayout(false);
-            this.homeTimeoutContextMenuStrip.ResumeLayout(false);
             this.awayBox.ResumeLayout(false);
+            this.awayTimeoutContextMenuStrip.ResumeLayout(false);
             this.awayPlayer5Context.ResumeLayout(false);
             this.awayPlayer4Context.ResumeLayout(false);
-            this.awayTimeoutContextMenuStrip.ResumeLayout(false);
             this.awayPlayer3Context.ResumeLayout(false);
             this.awayPlayer1Context.ResumeLayout(false);
             this.awayPlayer2Context.ResumeLayout(false);
@@ -816,6 +845,7 @@
             this.madeShotContextMenuStrip.ResumeLayout(false);
             this.missedShotContextMenuStrip.ResumeLayout(false);
             this.reboundContextMenuStrip.ResumeLayout(false);
+            this.foulContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -890,6 +920,10 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem14;
         private System.Windows.Forms.Label homeTimeoutLabel;
         private System.Windows.Forms.Label awayTimeoutLabel;
+        private System.Windows.Forms.ContextMenuStrip foulContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem12;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem15;
+        private System.Windows.Forms.ToolStripMenuItem technicalFoulToolStripMenuItem;
     }
 }
 
