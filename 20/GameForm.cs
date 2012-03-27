@@ -781,8 +781,7 @@ namespace _20
             if (MessageBox.Show("Send event: " + mse, "", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 pointSelected = false;
-                for(int i = 0; i < 39; i++)
-                    pac.post(mse);
+                pac.post(mse);
             }
 
         }
