@@ -66,6 +66,12 @@
     <Compile Include="Events\Event.cs" />
     <Compile Include="Events\TimeoutEvent.cs" />
     <Compile Include="Events\TurnoverEvent.cs" />
+    <Compile Include="DataForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataForm.Designer.cs">
+      <DependentUpon>DataForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SetupGameForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -105,6 +111,9 @@
     </Compile>
     <Compile Include="StartingLineups.cs" />
     <Compile Include="Team.cs" />
+    <EmbeddedResource Include="DataForm.resx">
+      <DependentUpon>DataForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GameSelectForm.resx">
       <DependentUpon>GameSelectForm.cs</DependentUpon>
     </EmbeddedResource>
