@@ -87,6 +87,9 @@ namespace _20
             homeNameLabel.Text = pac.HomeTeam.Name;
             awayNameLabel.Text = pac.AwayTeam.Name;
 
+            homeTimeoutLabel.Text = "T.O. Left: " + pac.HomeTeam.TimeoutsLeft;
+            awayTimeoutLabel.Text = "T.O. Left: " + pac.AwayTeam.TimeoutsLeft;
+
             homeScore.Text = pac.HomeTeam.Score.ToString();
             awayScore.Text = pac.AwayTeam.Score.ToString();
 
@@ -555,6 +558,7 @@ namespace _20
             }
             else if (sender.ToString().Equals("Away Timeout"))
             {
+                Console.WriteLine("Away Timeout");
                 timeoutEvent = new TimeoutEvent(pac, pac.AwayTeam.Id, "team");
             }
             else if (sender.ToString().Equals("Media Timeout"))
@@ -845,6 +849,11 @@ namespace _20
                 pointSelected = false;
                 pac.post(re);
             }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

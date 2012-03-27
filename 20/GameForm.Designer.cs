@@ -95,6 +95,8 @@
             this.reboundContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem13 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem14 = new System.Windows.Forms.ToolStripMenuItem();
+            this.homeTimeoutLabel = new System.Windows.Forms.Label();
+            this.awayTimeoutLabel = new System.Windows.Forms.Label();
             this.jumpBallContextMenuStrip.SuspendLayout();
             this.homeBox.SuspendLayout();
             this.homePlayer5Context.SuspendLayout();
@@ -144,9 +146,9 @@
             "Event 1",
             "Event 2",
             "Event 3"});
-            this.historyBox.Location = new System.Drawing.Point(962, 12);
+            this.historyBox.Location = new System.Drawing.Point(968, 25);
             this.historyBox.Name = "historyBox";
-            this.historyBox.Size = new System.Drawing.Size(262, 615);
+            this.historyBox.Size = new System.Drawing.Size(262, 602);
             this.historyBox.TabIndex = 7;
             this.historyBox.SelectedValueChanged += new System.EventHandler(this.historyBox_SelectedValueChanged);
             this.historyBox.Leave += new System.EventHandler(this.historyBox_Leave);
@@ -216,6 +218,7 @@
             // 
             // homeBox
             // 
+            this.homeBox.Controls.Add(this.homeTimeoutLabel);
             this.homeBox.Controls.Add(this.homePlayer5Context);
             this.homeBox.Controls.Add(this.homePlayer4Context);
             this.homeBox.Controls.Add(this.homePlayer3Context);
@@ -347,25 +350,25 @@
             // 
             // homeScore
             // 
-            this.homeScore.AutoSize = true;
             this.homeScore.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.homeScore.Font = new System.Drawing.Font("Courier New", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.homeScore.Location = new System.Drawing.Point(358, 27);
+            this.homeScore.Font = new System.Drawing.Font("Courier New", 35.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.homeScore.Location = new System.Drawing.Point(352, 41);
             this.homeScore.Name = "homeScore";
-            this.homeScore.Size = new System.Drawing.Size(108, 71);
+            this.homeScore.Size = new System.Drawing.Size(108, 52);
             this.homeScore.TabIndex = 1;
-            this.homeScore.Text = "00";
+            this.homeScore.Text = "999";
+            this.homeScore.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // homeNameLabel
             // 
-            this.homeNameLabel.AutoSize = true;
             this.homeNameLabel.ContextMenuStrip = this.homeTimeoutContextMenuStrip;
             this.homeNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.homeNameLabel.Location = new System.Drawing.Point(6, 16);
             this.homeNameLabel.Name = "homeNameLabel";
-            this.homeNameLabel.Size = new System.Drawing.Size(241, 31);
+            this.homeNameLabel.Size = new System.Drawing.Size(340, 40);
             this.homeNameLabel.TabIndex = 0;
             this.homeNameLabel.Text = "Home Team Name";
+            this.homeNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // homeTimeoutContextMenuStrip
             // 
@@ -399,6 +402,7 @@
             // 
             // awayBox
             // 
+            this.awayBox.Controls.Add(this.awayTimeoutLabel);
             this.awayBox.Controls.Add(this.awayPlayer5Context);
             this.awayBox.Controls.Add(this.awayScore);
             this.awayBox.Controls.Add(this.awayPlayer4Context);
@@ -438,14 +442,14 @@
             // 
             // awayScore
             // 
-            this.awayScore.AutoSize = true;
             this.awayScore.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.awayScore.Font = new System.Drawing.Font("Courier New", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.awayScore.Location = new System.Drawing.Point(356, 25);
+            this.awayScore.Font = new System.Drawing.Font("Courier New", 35.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.awayScore.Location = new System.Drawing.Point(352, 41);
             this.awayScore.Name = "awayScore";
-            this.awayScore.Size = new System.Drawing.Size(108, 71);
+            this.awayScore.Size = new System.Drawing.Size(108, 52);
             this.awayScore.TabIndex = 2;
-            this.awayScore.Text = "00";
+            this.awayScore.Text = "999";
+            this.awayScore.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // awayPlayer4Context
             // 
@@ -472,14 +476,14 @@
             // 
             // awayNameLabel
             // 
-            this.awayNameLabel.AutoSize = true;
             this.awayNameLabel.ContextMenuStrip = this.awayTimeoutContextMenuStrip;
             this.awayNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.awayNameLabel.Location = new System.Drawing.Point(6, 16);
             this.awayNameLabel.Name = "awayNameLabel";
-            this.awayNameLabel.Size = new System.Drawing.Size(236, 31);
+            this.awayNameLabel.Size = new System.Drawing.Size(340, 40);
             this.awayNameLabel.TabIndex = 1;
             this.awayNameLabel.Text = "Away Team Name";
+            this.awayNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // awayTimeoutContextMenuStrip
             // 
@@ -732,7 +736,7 @@
             this.toolStripMenuItem13,
             this.toolStripMenuItem14});
             this.reboundContextMenuStrip.Name = "madeShotContextMenuStrip";
-            this.reboundContextMenuStrip.Size = new System.Drawing.Size(177, 70);
+            this.reboundContextMenuStrip.Size = new System.Drawing.Size(177, 48);
             // 
             // toolStripMenuItem13
             // 
@@ -748,6 +752,29 @@
             this.toolStripMenuItem14.Text = "Defensive Rebound";
             this.toolStripMenuItem14.Click += new System.EventHandler(this.rebound_Click);
             // 
+            // homeTimeoutLabel
+            // 
+            this.homeTimeoutLabel.ContextMenuStrip = this.homeTimeoutContextMenuStrip;
+            this.homeTimeoutLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.homeTimeoutLabel.Location = new System.Drawing.Point(352, 16);
+            this.homeTimeoutLabel.Name = "homeTimeoutLabel";
+            this.homeTimeoutLabel.Size = new System.Drawing.Size(108, 25);
+            this.homeTimeoutLabel.TabIndex = 5;
+            this.homeTimeoutLabel.Text = "T.0. Left: 6";
+            this.homeTimeoutLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.homeTimeoutLabel.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // awayTimeoutLabel
+            // 
+            this.awayTimeoutLabel.ContextMenuStrip = this.awayTimeoutContextMenuStrip;
+            this.awayTimeoutLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.awayTimeoutLabel.Location = new System.Drawing.Point(352, 16);
+            this.awayTimeoutLabel.Name = "awayTimeoutLabel";
+            this.awayTimeoutLabel.Size = new System.Drawing.Size(108, 25);
+            this.awayTimeoutLabel.TabIndex = 6;
+            this.awayTimeoutLabel.Text = "T.0. Left: 6";
+            this.awayTimeoutLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -758,20 +785,19 @@
             this.Controls.Add(this.awayBox);
             this.Controls.Add(this.homeBox);
             this.Controls.Add(this.deleteEventButton);
-            this.Controls.Add(this.historyBox);
             this.Controls.Add(this.courtBox);
             this.Controls.Add(this.reboundButton);
             this.Controls.Add(this.jumpBallButton);
             this.Controls.Add(this.turnoverButton);
             this.Controls.Add(this.foulButton);
             this.Controls.Add(this.periodStartButton);
+            this.Controls.Add(this.historyBox);
             this.Name = "GameForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "20-20 Basketball";
             this.Load += new System.EventHandler(this.GameForm_Load);
             this.jumpBallContextMenuStrip.ResumeLayout(false);
             this.homeBox.ResumeLayout(false);
-            this.homeBox.PerformLayout();
             this.homePlayer5Context.ResumeLayout(false);
             this.homePlayer4Context.ResumeLayout(false);
             this.homePlayer3Context.ResumeLayout(false);
@@ -779,7 +805,6 @@
             this.homePlayer1Context.ResumeLayout(false);
             this.homeTimeoutContextMenuStrip.ResumeLayout(false);
             this.awayBox.ResumeLayout(false);
-            this.awayBox.PerformLayout();
             this.awayPlayer5Context.ResumeLayout(false);
             this.awayPlayer4Context.ResumeLayout(false);
             this.awayTimeoutContextMenuStrip.ResumeLayout(false);
@@ -863,6 +888,8 @@
         private System.Windows.Forms.ContextMenuStrip reboundContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem13;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem14;
+        private System.Windows.Forms.Label homeTimeoutLabel;
+        private System.Windows.Forms.Label awayTimeoutLabel;
     }
 }
 
