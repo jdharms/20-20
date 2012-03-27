@@ -145,6 +145,11 @@ namespace _20
                 courtBox.Refresh();
             }
 
+            if (historyBox.Items.Count > 0)
+            {
+                historyBox.SetSelected(historyBox.Items.Count - 1, true);
+            }
+
             this.Invalidate();
         }
 
@@ -177,21 +182,6 @@ namespace _20
             }
         }
 
-        private void historyBox_SelectedValueChanged(object sender, EventArgs e)
-        {
-            ////The selected value "changes" even when it goes to having no selected value.
-            ////This only shows the delete button if the selected value is an actual event,
-            ////and hides the box when the new selection is nothing.
-            //if (historyBox.SelectedItem != null)
-            //{
-            //    deleteEventButton.Visible = true;
-            //}
-            //else
-            //{
-            //    deleteEventButton.Visible = false;
-            //}
-
-        }
 
         private void historyBox_Leave(object sender, EventArgs e)
         {
@@ -219,36 +209,6 @@ namespace _20
                 Console.WriteLine("Not deleting...");
                 historyBox.ClearSelected();
             }
-        }
-
-        /* 
-         * Stub author: Daniel
-         * 
-         * Purpose: Handles clicks to the rebound button.
-         */
-        private void reboundButton_Click(object sender, EventArgs e)
-        {
-            //Ask for location
-            //Ask for team
-            //Ask for rebound type ("offensive", "defensive", "dead-ball", "team-offensive", or "team-defensive")
-            //Ask for player (optional except dead-ball rebounds must have player.)
-
-            //send rebound event to server
-        }
-
-        /*
-         * Stub author: Daniel
-         * 
-         * Purpose: Handles clicks to the turnover button.
-         */
-        private void turnoverButton_Click(object sender, EventArgs e)
-        {
-            //Ask for location
-            //Ask for team
-            //Ask for optional player on opposing team that forced turnover.
-            //Ask for turnover type ( "traveling", "lost-ball", "offensive-foul", "out-of-bounds", "violation", "offensive-goaltending" or "thrown-away")
-
-            //send turnover event to server
         }
 
         /*
@@ -288,27 +248,6 @@ namespace _20
 
             //send appropriate event to server
             pac.post(ev);
-
-        }
-
-        /*
-         * Stub author: Daniel
-         * 
-         * Purpose: Handles clicks to the foul button
-         */
-        private void foulButton_Click(object sender, EventArgs e)
-        {
-            //Ask for location
-            //ask for fouled player
-            //ask for committing player
-            //ask for type of foul
-            //ejected?
-
-            //send foul event
-        }
-
-        private void toolTip1_Popup(object sender, PopupEventArgs e)
-        {
 
         }
 
@@ -558,7 +497,6 @@ namespace _20
             }
             else if (sender.ToString().Equals("Away Timeout"))
             {
-                Console.WriteLine("Away Timeout");
                 timeoutEvent = new TimeoutEvent(pac, pac.AwayTeam.Id, "team");
             }
             else if (sender.ToString().Equals("Media Timeout"))
@@ -740,6 +678,36 @@ namespace _20
             }
         }
 
+        private void foul_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
+            {
+                if (firstSelectedPlayer == null)
+                {
+                    MessageBox.Show("Please select at least one player above");
+                    return;
+                }
+                else if (secondSelectedPlayer != null && firstSelectedPlayer.TeamId == secondSelectedPlayer.TeamId)
+                {
+                    MessageBox.Show("Selected players must be on different teams");
+                    return;
+                }
+                else if (!pointSelected)
+                {
+                    MessageBox.Show("Please select a location on the court");
+                    return;
+                }
+                else
+                {
+                    firstSelectedContext.Text = "Fouled";
+                    if (secondSelectedContext != null)
+                        secondSelectedContext.Text = "Drew";
+                }
+                Button btnSender = (Button)sender;
+                foulContextMenuStrip.Show(this, ((Button)sender).Location);
+            }
+        }
+
         private void pointScored_Click(object sender, EventArgs e)
         {
             MadeShotEvent mse = null;
@@ -851,9 +819,97 @@ namespace _20
             }
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void turnoverButton_MouseDown(object sender, MouseEventArgs e)
         {
+            if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
+            {
+                if (firstSelectedPlayer == null)
+                {
+                    MessageBox.Show("Please select at least one player above");
+                    return;
+                }
+                else if (secondSelectedPlayer != null && firstSelectedPlayer.TeamId == secondSelectedPlayer.TeamId)
+                {
+                    MessageBox.Show("Selected players must be on different teams");
+                    return;
+                }
+                else if (!pointSelected)
+                {
+                    MessageBox.Show("Please select a location on the court");
+                    return;
+                }
+                else
+                {
+                    firstSelectedContext.Text = "Commit";
+                    if (secondSelectedContext != null)
+                        secondSelectedContext.Text = "Forced";
+                    DataForm dataForm = new DataForm("turnover", -1);
+                    dataForm.ShowDialog();
+                    if (dataForm.cancelled)
+                    {
+                        return;
+                    }
 
+                    string forcedBy = secondSelectedPlayer == null ? null : secondSelectedPlayer.Id;
+
+                    TurnoverEvent te = new TurnoverEvent(pac, firstSelectedPlayer.Id, forcedBy, dataForm.turnoverType, currPoint);
+                    
+                    if (MessageBox.Show("Send event: " + te, "", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                    {
+                        pointSelected = false;
+                        pac.post(te);
+                    }
+                }
+            }
+        }
+
+        private void foul_Click(object sender, EventArgs e)
+        {
+            FoulEvent fe = null;
+            string str = sender.ToString();
+            string drewBy = secondSelectedPlayer == null ? null : secondSelectedPlayer.Id;
+            if (str.Equals("Offensive Foul"))
+            {
+                DataForm dataForm = new DataForm("foul", DataForm.CHARGING);
+                dataForm.ShowDialog();
+                if (dataForm.cancelled)
+                {
+                    return;
+                }
+
+                fe = new FoulEvent(pac, firstSelectedPlayer.TeamId, firstSelectedPlayer.Id, 
+                    drewBy, dataForm.foulType, dataForm.ejected, currPoint);
+            }
+            else if (str.Equals("Defensive Foul"))
+            {
+                DataForm dataForm = new DataForm("foul", DataForm.FOUL_TYPE);
+                dataForm.ShowDialog();
+                if (dataForm.cancelled)
+                {
+                    return;
+                }
+
+                fe = new FoulEvent(pac, firstSelectedPlayer.TeamId, firstSelectedPlayer.Id, 
+                    drewBy, dataForm.foulType, dataForm.ejected, currPoint);
+            }
+            else if (str.Equals("Technical Foul"))
+            {
+                DataForm dataForm = new DataForm("foul", DataForm.EJECTED);
+                dataForm.ShowDialog();
+                if (dataForm.cancelled)
+                {
+                    return;
+                }
+
+                fe = new FoulEvent(pac, firstSelectedPlayer.TeamId, firstSelectedPlayer.Id, 
+                    drewBy, "technical" , dataForm.ejected, currPoint);
+            }
+
+            if (MessageBox.Show("Send event: " + fe, "", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                pointSelected = false;
+                pac.post(fe);
+            }
         }
     }
 }
