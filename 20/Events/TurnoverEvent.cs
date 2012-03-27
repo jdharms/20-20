@@ -59,7 +59,7 @@ namespace _20.Events
             string committedByString = "";
             string forcedByString = "";
 
-            if (committedBy.TeamPlayer)
+            if (committedBy == null)
             {
                 committedByString = pac.getTeamById(committedBy.TeamId).Name;
             }
@@ -68,16 +68,12 @@ namespace _20.Events
                 committedByString = committedBy.DisplayName; 
             }
 
-            if (forcedBy.TeamPlayer)
+            if (forcedBy !=  null)
             {
-                forcedByString = pac.getTeamById(forcedBy.TeamId).Name;
-            }
-            else
-            {
-                forcedByString = forcedBy.DisplayName; 
+                forcedByString = " Forced by " + forcedBy.DisplayName; 
             }
 
-            return committedByString + " " + turnoverType + " turnover. Forced by " + forcedByString;
+            return committedByString + " " + turnoverType + " turnover." + forcedByString;
         }
         
     }

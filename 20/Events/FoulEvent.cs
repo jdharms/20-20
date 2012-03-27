@@ -144,13 +144,18 @@ namespace _20.Events
             string drewString = "";
             string committedString = "";
 
-            if (drew.TeamPlayer)
+
+            if (drew == null)
             {
-                drewString = pac.getTeamById(drew.TeamId).Name;
+                drewString = "";
+            }
+            else if (drew.TeamPlayer)
+            {
+                drewString = ". Drawn by " + pac.getTeamById(drew.TeamId).Name;
             }
             else
             {
-                drewString = drew.DisplayName;
+                drewString = ". Drawn by " + drew.DisplayName;
             }
 
             if (committed.TeamPlayer)
@@ -163,7 +168,7 @@ namespace _20.Events
             }
 
                 
-            return char.ToUpper(foulType[0]) + foulType.Substring(1) + " foul on " + committedString + ". Drawn by " + drewString + ".";
+            return char.ToUpper(foulType[0]) + foulType.Substring(1) + " foul on " + committedString + drewString + ".";
         }
     }
 }
