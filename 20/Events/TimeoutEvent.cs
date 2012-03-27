@@ -70,7 +70,7 @@ namespace _20.Events
                     // Adds one more to it
                     timeoutsUsed++;
                     // And sets the team's value to the new value
-                    pac.HomeTeam.TimeoutsUsed = timeoutsUsed;
+                    pac.AwayTeam.TimeoutsUsed = timeoutsUsed;
                 }
             }
         }
