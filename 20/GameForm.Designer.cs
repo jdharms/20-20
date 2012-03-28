@@ -126,23 +126,25 @@
             // 
             // reboundButton
             // 
-            this.reboundButton.Location = new System.Drawing.Point(504, 634);
+            this.reboundButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.reboundButton.Location = new System.Drawing.Point(12, 676);
             this.reboundButton.Name = "reboundButton";
-            this.reboundButton.Size = new System.Drawing.Size(117, 35);
+            this.reboundButton.Size = new System.Drawing.Size(227, 35);
             this.reboundButton.TabIndex = 1;
             this.reboundButton.Text = "Rebound";
             this.reboundButton.UseVisualStyleBackColor = true;
-            this.reboundButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.reboundButton_MouseDown);
+            this.reboundButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rebound_MouseDown);
             // 
             // periodStartButton
             // 
+            this.periodStartButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.periodStartButton.Location = new System.Drawing.Point(12, 635);
             this.periodStartButton.Name = "periodStartButton";
-            this.periodStartButton.Size = new System.Drawing.Size(117, 35);
+            this.periodStartButton.Size = new System.Drawing.Size(227, 35);
             this.periodStartButton.TabIndex = 5;
             this.periodStartButton.Text = "Period Start/End";
             this.periodStartButton.UseVisualStyleBackColor = true;
-            this.periodStartButton.Click += new System.EventHandler(this.periodStartButton_Click);
+            this.periodStartButton.Click += new System.EventHandler(this.periodChange_Click);
             // 
             // historyBox
             // 
@@ -155,28 +157,29 @@
             this.historyBox.Name = "historyBox";
             this.historyBox.Size = new System.Drawing.Size(262, 602);
             this.historyBox.TabIndex = 7;
-            this.historyBox.Leave += new System.EventHandler(this.historyBox_Leave);
             this.historyBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.historyBox_MouseMove);
             // 
             // deleteEventButton
             // 
-            this.deleteEventButton.Location = new System.Drawing.Point(962, 633);
+            this.deleteEventButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.deleteEventButton.Location = new System.Drawing.Point(968, 635);
             this.deleteEventButton.Name = "deleteEventButton";
-            this.deleteEventButton.Size = new System.Drawing.Size(262, 31);
+            this.deleteEventButton.Size = new System.Drawing.Size(262, 35);
             this.deleteEventButton.TabIndex = 11;
             this.deleteEventButton.Text = "Delete Event";
             this.deleteEventButton.UseVisualStyleBackColor = true;
-            this.deleteEventButton.Click += new System.EventHandler(this.deleteEventButton_Click);
+            this.deleteEventButton.Click += new System.EventHandler(this.deleteEvent_Click);
             // 
             // jumpBallButton
             // 
-            this.jumpBallButton.Location = new System.Drawing.Point(135, 635);
+            this.jumpBallButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.jumpBallButton.Location = new System.Drawing.Point(718, 635);
             this.jumpBallButton.Name = "jumpBallButton";
-            this.jumpBallButton.Size = new System.Drawing.Size(117, 35);
+            this.jumpBallButton.Size = new System.Drawing.Size(231, 35);
             this.jumpBallButton.TabIndex = 3;
             this.jumpBallButton.Text = "Jump Ball";
             this.jumpBallButton.UseVisualStyleBackColor = true;
-            this.jumpBallButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.jumpBallButton_MouseDown);
+            this.jumpBallButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.jumpBall_MouseDown);
             // 
             // jumpBallContextMenuStrip
             // 
@@ -191,30 +194,32 @@
             this.possesionToHomeTeamToolStripMenuItem.Name = "possesionToHomeTeamToolStripMenuItem";
             this.possesionToHomeTeamToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.possesionToHomeTeamToolStripMenuItem.Text = "Possesion to Home Team";
-            this.possesionToHomeTeamToolStripMenuItem.Click += new System.EventHandler(this.jumpballSelect_Click);
+            this.possesionToHomeTeamToolStripMenuItem.Click += new System.EventHandler(this.jumpball_Click);
             // 
             // possesionToAwayTeamToolStripMenuItem
             // 
             this.possesionToAwayTeamToolStripMenuItem.Name = "possesionToAwayTeamToolStripMenuItem";
             this.possesionToAwayTeamToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.possesionToAwayTeamToolStripMenuItem.Text = "Possesion to Away Team";
-            this.possesionToAwayTeamToolStripMenuItem.Click += new System.EventHandler(this.jumpballSelect_Click);
+            this.possesionToAwayTeamToolStripMenuItem.Click += new System.EventHandler(this.jumpball_Click);
             // 
             // turnoverButton
             // 
-            this.turnoverButton.Location = new System.Drawing.Point(627, 635);
+            this.turnoverButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.turnoverButton.Location = new System.Drawing.Point(248, 676);
             this.turnoverButton.Name = "turnoverButton";
-            this.turnoverButton.Size = new System.Drawing.Size(117, 35);
+            this.turnoverButton.Size = new System.Drawing.Size(228, 35);
             this.turnoverButton.TabIndex = 2;
             this.turnoverButton.Text = "Turnover";
             this.turnoverButton.UseVisualStyleBackColor = true;
-            this.turnoverButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.turnoverButton_MouseDown);
+            this.turnoverButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.turnover_MouseDown);
             // 
             // foulButton
             // 
-            this.foulButton.Location = new System.Drawing.Point(750, 635);
+            this.foulButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.foulButton.Location = new System.Drawing.Point(482, 676);
             this.foulButton.Name = "foulButton";
-            this.foulButton.Size = new System.Drawing.Size(118, 35);
+            this.foulButton.Size = new System.Drawing.Size(228, 35);
             this.foulButton.TabIndex = 6;
             this.foulButton.Text = "Foul";
             this.foulButton.UseVisualStyleBackColor = true;
@@ -230,7 +235,7 @@
             this.homeBox.Controls.Add(this.homePlayer1Context);
             this.homeBox.Controls.Add(this.homeScore);
             this.homeBox.Controls.Add(this.homeNameLabel);
-            this.homeBox.Location = new System.Drawing.Point(16, 19);
+            this.homeBox.Location = new System.Drawing.Point(12, 19);
             this.homeBox.Name = "homeBox";
             this.homeBox.Size = new System.Drawing.Size(470, 99);
             this.homeBox.TabIndex = 12;
@@ -425,7 +430,7 @@
             this.awayBox.Controls.Add(this.awayPlayer3Context);
             this.awayBox.Controls.Add(this.awayPlayer1Context);
             this.awayBox.Controls.Add(this.awayPlayer2Context);
-            this.awayBox.Location = new System.Drawing.Point(492, 19);
+            this.awayBox.Location = new System.Drawing.Point(486, 19);
             this.awayBox.Name = "awayBox";
             this.awayBox.Size = new System.Drawing.Size(470, 99);
             this.awayBox.TabIndex = 13;
@@ -644,23 +649,25 @@
             // 
             // madeShotButton
             // 
-            this.madeShotButton.Location = new System.Drawing.Point(258, 635);
+            this.madeShotButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.madeShotButton.Location = new System.Drawing.Point(248, 635);
             this.madeShotButton.Name = "madeShotButton";
-            this.madeShotButton.Size = new System.Drawing.Size(117, 35);
+            this.madeShotButton.Size = new System.Drawing.Size(228, 35);
             this.madeShotButton.TabIndex = 14;
             this.madeShotButton.Text = "Made Shot";
             this.madeShotButton.UseVisualStyleBackColor = true;
-            this.madeShotButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.madeShotButton_MouseDown);
+            this.madeShotButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.madeShot_MouseDown);
             // 
             // missedShotButton
             // 
-            this.missedShotButton.Location = new System.Drawing.Point(381, 635);
+            this.missedShotButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.missedShotButton.Location = new System.Drawing.Point(482, 635);
             this.missedShotButton.Name = "missedShotButton";
-            this.missedShotButton.Size = new System.Drawing.Size(117, 35);
+            this.missedShotButton.Size = new System.Drawing.Size(228, 35);
             this.missedShotButton.TabIndex = 15;
             this.missedShotButton.Text = "Missed Shot";
             this.missedShotButton.UseVisualStyleBackColor = true;
-            this.missedShotButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.missedShotButton_MouseDown);
+            this.missedShotButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.missedShot_MouseDown);
             // 
             // madeShotContextMenuStrip
             // 
@@ -691,21 +698,21 @@
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
             this.toolStripMenuItem4.Size = new System.Drawing.Size(148, 22);
             this.toolStripMenuItem4.Text = "1";
-            this.toolStripMenuItem4.Click += new System.EventHandler(this.pointScored_Click);
+            this.toolStripMenuItem4.Click += new System.EventHandler(this.madeShot_Click);
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
             this.toolStripMenuItem5.Size = new System.Drawing.Size(148, 22);
             this.toolStripMenuItem5.Text = "2";
-            this.toolStripMenuItem5.Click += new System.EventHandler(this.pointScored_Click);
+            this.toolStripMenuItem5.Click += new System.EventHandler(this.madeShot_Click);
             // 
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
             this.toolStripMenuItem6.Size = new System.Drawing.Size(148, 22);
             this.toolStripMenuItem6.Text = "3";
-            this.toolStripMenuItem6.Click += new System.EventHandler(this.pointScored_Click);
+            this.toolStripMenuItem6.Click += new System.EventHandler(this.madeShot_Click);
             // 
             // missedShotContextMenuStrip
             // 
@@ -736,21 +743,21 @@
             this.toolStripMenuItem7.Name = "toolStripMenuItem7";
             this.toolStripMenuItem7.Size = new System.Drawing.Size(175, 22);
             this.toolStripMenuItem7.Text = "1";
-            this.toolStripMenuItem7.Click += new System.EventHandler(this.pointMissed_Click);
+            this.toolStripMenuItem7.Click += new System.EventHandler(this.missedShot_Click);
             // 
             // toolStripMenuItem8
             // 
             this.toolStripMenuItem8.Name = "toolStripMenuItem8";
             this.toolStripMenuItem8.Size = new System.Drawing.Size(175, 22);
             this.toolStripMenuItem8.Text = "2";
-            this.toolStripMenuItem8.Click += new System.EventHandler(this.pointMissed_Click);
+            this.toolStripMenuItem8.Click += new System.EventHandler(this.missedShot_Click);
             // 
             // toolStripMenuItem9
             // 
             this.toolStripMenuItem9.Name = "toolStripMenuItem9";
             this.toolStripMenuItem9.Size = new System.Drawing.Size(175, 22);
             this.toolStripMenuItem9.Text = "3";
-            this.toolStripMenuItem9.Click += new System.EventHandler(this.pointMissed_Click);
+            this.toolStripMenuItem9.Click += new System.EventHandler(this.missedShot_Click);
             // 
             // reboundContextMenuStrip
             // 
@@ -809,18 +816,18 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1236, 730);
-            this.Controls.Add(this.missedShotButton);
-            this.Controls.Add(this.madeShotButton);
-            this.Controls.Add(this.deleteEventButton);
             this.Controls.Add(this.courtBox);
-            this.Controls.Add(this.reboundButton);
-            this.Controls.Add(this.jumpBallButton);
-            this.Controls.Add(this.awayBox);
-            this.Controls.Add(this.homeBox);
-            this.Controls.Add(this.turnoverButton);
-            this.Controls.Add(this.foulButton);
             this.Controls.Add(this.periodStartButton);
             this.Controls.Add(this.historyBox);
+            this.Controls.Add(this.reboundButton);
+            this.Controls.Add(this.madeShotButton);
+            this.Controls.Add(this.turnoverButton);
+            this.Controls.Add(this.missedShotButton);
+            this.Controls.Add(this.foulButton);
+            this.Controls.Add(this.awayBox);
+            this.Controls.Add(this.homeBox);
+            this.Controls.Add(this.jumpBallButton);
+            this.Controls.Add(this.deleteEventButton);
             this.Name = "GameForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "20-20 Basketball";
