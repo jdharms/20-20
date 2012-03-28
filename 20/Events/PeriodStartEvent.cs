@@ -40,7 +40,10 @@ namespace _20.Events
         // ASubtracts one to the value for period in Alpaca
         public override void unresolve()
         {
-            pac.Period--;
+            if (pac.Period > 1)
+            {
+                pac.Period--;
+            }
             pac.InsidePeriod = false;
         }
 

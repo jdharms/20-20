@@ -13,8 +13,10 @@ namespace _20
 {
     public partial class GameForm : Form
     {
+        // should these be private???
         Alpaca pac;
         Point currPoint;
+
         private bool pointSelected;
         private List<Label> homePlayerLabels;
         private List<Label> awayPlayerLabels;
@@ -60,7 +62,7 @@ namespace _20
             awayPlayerContexts.Add(awayPlayer5Context);
 
             jumpBallContextMenuStrip.Items.Clear();
-        }
+        }//end constructor
 
         private void GameForm_Load(object sender, EventArgs e)
         {
@@ -74,85 +76,129 @@ namespace _20
             }
             jumpBallContextMenuStrip.Items.Add("Possession to Home Team (" + pac.HomeTeam.Name + ")");
             jumpBallContextMenuStrip.Items.Add("Possession to Away Team (" + pac.AwayTeam.Name + ")");
-            jumpBallContextMenuStrip.Items[0].Click += new EventHandler(this.jumpballSelect_Click);
-            jumpBallContextMenuStrip.Items[1].Click += new EventHandler(this.jumpballSelect_Click);
+            jumpBallContextMenuStrip.Items[0].Click += new EventHandler(this.jumpball_Click);
+            jumpBallContextMenuStrip.Items[1].Click += new EventHandler(this.jumpball_Click);
             update();
-        }
+        }//end GameFormLoad
 
+        /// <summary>
+        /// Upadates all elements of the form that needs to be updated.
+        /// 
+        /// Authors: Daniel and Johny
+        /// </summary>
         void update()
         {
             //populate all form controls.    
             Console.WriteLine("Updating form...");
 
+            // Update the home and away team names
             homeNameLabel.Text = pac.HomeTeam.Name;
             awayNameLabel.Text = pac.AwayTeam.Name;
 
+            // Update the number of times outs left for the home and away teams
             homeTimeoutLabel.Text = "T.O. Left: " + pac.HomeTeam.TimeoutsLeft;
             awayTimeoutLabel.Text = "T.O. Left: " + pac.AwayTeam.TimeoutsLeft;
 
+            // Update the scores of the home and away team
             homeScore.Text = pac.HomeTeam.Score.ToString();
             awayScore.Text = pac.AwayTeam.Score.ToString();
 
+            // Set the history boxes data source to alpacas event log should populate the history log
             historyBox.DataSource = pac.EventLog;
+            // Tell the form that this has been refreshed
             ((CurrencyManager)historyBox.BindingContext[pac.EventLog]).Refresh();
+            // if there is nothing in the history box, disable the delete button
+            deleteEventButton.Enabled = historyBox.Items.Count > 0; 
+            // if we have more than one item
+            if (historyBox.Items.Count > 0)
+            {
+                //set the selected index to the last item in the history box
+                historyBox.SetSelected(historyBox.Items.Count - 1, true);
+            }
 
+            // for every control (button, label, etc...)
             foreach (Control c in this.Controls)
             {
+                // we never want to disable the history box and the delete button..in case we want to edit it after a game
                 if (c != historyBox && c != deleteEventButton)
                 {
+                    //set the control to being "not gameEnded" (if the game has ended it's enabled is false, and vice versa
                     c.Enabled = !pac.GameEnded;
                 }
             }
 
+            //get the home players that are on the court
             List<Player> homeOnCourt = pac.HomeTeam.getOncourt();
+            //for every player on the court
             for (int i = 0; i < homeOnCourt.Count; i++)
             {
+                //set the label that contains the players number
                 homePlayerLabels[i].Text = homeOnCourt[i].Jersey + "";
+                //set the tool tip (hovering over it) to the players name
                 toolTip1.SetToolTip(homePlayerLabels[i], homeOnCourt[i].DisplayName);
             }
 
+            // do the same with the away teams on court
             List<Player> awayOnCourt = pac.AwayTeam.getOncourt();
             for (int i = 0; i < awayOnCourt.Count; i++)
             {
                 awayPlayerLabels[i].Text = awayOnCourt[i].Jersey + "";
                 toolTip1.SetToolTip(awayPlayerLabels[i], awayOnCourt[i].DisplayName);
             }
+
+            // if the period is greater than 2 (which is when the game SHOULD be over), the text will become "Overtime", otherwise "Period"
             string perOrOver = pac.Period > 2 ? "Overtime" : "Period";
 
-            if (!pac.InsidePeriod)
+            // if we are in the middle of a period
+            if (pac.InsidePeriod)
             {
-                periodStartButton.Text = perOrOver + " Start";
-            }
-            else
-            {
+                // the button should be used to end it
                 periodStartButton.Text = perOrOver + " End";
             }
+            // we are not in the middle of a period
+            else
+            {
+                // the button should be used to start period
+                periodStartButton.Text = perOrOver + " Start";
+            }
 
+            // the selected players from the player labels should become null
             firstSelectedPlayer = secondSelectedPlayer = null;
+            // the selected players' labels should become null 
             firstSelectedLabel = secondSelectedLabel = null;
+            // the selected players' groupboxes should become null 
             firstSelectedContext = secondSelectedContext = null;
 
+            //**RESET THE CONTEXTS AND LABELS**//
+            // for all the contexts and labels
             for (int i = 0; i < homePlayerContexts.Count; i++)
             {
+                // Clear the contexts' text
                 homePlayerContexts[i].Text = "";
                 awayPlayerContexts[i].Text = "";
+                // Change the labels color back to black
                 homePlayerLabels[i].ForeColor = Color.Black;
                 awayPlayerLabels[i].ForeColor = Color.Black;
             }
 
+            // If a point was not selected
             if (!pointSelected)
             {
+                // refresh the court so the point doesn't stay
                 courtBox.Refresh();
             }
 
-            if (historyBox.Items.Count > 0)
-            {
-                historyBox.SetSelected(historyBox.Items.Count - 1, true);
-            }
 
             this.Invalidate();
-        }
-
+        }//end update
+        
+        /// <summary>
+        /// Draws the point, from the clicked location...
+        /// 
+        /// TODO: Needs to be documented
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void courtBox_MouseDown(object sender, MouseEventArgs e)
         {
             courtBox.Refresh();
@@ -173,6 +219,7 @@ namespace _20
             if (loc.Y < 0) loc.Y = 0;
 
             currPoint = loc;
+            // the form needs to know if we have selected a point yet
             pointSelected = true;
 
             Graphics g = courtBox.CreateGraphics();
@@ -180,183 +227,223 @@ namespace _20
             {
                 g.DrawEllipse(p, e.X - 5, e.Y - 5, 10, 10);
             }
-        }
+        }//courtBox_MouseDown
 
-
-        private void historyBox_Leave(object sender, EventArgs e)
+        /**************************************************************************************************************/
+        /*************************************************SUBSTITUTION*************************************************/
+        /**************************************************************************************************************/
+        /// <summary>
+        /// Handles a right click of a player (which is the substitution)
+        /// </summary>
+        /// <param name="sender">Should only be a label</param>
+        /// <param name="e">May or may not use</param>
+        private void playerSelect_MouseDown(object sender, MouseEventArgs e)
         {
-            //When we leave the box, clear the selected value so no accidental deletions are possible.
-            if (ActiveControl != deleteEventButton)
-            {
-                historyBox.ClearSelected();
-            }
-        }
 
-        private void deleteEventButton_Click(object sender, EventArgs e)
-        {
-            //requests user to confirm deletion of event.
-            if (MessageBox.Show("Really Delete?", "Confirm Delete.", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            //if the click registered was a right click
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
             {
-                //this branch runs if the result of the confirmation is "OK"
-                Console.WriteLine("Deleting...");
+                // we are going to reset everything in the right click menu
+                subContextMenuStrip.Items.Clear();
 
-                DeleteEvent del = new DeleteEvent(pac, pac.EventLog[pac.EventLog.Count - 1]);
-                pac.post(del);
-            }
-            else
-            {
-                //this branch executes if the user says "Cancel".
-                Console.WriteLine("Not deleting...");
-                historyBox.ClearSelected();
-            }
-        }
+                // get the oncourt and bench..
+                List<Player> onCourt = null;
+                List<Player> bench = null;
+                // this will be the player that was right clicked on
+                Player senderPlayer = null;
 
-        /*
-         * Stub author: Daniel
-         * 
-         * Purpose: Handles clicks to the period start/end button
-         */
-        private void periodStartButton_Click(object sender, EventArgs e)
-        {
-            Event ev = null;
-            if (pac.Period >= 2 && (pac.HomeTeam.Score != pac.AwayTeam.Score) && pac.InsidePeriod)
-            {
-                ev = new PeriodEndEvent(pac);
-                pac.post(ev);
-                ev = new GameEndEvent(pac);
-                pac.post(ev);
-                return;
-            }
-            else
-            {
-                //Determine if we're entering/exiting a period,
-                //and which period.
-                Button button = (Button)sender;
-                string perOrOver = pac.Period > 2 ? "Overtime" : "Period";
-                if (button.Text.Contains("Start"))
+                // lets get the jersey nubmer that was clicked on
+                int senderNumber = int.Parse(((Label)sender).Text);
+
+                // if the sender was a label (probably dont need this), and the list of homeLabels has our sender, then it was home player
+                if ((sender is Label && homePlayerLabels.Contains((Label)sender)))
                 {
-                    ev = new PeriodStartEvent(pac);
-
-                    button.Text = perOrOver + " End";
+                    // our oncourt list was the home teams on court
+                    onCourt = pac.HomeTeam.getOncourt();
+                    //same with bench
+                    bench = pac.HomeTeam.getBench();
+                    //out player was the home team's player with the number we parsed earlier
+                    senderPlayer = pac.getPlayerByNumber(true, senderNumber);
+                    //the home team was clicked
+                    homeRightClicked = true;
                 }
+                //it wasn't a home player, do it for away players
                 else
                 {
-                    ev = new PeriodEndEvent(pac);
-                    button.Text = perOrOver + " Start";
+                    onCourt = pac.AwayTeam.getOncourt();
+                    bench = pac.AwayTeam.getBench();
+                    senderPlayer = pac.getPlayerByNumber(false, senderNumber);
+                    homeRightClicked = false;
                 }
-            }
 
-            //send appropriate event to server
-            pac.post(ev);
+                //First right click item
+                ToolStripMenuItem subInItem = new ToolStripMenuItem("Sub out #" + senderNumber + " (" + senderPlayer.DisplayName + ")");
+                //get an array of sub in players
+                ToolStripMenuItem[] playerMenu = new ToolStripMenuItem[bench.Count - 1];
+                //index to keep track of the player menu
+                int toolStripInd = 0;
 
-        }
-
-        private void historyBox_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (pac != null && pac.EventLog != null)
-            {
-                int index = historyBox.IndexFromPoint(e.Location);
-
-                if (index != -1 && index < pac.EventLog.Count)
+                //for every player on the bench
+                for (int i = 0; i < bench.Count; i++)
                 {
-                    if (toolTip1.GetToolTip(historyBox) != pac.EventLog[index].ToString())
+                    //if this player isnt a team player
+                    if (!bench[i].TeamPlayer)
                     {
-                        toolTip1.SetToolTip(historyBox, pac.EventLog[index].ToString());
-                    }
-                }
-                else
-                {
-                    toolTip1.SetToolTip(historyBox, "");
-                }
-            }
-        }
+                        //make a new menu item with the bench player
+                        playerMenu[toolStripInd] = new ToolStripMenuItem("with #" + bench[i].Jersey + " (" + bench[i].DisplayName + ")");
+                        //make the menu item's click function subPlayer_click
+                        playerMenu[toolStripInd].Click += new EventHandler(subPlayer_click);
+                        //move to the next index
+                        toolStripInd++;
+                    }//end if
+                }//end for
 
+                //add the player menu to the drop down of the sub in player
+                subInItem.DropDownItems.AddRange(playerMenu);
+
+                //add the sub in player item in the context menu
+                subContextMenuStrip.Items.Add(subInItem);
+            }//end if
+        }//end playerSelect_MouseDown
+
+        /// <summary>
+        /// Performed when a player label is clicked on. Will set the players that were selected
+        /// </summary>
+        /// <param name="sender">Should be a label</param>
+        /// <param name="e">May or may not use</param>
         private void playerSelect_click(object sender, EventArgs e)
+
         {
+
+            // Get all the players on the court
             List<Player> homeOnCourt = pac.HomeTeam.getOncourt();
             List<Player> awayOnCourt = pac.AwayTeam.getOncourt();
+
+            // this will be used locally everywhere
             Player thisSelected = null;
+
+            // we need to use i for later, it will be changed though for sure
             int i = -1;
+            // we just use this to know if we selected a home or away player
             bool isHome = false;
+
+            // iterate through each label/context
             for (i = 0; i < homePlayerLabels.Count; i++)
             {
+                // if the sender was from the home side
                 if (sender == homePlayerLabels[i] || sender == homePlayerContexts[i])
                 {
+                    // the selected player is indexed in the same location, so set it
                     thisSelected = homeOnCourt[i];
+                    //we selected a home player
                     isHome = true;
+                    // we now have the correct index...leave the loop
                     break;
-                }
+                }//end if
+                // the player is on the away side
                 else if (sender == awayPlayerLabels[i] || sender == awayPlayerContexts[i])
                 {
+                    // the selected player is indexed in the same location, so set it
                     thisSelected = awayOnCourt[i];
+                    //we did not select a home player
                     isHome = false;
+                    // we have the correct index...dip out
                     break;
-                }
-            }
+                }// end else if
+            }//end for
 
             // if firstSelectedPlayer is null, then we have not set this and the second player
             if (firstSelectedPlayer == null)
             {
-                //set this current selection
+                // DEALING WITH ONLY THE FIRST PLAYER SELECTED 
+
+                //set the first player
                 firstSelectedPlayer = thisSelected;
+                // if it was on the home side
                 if (isHome)
                 {
+                    // set the first selected context to the indexed playercontext
                     firstSelectedContext = homePlayerContexts[i];
+                    //do the same with label
                     firstSelectedLabel = homePlayerLabels[i];
-                }
+                }//end if
+                // we are on the away side
                 else
                 {
+                    // set the first selected context to the indexed playercontext
                     firstSelectedContext = awayPlayerContexts[i];
+                    //do the same with label
                     firstSelectedLabel = awayPlayerLabels[i];
-                }
+                }//end else
 
+                //when the first player is chosen, the text should turn red
                 firstSelectedLabel.ForeColor = Color.Red;
+                // the context will just show that its the first player that was selected
                 firstSelectedContext.Text = "1st";
-            }
-            // the first player was selected, so check if we are unclicking it
+            }// end if
+            // the first player has been selected at this point, so check if we are unclicking it
             else if (firstSelectedPlayer == thisSelected)
             {
-                //unselect everything
+                // IF WE GET HERE WE MUST UNSELECT EVERYTHING
+
+                // set the selected players to null
                 firstSelectedPlayer = null;
                 secondSelectedPlayer = null;
 
-                if (firstSelectedContext != null)
+                //probably dont need this if because it shouldnt be null if we have selected the first player...oh well
+                if (firstSelectedContext != null && firstSelectedLabel != null)
                 {
+                    // set the lable to black
                     firstSelectedLabel.ForeColor = Color.Black;
+                    // change the context to the empty strig
                     firstSelectedContext.Text = "";
+                    //reset to null
                     firstSelectedLabel = null;
                     firstSelectedContext = null;
-                }
+                }// end if
 
-                if (secondSelectedContext != null)
+                // Definitely need to check if tis null
+                if (secondSelectedContext != null && secondSelectedLabel != null)
                 {
+                    // set the label to balck
                     secondSelectedLabel.ForeColor = Color.Black;
+                    // take out any text
                     secondSelectedContext.Text = "";
+
+                    //reset to null
                     secondSelectedLabel = null;
                     secondSelectedContext = null;
-                }
-            }
+                }//end if
+            }// end else if
+
             //the first player has been selected, we are not unclicking the first, and the second has not been set
             else if (secondSelectedPlayer == null)
             {
+                // set the second player to the selected player
                 secondSelectedPlayer = thisSelected;
+                // if it was the home player
                 if (isHome)
                 {
+                    // set the selected label and contexts
                     secondSelectedLabel = homePlayerLabels[i];
                     secondSelectedContext = homePlayerContexts[i];
-                }
+                }//end if
+                // it was an away player
                 else
                 {
+                    //set the second playeers label and context
                     secondSelectedLabel = awayPlayerLabels[i];
                     secondSelectedContext = awayPlayerContexts[i];
-                }
+                }// end else
 
+                // Second player will be denoted with green text
                 secondSelectedLabel.ForeColor = Color.Green;
                 secondSelectedContext.Text = "2nd";
-            }
+            }//end else if
             // we have selected the second player and we are unclicking it
             else if (secondSelectedPlayer == thisSelected)
             {
+                // reset the second selected things to null, black font, and no text
                 secondSelectedPlayer = null;
                 if (secondSelectedContext != null)
                 {
@@ -366,11 +453,13 @@ namespace _20
                     secondSelectedContext = null;
                 }
 
-            }
+            }//end else if
+
+            // we are clicking a player that is not the current first or second player
             else
             {
                 //undo previous second
-                if (secondSelectedContext != null)
+                if (secondSelectedContext != null && secondSelectedLabel != null)
                 {
                     secondSelectedLabel.ForeColor = Color.Black;
                     secondSelectedContext.Text = "";
@@ -378,9 +467,9 @@ namespace _20
                     secondSelectedContext = null;
                 }
 
+                //APPLY THE NEW SELECTED PLAYER
                 secondSelectedPlayer = thisSelected;
 
-                //applly to new selected
                 if (isHome)
                 {
                     secondSelectedLabel = homePlayerLabels[i];
@@ -396,6 +485,7 @@ namespace _20
                 secondSelectedContext.Text = "2nd";
             }
 
+            // MAY NOT NEED THIS, but this will assure that the 1st and second will pop up
             if (firstSelectedContext != null)
             {
                 firstSelectedContext.Text = "1st";
@@ -405,58 +495,16 @@ namespace _20
                 secondSelectedContext.Text = "2nd";
             }
 
-
+            // refresh the form
             this.Refresh();
             this.Invalidate();
-        }
+        }//end playerSelect_Click
 
-        private void playerSelect_MouseDown(object sender, MouseEventArgs e)
-        {
-            MouseButtons currButton = e.Button;
-            if (currButton == System.Windows.Forms.MouseButtons.Right)
-            {
-
-                subContextMenuStrip.Items.Clear();
-                List<Player> onCourt = null;
-                List<Player> bench = null;
-                Player senderPlayer = null;
-                int senderNumber = int.Parse(((Label)sender).Text);
-
-                if ((sender is Label && homePlayerLabels.Contains((Label)sender)))
-                {
-                    onCourt = pac.HomeTeam.getOncourt();
-                    bench = pac.HomeTeam.getBench();
-                    senderPlayer = pac.getPlayerByNumber(true, senderNumber);
-                    homeRightClicked = true;
-                }
-                else
-                {
-                    onCourt = pac.AwayTeam.getOncourt();
-                    bench = pac.AwayTeam.getBench();
-                    senderPlayer = pac.getPlayerByNumber(false, senderNumber);
-                    homeRightClicked = false;
-                }
-
-                ToolStripMenuItem subInItem = new ToolStripMenuItem("Sub out #" + senderNumber + " (" + senderPlayer.DisplayName + ")");
-                ToolStripMenuItem[] playerMenu = new ToolStripMenuItem[bench.Count - 1];
-                int toolStripInd = 0;
-
-                for (int i = 0; i < bench.Count; i++)
-                {
-                    if (!bench[i].TeamPlayer)
-                    {
-                        playerMenu[toolStripInd] = new ToolStripMenuItem("with #" + bench[i].Jersey + " (" + bench[i].DisplayName + ")");
-                        playerMenu[toolStripInd].Click += new EventHandler(subPlayer_click);
-                        toolStripInd++;
-                    }
-                }
-
-                subInItem.DropDownItems.AddRange(playerMenu);
-
-                subContextMenuStrip.Items.Add(subInItem);
-            }
-        }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void subPlayer_click(object sender, EventArgs e)
         {
             ToolStripMenuItem subInItem = (ToolStripMenuItem)sender;
@@ -485,47 +533,21 @@ namespace _20
             {
                 pac.post(subEvent);
             }
-        }
+        }//end subPlayer_click
+        /*------------------------------------------------------------------------------------------------------------*/
+        /*----------------------------------------------SUBSTITUTION END----------------------------------------------*/
+        /*------------------------------------------------------------------------------------------------------------*/
 
-        private void timeout_Click(object sender, EventArgs e)
-        {
-
-            TimeoutEvent timeoutEvent = null;
-            if (sender.ToString().Equals("Home Timeout"))
-            {
-                timeoutEvent = new TimeoutEvent(pac, pac.HomeTeam.Id, "team");
-            }
-            else if (sender.ToString().Equals("Away Timeout"))
-            {
-                timeoutEvent = new TimeoutEvent(pac, pac.AwayTeam.Id, "team");
-            }
-            else if (sender.ToString().Equals("Media Timeout"))
-            {
-                timeoutEvent = new TimeoutEvent(pac, null, "media");
-            }
-            else if (sender.ToString().Equals("Official Timeout"))
-            {
-                timeoutEvent = new TimeoutEvent(pac, null, "official");
-            }
-
-            if (MessageBox.Show("Call " + sender.ToString() + "?",
-                "", MessageBoxButtons.OKCancel) == DialogResult.OK)
-            {
-                pac.post(timeoutEvent);
-            }
-        }
-
-        private void madeShotButton_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void missedShotButton_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void jumpBallButton_MouseDown(object sender, MouseEventArgs e)
+        
+        /**************************************************************************************************************/
+        /***************************************************JUMPBALL***************************************************/
+        /**************************************************************************************************************/
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void jumpBall_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right || e.Button == MouseButtons.Left)
             {
@@ -553,9 +575,14 @@ namespace _20
                 jumpBallContextMenuStrip.Show(this, btnSender.Location);
 
             }
-        }
+        }//end jumpButton_MouseDown
 
-        private void jumpballSelect_Click(object sender, EventArgs e)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void jumpball_Click(object sender, EventArgs e)
         {
             //requests user to confirm deletion of event.
             if (MessageBox.Show(sender + "?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
@@ -590,9 +617,20 @@ namespace _20
 
                 pac.post(jbe);
             }
-        }
+        }//end jumpball_Click
+        /*------------------------------------------------------------------------------------------------------------*/
+        /*------------------------------------------------JUMPBALL END------------------------------------------------*/
+        /*------------------------------------------------------------------------------------------------------------*/
 
-        private void madeShotButton_MouseDown(object sender, MouseEventArgs e)
+        /*************************************************************************************************************/
+        /**************************************************MADE SHOT**************************************************/
+        /*************************************************************************************************************/
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void madeShot_MouseDown(object sender, MouseEventArgs e)
         {
 
             if (e.Button == MouseButtons.Right || e.Button == MouseButtons.Left)
@@ -621,9 +659,75 @@ namespace _20
                 Button btnSender = (Button)sender;
                 madeShotContextMenuStrip.Show(this, btnSender.Location);
             }
-        }
+        }//end madeButton_MouseDown
 
-        private void missedShotButton_MouseDown(object sender, MouseEventArgs e)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void madeShot_Click(object sender, EventArgs e)
+        {
+            MadeShotEvent mse = null;
+            string str = sender.ToString();
+            string assistId = secondSelectedPlayer != null ? secondSelectedPlayer.Id : null;
+            //HAS TO BE A FREE THROW!!
+            if (str.Equals("1"))
+            {
+                DataForm dataForm = new DataForm("madeShot", DataForm.GOALTENDING);
+                dataForm.ShowDialog();
+                if (dataForm.cancelled)
+                {
+                    return;
+                }
+                mse = new MadeShotEvent(pac, firstSelectedPlayer.Id, firstSelectedPlayer.TeamId, null,
+                                        "free-throw", 1, false, dataForm.goaltending, currPoint);
+            }
+            // can be a jumpshot, layup, dunk, tip-in
+            else if (str.Equals("2"))
+            {
+                DataForm dataForm = new DataForm("madeShot", DataForm.SHOT_TYPE);
+                dataForm.ShowDialog();
+                if (dataForm.cancelled)
+                {
+                    return;
+                }
+                mse = new MadeShotEvent(pac, firstSelectedPlayer.Id, firstSelectedPlayer.TeamId, assistId,
+                                        dataForm.shotType, 2, dataForm.fastbreak, dataForm.goaltending, currPoint);
+            }
+            else if (str.Equals("3"))
+            {
+                DataForm dataForm = new DataForm("madeShot", DataForm.FASTBREAK);
+                dataForm.ShowDialog();
+                if (dataForm.cancelled)
+                {
+                    return;
+                }
+
+                mse = new MadeShotEvent(pac, firstSelectedPlayer.Id, firstSelectedPlayer.TeamId, assistId,
+                                        "jump-shot", 3, dataForm.fastbreak, dataForm.goaltending, currPoint);
+            }
+
+            if (MessageBox.Show("Send event: " + mse, "", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                pointSelected = false;
+                pac.post(mse);
+            }
+
+        }//end madeShot_Click
+        /*-----------------------------------------------------------------------------------------------------------*/
+        /*-----------------------------------------------MADE SHOT END-----------------------------------------------*/
+        /*-----------------------------------------------------------------------------------------------------------*/
+        
+        /*************************************************************************************************************/
+        /*************************************************MISSED SHOT*************************************************/
+        /*************************************************************************************************************/
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void missedShot_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
             {
@@ -651,9 +755,70 @@ namespace _20
                 Button btnSender = (Button)sender;
                 missedShotContextMenuStrip.Show(this, ((Button)sender).Location);
             }
-        }
+        }//end missedShot_MouseDown
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void missedShot_Click(object sender, EventArgs e)
+        {
+            MissedShotEvent mse = null;
+            string str = sender.ToString();
+            Console.WriteLine("HEY: " + str);
+            string blocker = secondSelectedPlayer == null ? null : secondSelectedPlayer.Id;
+            //HAS TO BE A FREE THROW!!
+            if (str.Equals("1"))
+            {
+                mse = new MissedShotEvent(pac, firstSelectedPlayer.Id, firstSelectedPlayer.TeamId, null,
+                                          "free-throw", 1, false, currPoint);
+            }
+            // can be a jumpshot, layup, dunk, tip-in
+            else if (str.Equals("2"))
+            {
+                Console.WriteLine("HEY: " + str);
+                DataForm dataForm = new DataForm("missedShot", DataForm.SHOT_TYPE);
+                dataForm.ShowDialog();
+                if (dataForm.cancelled)
+                {
+                    return;
+                }
 
-        private void reboundButton_MouseDown(object sender, MouseEventArgs e)
+                mse = new MissedShotEvent(pac, firstSelectedPlayer.Id, firstSelectedPlayer.TeamId, blocker,
+                                          dataForm.shotType, 2, dataForm.fastbreak, currPoint);
+            }
+            else if (str.Equals("3"))
+            {
+                DataForm dataForm = new DataForm("missedShot", DataForm.FASTBREAK);
+                dataForm.ShowDialog();
+                if (dataForm.cancelled)
+                {
+                    return;
+                }
+
+                mse = new MissedShotEvent(pac, firstSelectedPlayer.Id, firstSelectedPlayer.TeamId, blocker,
+                                          "jump-shot", 3, dataForm.fastbreak, currPoint);
+            }
+
+            if (MessageBox.Show("Send event: " + mse, "", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                pointSelected = false;
+                pac.post(mse);
+            }
+        }//end missedShot_Click
+        /*-----------------------------------------------------------------------------------------------------------*/
+        /*----------------------------------------------MISSED SHOT END----------------------------------------------*/
+        /*-----------------------------------------------------------------------------------------------------------*/
+
+        /************************************************************************************************************/
+        /************************************************REBOUND SHOT************************************************/
+        /************************************************************************************************************/
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void rebound_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
             {
@@ -676,134 +841,13 @@ namespace _20
                 Button btnSender = (Button)sender;
                 reboundContextMenuStrip.Show(this, ((Button)sender).Location);
             }
-        }
+        }//end rebound_MouseDown
 
-        private void foul_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
-            {
-                if (firstSelectedPlayer == null)
-                {
-                    MessageBox.Show("Please select at least one player above");
-                    return;
-                }
-                else if (secondSelectedPlayer != null && firstSelectedPlayer.TeamId == secondSelectedPlayer.TeamId)
-                {
-                    MessageBox.Show("Selected players must be on different teams");
-                    return;
-                }
-                else if (!pointSelected)
-                {
-                    MessageBox.Show("Please select a location on the court");
-                    return;
-                }
-                else
-                {
-                    firstSelectedContext.Text = "Fouled";
-                    if (secondSelectedContext != null)
-                        secondSelectedContext.Text = "Drew";
-                }
-                Button btnSender = (Button)sender;
-                foulContextMenuStrip.Show(this, ((Button)sender).Location);
-            }
-        }
-
-        private void pointScored_Click(object sender, EventArgs e)
-        {
-            MadeShotEvent mse = null;
-            string str = sender.ToString();
-            string assistId = secondSelectedPlayer != null ? secondSelectedPlayer.Id : null;
-            //HAS TO BE A FREE THROW!!
-            if (str.Equals("1"))
-            {
-                DataForm dataForm = new DataForm("madeShot", DataForm.GOALTENDING);
-                dataForm.ShowDialog();
-                if (dataForm.cancelled)
-                {
-                    return;
-                }
-                mse = new MadeShotEvent(pac, firstSelectedPlayer.Id, firstSelectedPlayer.TeamId, null, 
-                                        "free-throw", 1, false, dataForm.goaltending, currPoint);
-            }
-            // can be a jumpshot, layup, dunk, tip-in
-            else if (str.Equals("2"))
-            {
-                DataForm dataForm = new DataForm("madeShot", DataForm.SHOT_TYPE);
-                dataForm.ShowDialog();
-                if (dataForm.cancelled)
-                {
-                    return;
-                }
-                mse = new MadeShotEvent(pac, firstSelectedPlayer.Id, firstSelectedPlayer.TeamId, assistId, 
-                                        dataForm.shotType, 2, dataForm.fastbreak, dataForm.goaltending, currPoint);
-            }
-            else if (str.Equals("3"))
-            {
-                DataForm dataForm = new DataForm("madeShot", DataForm.FASTBREAK);
-                dataForm.ShowDialog();
-                if (dataForm.cancelled)
-                {
-                    return;
-                }
-
-                mse = new MadeShotEvent(pac, firstSelectedPlayer.Id, firstSelectedPlayer.TeamId, assistId, 
-                                        "jump-shot", 3, dataForm.fastbreak, dataForm.goaltending, currPoint);
-            }
-
-            if (MessageBox.Show("Send event: " + mse, "", MessageBoxButtons.OKCancel) == DialogResult.OK)
-            {
-                pointSelected = false;
-                pac.post(mse);
-            }
-
-        }
-
-        private void pointMissed_Click(object sender, EventArgs e)
-        {
-            MissedShotEvent mse = null;
-            string str = sender.ToString();
-            Console.WriteLine("HEY: " + str);
-            string blocker = secondSelectedPlayer == null ? null : secondSelectedPlayer.Id;
-            //HAS TO BE A FREE THROW!!
-            if (str.Equals("1"))
-            {
-                mse = new MissedShotEvent(pac, firstSelectedPlayer.Id, firstSelectedPlayer.TeamId, null, 
-                                          "free-throw", 1, false, currPoint);
-            }
-            // can be a jumpshot, layup, dunk, tip-in
-            else if (str.Equals("2"))
-            {
-                Console.WriteLine("HEY: " + str);
-                DataForm dataForm = new DataForm("missedShot", DataForm.SHOT_TYPE);
-                dataForm.ShowDialog();
-                if (dataForm.cancelled)
-                {
-                    return;
-                }
-
-                mse = new MissedShotEvent(pac, firstSelectedPlayer.Id, firstSelectedPlayer.TeamId, blocker, 
-                                          dataForm.shotType, 2, dataForm.fastbreak, currPoint);
-            }
-            else if (str.Equals("3"))
-            {
-                DataForm dataForm = new DataForm("missedShot", DataForm.FASTBREAK);
-                dataForm.ShowDialog();
-                if (dataForm.cancelled)
-                {
-                    return;
-                }
-
-                mse = new MissedShotEvent(pac, firstSelectedPlayer.Id, firstSelectedPlayer.TeamId, blocker, 
-                                          "jump-shot", 3, dataForm.fastbreak, currPoint);
-            }
-
-            if (MessageBox.Show("Send event: " + mse, "", MessageBoxButtons.OKCancel) == DialogResult.OK)
-            {
-                pointSelected = false;
-                pac.post(mse);
-            }
-        }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void rebound_Click(object sender, EventArgs e)
         {
             string str = sender.ToString();
@@ -817,9 +861,20 @@ namespace _20
                 pointSelected = false;
                 pac.post(re);
             }
-        }
+        }//end rebound_Click
+        /*-----------------------------------------------------------------------------------------------------------*/
+        /*------------------------------------------------REBOUND END------------------------------------------------*/
+        /*-----------------------------------------------------------------------------------------------------------*/
 
-        private void turnoverButton_MouseDown(object sender, MouseEventArgs e)
+        /************************************************************************************************************/
+        /**************************************************TURNOVER**************************************************/
+        /************************************************************************************************************/
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void turnover_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
             {
@@ -861,8 +916,54 @@ namespace _20
                     }
                 }
             }
-        }
+        }//end turnoverButton_MouseDown
+        /*-----------------------------------------------------------------------------------------------------------*/
+        /*-----------------------------------------------TURNOVER END------------------------------------------------*/
+        /*-----------------------------------------------------------------------------------------------------------*/
 
+        /************************************************************************************************************/
+        /****************************************************FOUL****************************************************/
+        /************************************************************************************************************/
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void foul_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
+            {
+                if (firstSelectedPlayer == null)
+                {
+                    MessageBox.Show("Please select at least one player above");
+                    return;
+                }
+                else if (secondSelectedPlayer != null && firstSelectedPlayer.TeamId == secondSelectedPlayer.TeamId)
+                {
+                    MessageBox.Show("Selected players must be on different teams");
+                    return;
+                }
+                else if (!pointSelected)
+                {
+                    MessageBox.Show("Please select a location on the court");
+                    return;
+                }
+                else
+                {
+                    firstSelectedContext.Text = "Fouled";
+                    if (secondSelectedContext != null)
+                        secondSelectedContext.Text = "Drew";
+                }
+                Button btnSender = (Button)sender;
+                foulContextMenuStrip.Show(this, ((Button)sender).Location);
+            }
+        }//end foul_MouseDown
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void foul_Click(object sender, EventArgs e)
         {
             FoulEvent fe = null;
@@ -910,6 +1011,172 @@ namespace _20
                 pointSelected = false;
                 pac.post(fe);
             }
-        }
-    }
-}
+        }//end foul_Click
+        /*-----------------------------------------------------------------------------------------------------------*/
+        /*-------------------------------------------------FOUL END--------------------------------------------------*/
+        /*-----------------------------------------------------------------------------------------------------------*/
+
+        /// <summary>
+        /// Deletes the last event in the history box. 
+        /// </summary>
+        /// <param name="sender"> The object that is calling this method (should just be the delete button)</param>
+        /// <param name="e">Some arguments that we may or may not user</param>
+        private void deleteEvent_Click(object sender, EventArgs e)
+        {
+            //requests user to confirm deletion of event.
+            if (MessageBox.Show("Really Delete?", "Confirm Delete.", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                //this branch runs if the result of the confirmation is "OK"
+                Console.WriteLine("Deleting...");
+
+                // create a delete event, and tell pac to post it
+                DeleteEvent del = new DeleteEvent(pac, pac.EventLog[pac.EventLog.Count - 1]);
+                pac.post(del);
+            }//end if
+            else
+            {
+                //this branch executes if the user says "Cancel".
+                Console.WriteLine("Not deleting...");
+                // Don't really need this line...for now
+                //historyBox.ClearSelected();
+            }//end else
+        }//end deleteEvent_Click
+
+        /// <summary>
+        /// Handles the click of the Period Start/End button
+        /// </summary>
+        /// <param name="sender">Should just be the periodStartButton</param>
+        /// <param name="e">Some arguments that we may or may not user</param>
+        private void periodChange_Click(object sender, EventArgs e)
+        {
+            // create a generic event. We may have either a period start or period end event
+            Event ev = null;
+
+            // if the period is 2 or later, and the teams are not tied, and we are inside a period
+            if (pac.Period >= 2 && (pac.HomeTeam.Score != pac.AwayTeam.Score) && pac.InsidePeriod)
+            {
+                ev = new PeriodEndEvent(pac);
+                // send a period end event
+                if (!confirmAndSendEvent(ev))
+                {
+                    return;
+                }//end if
+                ev = new GameEndEvent(pac);
+                // and send a game end event
+                confirmAndSendEvent(ev);
+                return;
+            }//end if
+            // the game should not end at this point
+            else
+            {
+                // shit best be a button
+                Button button = (Button)sender;
+                // Check if its a period or an overtime
+                string perOrOver = pac.Period > 2 ? "Overtime" : "Period";
+
+                //Determine if we're entering/exiting a period//
+
+                // if the button had "Start" in it
+                if (button.Text.Contains("Start"))
+                {
+                    // create a period start event
+                    ev = new PeriodStartEvent(pac);
+
+                    // since we just started a period/overtime, we have to change the button to have end in it
+                    button.Text = perOrOver + " End";
+                }// end if
+                // if the button had an "End" in it
+                else
+                {
+                    // create a period end event
+                    ev = new PeriodEndEvent(pac);
+                    // since we just ended a period/overtime, we have to change the button to have start in it
+                    button.Text = perOrOver + " Start";
+                }// end else
+            }//end else
+
+            //send appropriate event to server
+            confirmAndSendEvent(ev);
+        }//end periodChange_Click
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timeout_Click(object sender, EventArgs e)
+        {
+
+            TimeoutEvent timeoutEvent = null;
+            if (sender.ToString().Equals("Home Timeout"))
+            {
+                timeoutEvent = new TimeoutEvent(pac, pac.HomeTeam.Id, "team");
+            }
+            else if (sender.ToString().Equals("Away Timeout"))
+            {
+                timeoutEvent = new TimeoutEvent(pac, pac.AwayTeam.Id, "team");
+            }
+            else if (sender.ToString().Equals("Media Timeout"))
+            {
+                timeoutEvent = new TimeoutEvent(pac, null, "media");
+            }
+            else if (sender.ToString().Equals("Official Timeout"))
+            {
+                timeoutEvent = new TimeoutEvent(pac, null, "official");
+            }
+
+            if (MessageBox.Show("Call " + sender.ToString() + "?",
+                "", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                pac.post(timeoutEvent);
+            }
+        }//end timeout_Click
+       
+        /// <summary>
+        /// TODO: needs to be documented...COUGH COUGH, thats you daniel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void historyBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (pac != null && pac.EventLog != null)
+            {
+                int index = historyBox.IndexFromPoint(e.Location);
+
+                if (index != -1 && index < pac.EventLog.Count)
+                {
+                    if (toolTip1.GetToolTip(historyBox) != pac.EventLog[index].ToString())
+                    {
+                        toolTip1.SetToolTip(historyBox, pac.EventLog[index].ToString());
+                    }
+                }
+                else
+                {
+                    toolTip1.SetToolTip(historyBox, "");
+                }
+            }
+        }//end historyBox_MouseMove
+
+        /// <summary>
+        /// Confirms the user to send the an event. If they say it's okay, we tell alpaca to send it.
+        /// </summary>
+        /// <param name="e">The Event to send</param>
+        /// <returns>True if we posted the event, otherwise false</returns>
+        private bool confirmAndSendEvent(Event e)
+        {
+            // Send a message box that asks the 
+            if (MessageBox.Show("Press OK to send the following event:\n" + e, "", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                //our point is already used, so we have technically "not selected a point"
+                pointSelected = false;
+                // post the event
+                pac.post(e);
+                // they said yes!!!! Return true
+                return true;
+            } // end if
+
+            // They did not want to send the event...awkward...return false
+            return false;
+        } // end confirmAndSendEvent(Event e)
+    }// end GameForm
+} //end using namespace
