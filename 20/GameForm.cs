@@ -103,6 +103,7 @@ namespace _20
         private void GameForm_Load(object sender, EventArgs e)
         {
             pac = new Alpaca();
+            confirmScore(false);
             pac.OnStateChange += update;
             waitingForReboundClick = false;
             //GameDataResponse gameData = pac.getGameData(pac.GameID);
@@ -1256,6 +1257,7 @@ namespace _20
             if (pac.Period >= 2 && (pac.HomeTeam.Score != pac.AwayTeam.Score) && pac.InsidePeriod)
             {
                 ev = new PeriodEndEvent(pac);
+                confirmScore(false);
                 // send a period end event
                 if (!confirmAndSendEvent(ev))
                 {
@@ -1264,6 +1266,7 @@ namespace _20
                 ev = new GameEndEvent(pac);
                 // and send a game end event
                 confirmAndSendEvent(ev);
+                confirmScore(true);
                 return;
             }//end if
             // the game should not end at this point
@@ -1290,6 +1293,7 @@ namespace _20
                 {
                     // create a period end event
                     ev = new PeriodEndEvent(pac);
+                    confirmScore(false);
                     // since we just ended a period/overtime, we have to change the button to have start in it
                     button.Text = perOrOver + " Start";
                 }// end else
@@ -1298,6 +1302,18 @@ namespace _20
             //send appropriate event to server
             confirmAndSendEvent(ev);
         }//end periodChange_Click
+
+        private void confirmScore(bool endGame)
+        {
+            ConfirmScoreForm conf = new ConfirmScoreForm(pac, endGame);
+            if (endGame)
+            {
+                conf.Text = "Final Game Results";
+            }
+            conf.ShowDialog();
+            pac.HomeTeam.Score = conf.homeScore;
+            pac.AwayTeam.Score = conf.awayScore;
+        }
 
         /// <summary>
         /// 

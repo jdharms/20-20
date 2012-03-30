@@ -102,9 +102,9 @@
             this.toolStripMenuItem15 = new System.Windows.Forms.ToolStripMenuItem();
             this.technicalFoulToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonPanel = new System.Windows.Forms.Panel();
-            this.courtBox = new System.Windows.Forms.PictureBox();
             this.flipSidesButton = new System.Windows.Forms.Button();
             this.confirmCheckBox = new System.Windows.Forms.CheckBox();
+            this.courtBox = new System.Windows.Forms.PictureBox();
             this.jumpBallContextMenuStrip.SuspendLayout();
             this.homeBox.SuspendLayout();
             this.homeTimeoutContextMenuStrip.SuspendLayout();
@@ -830,19 +830,6 @@
             this.buttonPanel.TabIndex = 16;
             this.buttonPanel.Visible = false;
             // 
-            // courtBox
-            // 
-            this.courtBox.Image = global::_20.Properties.Resources.BasketballCourt;
-            this.courtBox.Location = new System.Drawing.Point(12, 124);
-            this.courtBox.Name = "courtBox";
-            this.courtBox.Size = new System.Drawing.Size(944, 504);
-            this.courtBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.courtBox.TabIndex = 0;
-            this.courtBox.TabStop = false;
-            this.courtBox.DoubleClick += new System.EventHandler(this.courtBox_DoubleClick);
-            this.courtBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.courtBox_MouseDown);
-            this.courtBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.courtBox_MouseMove);
-            // 
             // flipSidesButton
             // 
             this.flipSidesButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -863,6 +850,19 @@
             this.confirmCheckBox.TabIndex = 18;
             this.confirmCheckBox.Text = "Confirm Before Sending Event";
             this.confirmCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // courtBox
+            // 
+            this.courtBox.Image = global::_20.Properties.Resources.BasketballCourt;
+            this.courtBox.Location = new System.Drawing.Point(12, 124);
+            this.courtBox.Name = "courtBox";
+            this.courtBox.Size = new System.Drawing.Size(944, 504);
+            this.courtBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.courtBox.TabIndex = 0;
+            this.courtBox.TabStop = false;
+            this.courtBox.DoubleClick += new System.EventHandler(this.courtBox_DoubleClick);
+            this.courtBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.courtBox_MouseDown);
+            this.courtBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.courtBox_MouseMove);
             // 
             // GameForm
             // 
