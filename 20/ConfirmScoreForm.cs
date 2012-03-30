@@ -28,6 +28,7 @@ namespace _20
 
         private void confirmScoreButton_Click(object sender, EventArgs e)
         {
+
             try
             {
                 this.homeScore = int.Parse(homeScoreConfirmText.Text);
