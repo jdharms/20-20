@@ -14,7 +14,6 @@ namespace _20.Events
         string shotType;
         int points;
         bool fastBreak;
-        Point location;
         string teamId;
 
         //variables for toString()

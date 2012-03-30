@@ -40,6 +40,7 @@ namespace _20
 
         public Team AwayTeam { get; set; }
         public Team HomeTeam { get; set; }
+        public Team Possesion { get; set; }
         private string gid;
         private List<Event> eventLog;
         public List<Event> EventLog { get { return eventLog; } }
@@ -347,10 +348,6 @@ namespace _20
                     AwayTeam = gameResponse.AwayTeam();
                     eventLog = gameResponse.Events(this);
 
-                    foreach (Event e in eventLog)
-                    {
-                        e.resolve();
-                    }
                     Notify();
 
 
@@ -609,6 +606,29 @@ namespace _20
             {
                 if (p.Jersey == number)
                     return p;
+            }
+
+            return null;
+        }
+
+        public Player getTeamPlayer(bool isHome)
+        {
+            Team team = null;
+            if (isHome)
+            {
+                team = HomeTeam;
+            }
+            else
+            {
+                team = AwayTeam;
+            }
+
+            foreach (Player p in team.Players)
+            {
+                if (p.TeamPlayer)
+                {
+                    return p;
+                }
             }
 
             return null;

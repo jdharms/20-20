@@ -13,8 +13,6 @@ namespace _20.Events
         private string committedBy;
         private string forcedBy;
         private string turnoverType;
-        private Point location;
-
         
         public TurnoverEvent(Alpaca pac, string committedBy, string forcedBy, string turnoverType, Point location)
             : base(pac)

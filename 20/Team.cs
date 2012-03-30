@@ -33,7 +33,7 @@ namespace _20
             this.id = id;
             this.name = name;
             this.players = players;
-            this.teamFouls = 5;
+            this.teamFouls = 0;
             this.timeoutsUsed = 0;
             this.score = 0;
             this.onCourt = new List<Player>();
