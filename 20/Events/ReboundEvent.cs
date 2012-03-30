@@ -12,8 +12,6 @@ namespace _20.Events
     {
         string rebounder;
         string reboundType;
-        Point location;
-
         string rebounderName;
 
         public ReboundEvent(Alpaca pac, string rebounder, string reboundType, Point location)
@@ -57,7 +55,13 @@ namespace _20.Events
 
         public override string ToString()
         {
-            return rebounderName + " " + reboundType + " rebound.";
+            Player p = pac.getPlayer(rebounder);
+            string name = "";
+            if (p.TeamPlayer)
+            {
+                name = pac.getTeamById(p.TeamId).Name;
+            }
+            return name + " " + reboundType + " rebound.";
         }
 
     }

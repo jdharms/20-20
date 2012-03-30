@@ -15,7 +15,6 @@ namespace _20.Events
         int points;
         bool fastBreak;
         bool goaltending;
-        Point location;
         string teamId;
 
         //toString variables

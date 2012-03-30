@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
+using System.Drawing;
 
 namespace _20.Events
 {
@@ -13,6 +14,7 @@ namespace _20.Events
             : base(pac)
         {
             apiCall = "gameEnd";
+            this.location = new Point(-1, -1);
         }
             
         // Converts this class to a Json serialized 

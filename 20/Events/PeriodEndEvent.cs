@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
+using System.Drawing;
 
 namespace _20.Events
 {
@@ -15,6 +16,8 @@ namespace _20.Events
             : base(pac)
         {
             apiCall = "periodEnd";
+            period = pac.Period;
+            this.location = new Point(-1, -1);
         }
 
         // Converts this class to a Json serialized 
@@ -33,7 +36,6 @@ namespace _20.Events
         // Not a soul found in these parts
         public override void resolve()
         {
-            period = pac.Period;
             pac.Period++;
             pac.InsidePeriod = false;
         }
