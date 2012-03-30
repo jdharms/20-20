@@ -92,9 +92,12 @@ namespace _20
             Period = 1;
             GameEnded = false;
             InsidePeriod = false;
-            LoginForm child = new LoginForm();
+            LoginForm child = null;
+            bool prevLogin = false;
             while (!authenticated)
             {
+                child = new LoginForm();
+                child.failed = prevLogin;
                 child.login = new acceptCredentials(this.login);
                 child.StartPosition = FormStartPosition.CenterScreen;
                 child.ShowDialog();
@@ -105,7 +108,7 @@ namespace _20
                 /*
                 token = login(username, password);
                 */
-                child.failed = true;
+                prevLogin = true;
             }
             lastAuthed = DateTime.Now;
 
