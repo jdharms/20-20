@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
+using System.Drawing;
 
 namespace _20.Events
 {
@@ -18,7 +19,7 @@ namespace _20.Events
             deletionId = eventToDelete.EventId;
             apiCall = "deleteEvent/" + deletionId;
             Console.WriteLine("i will delete: " + deletionId);
-
+            this.location = new Point(-1, -1);
         }
 
         public override void resolve()

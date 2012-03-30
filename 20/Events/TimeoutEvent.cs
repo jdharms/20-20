@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
+using System.Drawing;
 
 namespace _20.Events
 {
@@ -21,6 +22,7 @@ namespace _20.Events
             this.inputTeam = inputTeam;
             this.inputType = inputType;
             apiCall = "timeout";
+            this.location = new Point(-1, -1);
             if (inputTeam != null)
             {
                 teamName = pac.getTeamById(inputTeam).Name;

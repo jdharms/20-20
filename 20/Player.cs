@@ -12,7 +12,7 @@ namespace _20
         private string lName;
         public string Name { get { return lName + ", " + fName + " " + mName; } }
 
-        public string DisplayName { get { return fName + " " + lName; } }
+        public string DisplayName { get { return teamPlayer ? "Team Player" : fName + " " + lName; } }
 
         private string id;
         public string Id { get { return id; } }

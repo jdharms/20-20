@@ -23,6 +23,8 @@ namespace _20.Events
         public DateTime Time { get { return time; } set { time = value; } }
         public bool ReceivedByServer { get { return eventId != null; } }
         protected Context context;
+        protected Point location;
+        public Point Location { get { return location; } }
 
         protected Alpaca pac;
         

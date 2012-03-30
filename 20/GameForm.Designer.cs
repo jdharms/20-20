@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.reboundButton = new System.Windows.Forms.Button();
             this.periodStartButton = new System.Windows.Forms.Button();
             this.historyBox = new System.Windows.Forms.ListBox();
             this.deleteEventButton = new System.Windows.Forms.Button();
@@ -40,6 +39,7 @@
             this.turnoverButton = new System.Windows.Forms.Button();
             this.foulButton = new System.Windows.Forms.Button();
             this.homeBox = new System.Windows.Forms.GroupBox();
+            this.homeBonus = new System.Windows.Forms.Label();
             this.homeTimeoutLabel = new System.Windows.Forms.Label();
             this.homeTimeoutContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.teamTimeoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,6 +58,7 @@
             this.homeScore = new System.Windows.Forms.Label();
             this.homeNameLabel = new System.Windows.Forms.Label();
             this.awayBox = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.awayTimeoutLabel = new System.Windows.Forms.Label();
             this.awayTimeoutContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,7 +77,6 @@
             this.awayPlayer2Context = new System.Windows.Forms.GroupBox();
             this.awayPlayer2Label = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.courtBox = new System.Windows.Forms.PictureBox();
             this.subContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.helloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -101,6 +101,10 @@
             this.toolStripMenuItem12 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem15 = new System.Windows.Forms.ToolStripMenuItem();
             this.technicalFoulToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.buttonPanel = new System.Windows.Forms.Panel();
+            this.courtBox = new System.Windows.Forms.PictureBox();
+            this.flipSidesButton = new System.Windows.Forms.Button();
+            this.confirmCheckBox = new System.Windows.Forms.CheckBox();
             this.jumpBallContextMenuStrip.SuspendLayout();
             this.homeBox.SuspendLayout();
             this.homeTimeoutContextMenuStrip.SuspendLayout();
@@ -116,31 +120,21 @@
             this.awayPlayer3Context.SuspendLayout();
             this.awayPlayer1Context.SuspendLayout();
             this.awayPlayer2Context.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.courtBox)).BeginInit();
             this.subContextMenuStrip.SuspendLayout();
             this.madeShotContextMenuStrip.SuspendLayout();
             this.missedShotContextMenuStrip.SuspendLayout();
             this.reboundContextMenuStrip.SuspendLayout();
             this.foulContextMenuStrip.SuspendLayout();
+            this.buttonPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.courtBox)).BeginInit();
             this.SuspendLayout();
-            // 
-            // reboundButton
-            // 
-            this.reboundButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.reboundButton.Location = new System.Drawing.Point(12, 676);
-            this.reboundButton.Name = "reboundButton";
-            this.reboundButton.Size = new System.Drawing.Size(227, 35);
-            this.reboundButton.TabIndex = 1;
-            this.reboundButton.Text = "Rebound";
-            this.reboundButton.UseVisualStyleBackColor = true;
-            this.reboundButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rebound_MouseDown);
             // 
             // periodStartButton
             // 
             this.periodStartButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.periodStartButton.Location = new System.Drawing.Point(12, 635);
+            this.periodStartButton.Location = new System.Drawing.Point(492, 25);
             this.periodStartButton.Name = "periodStartButton";
-            this.periodStartButton.Size = new System.Drawing.Size(227, 35);
+            this.periodStartButton.Size = new System.Drawing.Size(262, 35);
             this.periodStartButton.TabIndex = 5;
             this.periodStartButton.Text = "Period Start/End";
             this.periodStartButton.UseVisualStyleBackColor = true;
@@ -153,16 +147,17 @@
             "Event 1",
             "Event 2",
             "Event 3"});
-            this.historyBox.Location = new System.Drawing.Point(968, 25);
+            this.historyBox.Location = new System.Drawing.Point(968, 129);
             this.historyBox.Name = "historyBox";
-            this.historyBox.Size = new System.Drawing.Size(262, 602);
+            this.historyBox.Size = new System.Drawing.Size(262, 459);
             this.historyBox.TabIndex = 7;
+            this.historyBox.Click += new System.EventHandler(this.historyBox_Click);
             this.historyBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.historyBox_MouseMove);
             // 
             // deleteEventButton
             // 
             this.deleteEventButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.deleteEventButton.Location = new System.Drawing.Point(968, 635);
+            this.deleteEventButton.Location = new System.Drawing.Point(968, 593);
             this.deleteEventButton.Name = "deleteEventButton";
             this.deleteEventButton.Size = new System.Drawing.Size(262, 35);
             this.deleteEventButton.TabIndex = 11;
@@ -173,9 +168,9 @@
             // jumpBallButton
             // 
             this.jumpBallButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.jumpBallButton.Location = new System.Drawing.Point(718, 635);
+            this.jumpBallButton.Location = new System.Drawing.Point(3, 189);
             this.jumpBallButton.Name = "jumpBallButton";
-            this.jumpBallButton.Size = new System.Drawing.Size(231, 35);
+            this.jumpBallButton.Size = new System.Drawing.Size(228, 63);
             this.jumpBallButton.TabIndex = 3;
             this.jumpBallButton.Text = "Jump Ball";
             this.jumpBallButton.UseVisualStyleBackColor = true;
@@ -206,9 +201,9 @@
             // turnoverButton
             // 
             this.turnoverButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.turnoverButton.Location = new System.Drawing.Point(248, 676);
+            this.turnoverButton.Location = new System.Drawing.Point(3, 251);
             this.turnoverButton.Name = "turnoverButton";
-            this.turnoverButton.Size = new System.Drawing.Size(228, 35);
+            this.turnoverButton.Size = new System.Drawing.Size(228, 63);
             this.turnoverButton.TabIndex = 2;
             this.turnoverButton.Text = "Turnover";
             this.turnoverButton.UseVisualStyleBackColor = true;
@@ -217,9 +212,9 @@
             // foulButton
             // 
             this.foulButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.foulButton.Location = new System.Drawing.Point(482, 676);
+            this.foulButton.Location = new System.Drawing.Point(3, 127);
             this.foulButton.Name = "foulButton";
-            this.foulButton.Size = new System.Drawing.Size(228, 35);
+            this.foulButton.Size = new System.Drawing.Size(228, 63);
             this.foulButton.TabIndex = 6;
             this.foulButton.Text = "Foul";
             this.foulButton.UseVisualStyleBackColor = true;
@@ -227,6 +222,7 @@
             // 
             // homeBox
             // 
+            this.homeBox.Controls.Add(this.homeBonus);
             this.homeBox.Controls.Add(this.homeTimeoutLabel);
             this.homeBox.Controls.Add(this.homePlayer5Context);
             this.homeBox.Controls.Add(this.homePlayer4Context);
@@ -242,13 +238,22 @@
             this.homeBox.TabStop = false;
             this.homeBox.Text = "Home";
             // 
+            // homeBonus
+            // 
+            this.homeBonus.Location = new System.Drawing.Point(387, 27);
+            this.homeBonus.Name = "homeBonus";
+            this.homeBonus.Size = new System.Drawing.Size(73, 14);
+            this.homeBonus.TabIndex = 6;
+            this.homeBonus.Text = "label1";
+            this.homeBonus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // homeTimeoutLabel
             // 
             this.homeTimeoutLabel.ContextMenuStrip = this.homeTimeoutContextMenuStrip;
-            this.homeTimeoutLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.homeTimeoutLabel.Location = new System.Drawing.Point(352, 16);
+            this.homeTimeoutLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.homeTimeoutLabel.Location = new System.Drawing.Point(280, 9);
             this.homeTimeoutLabel.Name = "homeTimeoutLabel";
-            this.homeTimeoutLabel.Size = new System.Drawing.Size(108, 25);
+            this.homeTimeoutLabel.Size = new System.Drawing.Size(180, 17);
             this.homeTimeoutLabel.TabIndex = 5;
             this.homeTimeoutLabel.Text = "T.0. Left: 6";
             this.homeTimeoutLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -415,13 +420,15 @@
             this.homeNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.homeNameLabel.Location = new System.Drawing.Point(6, 16);
             this.homeNameLabel.Name = "homeNameLabel";
-            this.homeNameLabel.Size = new System.Drawing.Size(340, 32);
+            this.homeNameLabel.Size = new System.Drawing.Size(272, 32);
             this.homeNameLabel.TabIndex = 0;
             this.homeNameLabel.Text = "Home Team Name";
             this.homeNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.homeNameLabel.Click += new System.EventHandler(this.playerSelect_click);
             // 
             // awayBox
             // 
+            this.awayBox.Controls.Add(this.label1);
             this.awayBox.Controls.Add(this.awayTimeoutLabel);
             this.awayBox.Controls.Add(this.awayPlayer5Context);
             this.awayBox.Controls.Add(this.awayScore);
@@ -430,20 +437,29 @@
             this.awayBox.Controls.Add(this.awayPlayer3Context);
             this.awayBox.Controls.Add(this.awayPlayer1Context);
             this.awayBox.Controls.Add(this.awayPlayer2Context);
-            this.awayBox.Location = new System.Drawing.Point(486, 19);
+            this.awayBox.Location = new System.Drawing.Point(760, 19);
             this.awayBox.Name = "awayBox";
             this.awayBox.Size = new System.Drawing.Size(470, 99);
             this.awayBox.TabIndex = 13;
             this.awayBox.TabStop = false;
             this.awayBox.Text = "Away";
             // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(387, 26);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(73, 14);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "label1";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // awayTimeoutLabel
             // 
             this.awayTimeoutLabel.ContextMenuStrip = this.awayTimeoutContextMenuStrip;
-            this.awayTimeoutLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.awayTimeoutLabel.Location = new System.Drawing.Point(352, 16);
+            this.awayTimeoutLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.awayTimeoutLabel.Location = new System.Drawing.Point(284, 9);
             this.awayTimeoutLabel.Name = "awayTimeoutLabel";
-            this.awayTimeoutLabel.Size = new System.Drawing.Size(108, 25);
+            this.awayTimeoutLabel.Size = new System.Drawing.Size(176, 17);
             this.awayTimeoutLabel.TabIndex = 6;
             this.awayTimeoutLabel.Text = "T.0. Left: 6";
             this.awayTimeoutLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -541,10 +557,11 @@
             this.awayNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.awayNameLabel.Location = new System.Drawing.Point(6, 16);
             this.awayNameLabel.Name = "awayNameLabel";
-            this.awayNameLabel.Size = new System.Drawing.Size(340, 32);
+            this.awayNameLabel.Size = new System.Drawing.Size(272, 32);
             this.awayNameLabel.TabIndex = 1;
             this.awayNameLabel.Text = "Away Team Name";
             this.awayNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.awayNameLabel.Click += new System.EventHandler(this.playerSelect_click);
             // 
             // awayPlayer3Context
             // 
@@ -615,17 +632,6 @@
             this.awayPlayer2Label.Click += new System.EventHandler(this.playerSelect_click);
             this.awayPlayer2Label.MouseDown += new System.Windows.Forms.MouseEventHandler(this.playerSelect_MouseDown);
             // 
-            // courtBox
-            // 
-            this.courtBox.Image = global::_20.Properties.Resources.BasketballCourt;
-            this.courtBox.Location = new System.Drawing.Point(12, 124);
-            this.courtBox.Name = "courtBox";
-            this.courtBox.Size = new System.Drawing.Size(944, 504);
-            this.courtBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.courtBox.TabIndex = 0;
-            this.courtBox.TabStop = false;
-            this.courtBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.courtBox_MouseDown);
-            // 
             // subContextMenuStrip
             // 
             this.subContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -650,9 +656,9 @@
             // madeShotButton
             // 
             this.madeShotButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.madeShotButton.Location = new System.Drawing.Point(248, 635);
+            this.madeShotButton.Location = new System.Drawing.Point(3, 3);
             this.madeShotButton.Name = "madeShotButton";
-            this.madeShotButton.Size = new System.Drawing.Size(228, 35);
+            this.madeShotButton.Size = new System.Drawing.Size(228, 63);
             this.madeShotButton.TabIndex = 14;
             this.madeShotButton.Text = "Made Shot";
             this.madeShotButton.UseVisualStyleBackColor = true;
@@ -661,9 +667,9 @@
             // missedShotButton
             // 
             this.missedShotButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.missedShotButton.Location = new System.Drawing.Point(482, 635);
+            this.missedShotButton.Location = new System.Drawing.Point(3, 65);
             this.missedShotButton.Name = "missedShotButton";
-            this.missedShotButton.Size = new System.Drawing.Size(228, 35);
+            this.missedShotButton.Size = new System.Drawing.Size(228, 63);
             this.missedShotButton.TabIndex = 15;
             this.missedShotButton.Text = "Missed Shot";
             this.missedShotButton.UseVisualStyleBackColor = true;
@@ -793,45 +799,90 @@
             // toolStripMenuItem12
             // 
             this.toolStripMenuItem12.Name = "toolStripMenuItem12";
-            this.toolStripMenuItem12.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem12.Size = new System.Drawing.Size(151, 22);
             this.toolStripMenuItem12.Text = "Offensive Foul";
             this.toolStripMenuItem12.Click += new System.EventHandler(this.foul_Click);
             // 
             // toolStripMenuItem15
             // 
             this.toolStripMenuItem15.Name = "toolStripMenuItem15";
-            this.toolStripMenuItem15.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem15.Size = new System.Drawing.Size(151, 22);
             this.toolStripMenuItem15.Text = "Defensive Foul";
             this.toolStripMenuItem15.Click += new System.EventHandler(this.foul_Click);
             // 
             // technicalFoulToolStripMenuItem
             // 
             this.technicalFoulToolStripMenuItem.Name = "technicalFoulToolStripMenuItem";
-            this.technicalFoulToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.technicalFoulToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.technicalFoulToolStripMenuItem.Text = "Technical Foul";
             this.technicalFoulToolStripMenuItem.Click += new System.EventHandler(this.foul_Click);
+            // 
+            // buttonPanel
+            // 
+            this.buttonPanel.Controls.Add(this.jumpBallButton);
+            this.buttonPanel.Controls.Add(this.foulButton);
+            this.buttonPanel.Controls.Add(this.missedShotButton);
+            this.buttonPanel.Controls.Add(this.madeShotButton);
+            this.buttonPanel.Controls.Add(this.turnoverButton);
+            this.buttonPanel.Location = new System.Drawing.Point(12, 124);
+            this.buttonPanel.Name = "buttonPanel";
+            this.buttonPanel.Size = new System.Drawing.Size(234, 317);
+            this.buttonPanel.TabIndex = 16;
+            this.buttonPanel.Visible = false;
+            // 
+            // courtBox
+            // 
+            this.courtBox.Image = global::_20.Properties.Resources.BasketballCourt;
+            this.courtBox.Location = new System.Drawing.Point(12, 124);
+            this.courtBox.Name = "courtBox";
+            this.courtBox.Size = new System.Drawing.Size(944, 504);
+            this.courtBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.courtBox.TabIndex = 0;
+            this.courtBox.TabStop = false;
+            this.courtBox.DoubleClick += new System.EventHandler(this.courtBox_DoubleClick);
+            this.courtBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.courtBox_MouseDown);
+            this.courtBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.courtBox_MouseMove);
+            // 
+            // flipSidesButton
+            // 
+            this.flipSidesButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.flipSidesButton.Location = new System.Drawing.Point(492, 60);
+            this.flipSidesButton.Name = "flipSidesButton";
+            this.flipSidesButton.Size = new System.Drawing.Size(262, 35);
+            this.flipSidesButton.TabIndex = 17;
+            this.flipSidesButton.Text = "Flip Sides";
+            this.flipSidesButton.UseVisualStyleBackColor = true;
+            this.flipSidesButton.Click += new System.EventHandler(this.flipSides_Click);
+            // 
+            // confirmCheckBox
+            // 
+            this.confirmCheckBox.AutoSize = true;
+            this.confirmCheckBox.Location = new System.Drawing.Point(544, 101);
+            this.confirmCheckBox.Name = "confirmCheckBox";
+            this.confirmCheckBox.Size = new System.Drawing.Size(168, 17);
+            this.confirmCheckBox.TabIndex = 18;
+            this.confirmCheckBox.Text = "Confirm Before Sending Event";
+            this.confirmCheckBox.UseVisualStyleBackColor = true;
             // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1236, 730);
+            this.ClientSize = new System.Drawing.Size(1243, 637);
+            this.Controls.Add(this.confirmCheckBox);
+            this.Controls.Add(this.flipSidesButton);
+            this.Controls.Add(this.buttonPanel);
             this.Controls.Add(this.courtBox);
-            this.Controls.Add(this.periodStartButton);
             this.Controls.Add(this.historyBox);
-            this.Controls.Add(this.reboundButton);
-            this.Controls.Add(this.madeShotButton);
-            this.Controls.Add(this.turnoverButton);
-            this.Controls.Add(this.missedShotButton);
-            this.Controls.Add(this.foulButton);
-            this.Controls.Add(this.awayBox);
             this.Controls.Add(this.homeBox);
-            this.Controls.Add(this.jumpBallButton);
             this.Controls.Add(this.deleteEventButton);
+            this.Controls.Add(this.awayBox);
+            this.Controls.Add(this.periodStartButton);
             this.Name = "GameForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "20-20 Basketball";
             this.Load += new System.EventHandler(this.GameForm_Load);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GameForm_MouseDown);
             this.jumpBallContextMenuStrip.ResumeLayout(false);
             this.homeBox.ResumeLayout(false);
             this.homeTimeoutContextMenuStrip.ResumeLayout(false);
@@ -847,20 +898,21 @@
             this.awayPlayer3Context.ResumeLayout(false);
             this.awayPlayer1Context.ResumeLayout(false);
             this.awayPlayer2Context.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.courtBox)).EndInit();
             this.subContextMenuStrip.ResumeLayout(false);
             this.madeShotContextMenuStrip.ResumeLayout(false);
             this.missedShotContextMenuStrip.ResumeLayout(false);
             this.reboundContextMenuStrip.ResumeLayout(false);
             this.foulContextMenuStrip.ResumeLayout(false);
+            this.buttonPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.courtBox)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.PictureBox courtBox;
-        private System.Windows.Forms.Button reboundButton;
         private System.Windows.Forms.Button periodStartButton;
         private System.Windows.Forms.ListBox historyBox;
         private System.Windows.Forms.Button deleteEventButton;
@@ -931,6 +983,11 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem12;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem15;
         private System.Windows.Forms.ToolStripMenuItem technicalFoulToolStripMenuItem;
+        private System.Windows.Forms.Panel buttonPanel;
+        private System.Windows.Forms.Button flipSidesButton;
+        private System.Windows.Forms.Label homeBonus;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox confirmCheckBox;
     }
 }
 

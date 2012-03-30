@@ -14,13 +14,16 @@ namespace _20
         string type;
         public static int SHOT_TYPE = 0;
         public static int FASTBREAK = 1;
+        public static int REBOUND = 2;
         public static int GOALTENDING = 2;
+        public static int PLAYER_SELECT = 3;
+
         public static int FOUL_TYPE = 0;
         public static int CHARGING = 1;
         public static int EJECTED = 2;
 
-        int sideBorderLength = 6;
-        int topBottomBorderLength = 28;
+        public static int sideBorderLength = 6;
+        public static int topBottomBorderLength = 28;
         public string shotType;
         public string turnoverType;
         public string foulType;
@@ -28,15 +31,25 @@ namespace _20
         public bool goaltending;
         public bool fastbreak;
         public bool ejected;
+        public bool rebounded;
+        public string reboundType;
+        private bool isHome;
+        public Player playerRebounded;
+        public Player playerShot;
+        public bool blocked;
+        private List<Player> playersOnCourt;
+        private Alpaca pac;
         private int iteration;
         private Dictionary<string, EventHandler> events;
 
-        public DataForm(string type, int start)
+        public DataForm(Alpaca pac, string type, int start, Point loc)
         {
             InitializeComponent();
             this.type = type;
             this.iteration = start;
             this.cancelled = false;
+            this.Location = loc;
+            this.pac = pac;
             events = new Dictionary<string, EventHandler>();
             events["madeShot"] = new EventHandler(this.madeShot_Click);
             events["missedShot"] = new EventHandler(this.missedShot_Click);
@@ -66,6 +79,7 @@ namespace _20
             }
             else if (type.Equals("missedShot"))
             {
+                rebounded = true;
                 if (this.iteration == SHOT_TYPE)
                 {
                     this.Text = "Shot Type";
@@ -75,6 +89,11 @@ namespace _20
                 {
                     this.Text = "Fastbreak?";
                     loadFormWithButtons(new string[] { "Yes", "No" });
+                }
+                else if (this.iteration == REBOUND)
+                {
+                    this.Text = "Rebounded?";
+                    loadFormWithButtons(new string[] { "Offensive Rebound", "Defensive Rebound", "Dead Ball Rebound", "No Rebound" });
                 }
             }
             else if (type.Equals("turnover"))
@@ -175,6 +194,78 @@ namespace _20
             else if (iteration == FASTBREAK)
             {
                 this.fastbreak = button.Text.Equals("Yes");
+                if (this.blocked)
+                {
+                    rebounded = false;
+                    Close();
+                }
+                this.Text = "Rebounded?";
+                loadFormWithButtons(new string[] { "Offensive Rebound", "Defensive Rebound", "Dead Ball Rebound", "No Rebound", });
+                iteration ++;
+            }
+            else if (iteration == REBOUND)
+            {
+                isHome = playerShot.TeamId == pac.HomeTeam.Id;
+                bool isDead = false; ;
+                
+
+                if (button.Text.Contains("Offensive"))
+                {
+                    reboundType = "offensive";
+                }
+                else if (button.Text.Contains("Defensive"))
+                {
+                    reboundType = "defensive";
+                }
+                else if (button.Text.Contains("Dead"))
+                {
+                    reboundType = "dead-ball";
+                    isDead = true;
+                }
+                else
+                {
+                    rebounded = false;
+                    this.Close();
+                    return;
+                }
+                if (isHome)
+                {
+                    playersOnCourt = pac.AwayTeam.getOncourt();
+                }
+                else
+                {
+                    playersOnCourt = pac.HomeTeam.getOncourt();
+                }
+
+                string[] players = null;
+                if (isDead)
+                {
+                    players = new string[] { "Home Possession", "Away Possession" };
+                }
+                else
+                {
+                    players = new string[playersOnCourt.Count + 1];
+                    for (int i = 0; i < players.Length - 1; i++)
+                    {
+                        Player p = playersOnCourt[i];
+                        players[i] = "#" + p.Jersey + " " + p.DisplayName;
+                    }
+                    players[players.Length - 1] = playersOnCourt[0].Id == pac.HomeTeam.Id ? "Home Team Rebound (" + pac.HomeTeam.Name + ")": "Away Team Rebound (" + pac.AwayTeam.Name + ")";
+                }
+
+                iteration++;
+                loadFormWithButtons(players);
+            }
+            else if (iteration == PLAYER_SELECT)
+            {
+                if (button.Text.Contains("Possession") || button.Text.Contains("Team Rebound"))
+                {
+                    playerRebounded = pac.getTeamPlayer(button.Text.Contains("Home"));
+                }
+                else
+                {
+                    playerRebounded = pac.getPlayerByNumber(isHome, int.Parse(button.Text.Substring(1, button.Text.IndexOf(" ") - 1)));
+                }
                 this.Close();
             }
         }

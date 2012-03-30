@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
+using System.Drawing;
 
 namespace _20.Events
 {
@@ -20,6 +21,7 @@ namespace _20.Events
             this.idGoingIn = idGoingIn;
             this.idGoingOut = idGoingOut;
             this.teamId = teamId;
+            this.location = new Point(-1, -1);
             apiCall = "substitution";
         }
 

@@ -12,7 +12,6 @@ namespace _20.Events
         private string homePlayerId;
         private string awayPlayerId;
         private string winner;
-        private Point location;
 
         public JumpballEvent(Alpaca pac, string homePlayerId, string awayPlayerId, string winner, Point location)
             : base(pac)
@@ -26,7 +25,7 @@ namespace _20.Events
 
         public override void resolve()
         {
-            //does not resolve anything for now.
+            pac.Possesion = pac.getTeamById(pac.getPlayer(winner).TeamId) == pac.HomeTeam ? pac.AwayTeam : pac.HomeTeam ;
         }
 
         public override void unresolve()

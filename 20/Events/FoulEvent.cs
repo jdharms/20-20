@@ -14,7 +14,6 @@ namespace _20.Events
         string drewBy;
         string foulType;
         Boolean ejected;
-        Point location;
         string team;
 
         public FoulEvent(Alpaca pac, string team, string committedBy, string drewBy, string foulType, Boolean ejected, Point location)

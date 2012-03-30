@@ -255,6 +255,7 @@ namespace _20
                 if (e != null)
                 {
                     e.setContext(context);
+                    e.resolve();
                     events.Add(e);
                 }
             }
