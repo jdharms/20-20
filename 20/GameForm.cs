@@ -391,6 +391,8 @@ namespace _20
         private void historyBox_Click(object sender, EventArgs e)
         {
             this.buttonPanel.Visible = false;
+            if (historyBox.SelectedIndex < 0 || historyBox.SelectedIndex >= pac.EventLog.Count)
+                return;
             try
             {
                 Event ev = pac.EventLog[historyBox.SelectedIndex];
@@ -453,7 +455,7 @@ namespace _20
 
 
                 onCourt = homeRightClicked ? pac.HomeTeam.getOncourt() : pac.AwayTeam.getOncourt();
-                bench = homeRightClicked ? pac.HomeTeam.getBench() : pac.AwayTeam.getOncourt();
+                bench = homeRightClicked ? pac.HomeTeam.getBench() : pac.AwayTeam.getBench();
                 senderPlayer = pac.getPlayerByNumber(homeRightClicked, senderNumber);
 
                 // The top thing that will say the players name coming out
