@@ -40,8 +40,9 @@ namespace _20.Events
                 { 
                     apiCall = apiCall,
                     gameId=pac.GameID,
-                    commitedBy=committedBy,
+                    committedBy=committedBy,
                     forcedBy=forcedBy,
+                    turnoverType=turnoverType,
                     location=convertPointToArray(location),
                     context= context
                 },
