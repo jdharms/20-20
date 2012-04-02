@@ -56,7 +56,7 @@ namespace _20.Events
         public override string ToString()
         {
             Player p = pac.getPlayer(rebounder);
-            string name = "";
+            string name = p.DisplayName;
             if (p.TeamPlayer)
             {
                 name = pac.getTeamById(p.TeamId).Name;
