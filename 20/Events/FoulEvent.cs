@@ -40,7 +40,7 @@ namespace _20.Events
                 drewBy = drewBy, 
                 foulType = foulType, 
                 ejected = ejected, 
-                location = location, 
+                location = this.convertPointToArray(location), 
                 context = context 
             },
                 Formatting.None,
