@@ -863,6 +863,7 @@
             this.courtBox.DoubleClick += new System.EventHandler(this.courtBox_DoubleClick);
             this.courtBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.courtBox_MouseDown);
             this.courtBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.courtBox_MouseMove);
+            this.courtBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.courtBox_MouseUp);
             // 
             // GameForm
             // 
