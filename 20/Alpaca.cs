@@ -32,7 +32,7 @@ namespace _20
         private string password;
         private bool authenticated;
         DateTime lastAuthed;
-        public static bool LOCAL_POST = true;
+        public static bool LOCAL_POST = false;
 
         public int Period { get; set; }
         public bool InsidePeriod { get; set; }

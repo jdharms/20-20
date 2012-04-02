@@ -304,6 +304,13 @@ namespace _20
             MouseButtons currButton = e.Button;
             Point loc = new Point(e.X, e.Y);
 
+            if (currButton == System.Windows.Forms.MouseButtons.Right)
+            {
+                buttonPanel.Visible = false;
+                return;
+            }
+
+
             /* We need to get the location of the click in "ESPN" coordinates.  That is, the top left corner is (0,0)
              * and the bottom right corner is (940, 500). */
 
@@ -341,9 +348,20 @@ namespace _20
             int bLocY = Math.Max(courtLoc.Y, courtLoc.Y + e.Y - (buttonPanel.Height / 2));
             bLocY = Math.Min(bLocY, courtLoc.Y + courtBox.Height - buttonPanel.Height);
             Point buttonPanelLoc = new Point(bLocX, bLocY);
+            buttonPanel.Visible = false;
             buttonPanel.Location = buttonPanelLoc;
-            buttonPanel.Visible = true;
         }//courtBox_MouseDown
+
+
+        private void courtBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                buttonPanel.Visible = true;
+            }
+
+
+        }
 
         /// <summary>
         /// TODO: needs to be documented...COUGH COUGH, thats you daniel
@@ -1455,6 +1473,8 @@ namespace _20
 
             this.update();
         }
+
+
 
     }// end GameForm
 } //end using namespace
