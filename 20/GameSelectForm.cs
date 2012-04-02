@@ -32,15 +32,7 @@ namespace _20
             from = fromDatePicker.Value;
             to = toDatePicker.Value.AddDays(1);
 
-            games = getGames(from, to);
-            foreach (Game g in games)
-            {
-                Console.WriteLine("in form:");
-                Console.WriteLine(g);
-            }
-            gameListBox.DataSource = games;
-            gameListBox.Refresh();
-            gameListBox.Invalidate();
+            searchGames(from, to);
         }
 
         private void selectGameButton_Click(object sender, EventArgs e)
@@ -65,8 +57,34 @@ namespace _20
         private void searchTodayButton_Click(object sender, EventArgs e)
         {
             from = DateTime.Today;
-            to = from.AddDays(1); 
-            Close();
+            to = from.AddDays(1);
+            searchGames(from, to);
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            Console.WriteLine(keyData);
+            if (keyData == Keys.Enter)
+            {
+                selectGameButton_Click(null, null);
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void searchGames(DateTime from, DateTime to)
+        {
+            games = getGames(from, to);
+            foreach (Game g in games)
+            {
+                Console.WriteLine("in form:");
+                Console.WriteLine(g);
+            }
+            gameListBox.DataSource = games;
+            gameListBox.Refresh();
+            gameListBox.Invalidate();
+            gameListBox.SetSelected(0, true);
+            selectGameButton.Focus();
         }
 
         private void GameSelectForm_Load(object sender, EventArgs e)

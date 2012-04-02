@@ -137,7 +137,7 @@ namespace _20
                 b.Size = new Size((this.Width - sideBorderLength), (this.Height - topBottomBorderLength) / (types.Count<string>() + 1));
                 b.Location = new Point(0, location);
                 b.Click += i == cancelInd ? new EventHandler(this.cancelForm) : events[type];
-                font = new Font(b.Font.FontFamily, 15.0f);
+                font = new Font(b.Font.FontFamily, 12.0f);
                 b.Font = font;
                 location += b.Size.Height;
                 this.Controls.Add(b);
@@ -206,8 +206,7 @@ namespace _20
             else if (iteration == REBOUND)
             {
                 isHome = playerShot.TeamId == pac.HomeTeam.Id;
-                bool isDead = false; ;
-                
+                bool isDead = false;                
 
                 if (button.Text.Contains("Offensive"))
                 {
@@ -228,7 +227,7 @@ namespace _20
                     this.Close();
                     return;
                 }
-                if (isHome)
+                if ((isHome && reboundType.Equals("defensive")) || (!isHome && reboundType.Equals("offensive")))
                 {
                     playersOnCourt = pac.AwayTeam.getOncourt();
                 }
@@ -250,7 +249,7 @@ namespace _20
                         Player p = playersOnCourt[i];
                         players[i] = "#" + p.Jersey + " " + p.DisplayName;
                     }
-                    players[players.Length - 1] = playersOnCourt[0].Id == pac.HomeTeam.Id ? "Home Team Rebound (" + pac.HomeTeam.Name + ")": "Away Team Rebound (" + pac.AwayTeam.Name + ")";
+                    players[players.Length - 1] = playersOnCourt[0].TeamId == pac.HomeTeam.Id ? "Home Team Rebound (" + pac.HomeTeam.Name + ")": "Away Team Rebound (" + pac.AwayTeam.Name + ")";
                 }
 
                 iteration++;
