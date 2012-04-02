@@ -470,7 +470,9 @@ namespace _20
                 {
                     if (!p.TeamPlayer)
                     {
-                        subContextMenuStrip.Items.Add(new ToolStripMenuItem("with #" + p.Jersey + " (" + p.DisplayName + ")"));
+                        ToolStripMenuItem tsmi = new ToolStripMenuItem("with #" + p.Jersey + " (" + p.DisplayName + ")");
+                        tsmi.Click += new EventHandler(this.subPlayer_click);
+                        subContextMenuStrip.Items.Add(tsmi);                        
                     }
                 }
 
@@ -757,7 +759,7 @@ namespace _20
             }
             ToolStripMenuItem subInItem = (ToolStripMenuItem)sender;
             string subInItemText = subInItem.Text;
-            ToolStripMenuItem subOutItem = (ToolStripMenuItem)subInItem.OwnerItem;
+            ToolStripMenuItem subOutItem = (ToolStripMenuItem)subContextMenuStrip.Items[0];
             string subOutItemText = subOutItem.Text;
 
             int inBeg = subInItemText.IndexOf("#") + 1;
