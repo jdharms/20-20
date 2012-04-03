@@ -778,11 +778,7 @@ namespace _20
 
             SubstitutionEvent subEvent = new SubstitutionEvent(pac, subInPlayer.Id, subOutPlayer.Id, subInPlayer.TeamId);
 
-            if (MessageBox.Show("Sub in " + subInPlayer.DisplayName + " for " + subOutPlayer.DisplayName + "?",
-                "", MessageBoxButtons.OKCancel) == DialogResult.OK)
-            {
-                pac.post(subEvent);
-            }
+            confirmAndSendEvent(subEvent);
         }//end subPlayer_click
         /*------------------------------------------------------------------------------------------------------------*/
         /*----------------------------------------------SUBSTITUTION END----------------------------------------------*/
@@ -1200,7 +1196,7 @@ namespace _20
                 }
                 else
                 {
-                    firstSelectedContext.Text = "Fouled";
+                    firstSelectedContext.Text = "Commit";
                     if (secondSelectedContext != null)
                         secondSelectedContext.Text = "Drew";
                 }
@@ -1309,8 +1305,9 @@ namespace _20
                 }//end if
                 ev = new GameEndEvent(pac);
                 // and send a game end event
-                confirmAndSendEvent(ev);
                 confirmScore(true);
+                confirmAndSendEvent(ev);
+                update();
                 return;
             }//end if
             // the game should not end at this point
@@ -1385,11 +1382,7 @@ namespace _20
                 timeoutEvent = new TimeoutEvent(pac, null, "official");
             }
 
-            if (MessageBox.Show("Call " + sender.ToString() + "?",
-                "", MessageBoxButtons.OKCancel) == DialogResult.OK)
-            {
-                pac.post(timeoutEvent);
-            }
+            confirmAndSendEvent(timeoutEvent);
         }//end timeout_Click
        
         /// <summary>

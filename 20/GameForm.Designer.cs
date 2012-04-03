@@ -163,6 +163,7 @@
             this.deleteEventButton.TabIndex = 11;
             this.deleteEventButton.Text = "Delete Event";
             this.deleteEventButton.UseVisualStyleBackColor = true;
+            this.deleteEventButton.Visible = false;
             this.deleteEventButton.Click += new System.EventHandler(this.deleteEvent_Click);
             // 
             // jumpBallButton
