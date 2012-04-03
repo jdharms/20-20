@@ -71,7 +71,6 @@ namespace _20
             homePlayerContexts.Add(homePlayer3Context);
             homePlayerContexts.Add(homePlayer4Context);
             homePlayerContexts.Add(homePlayer5Context);
-            homePlayerContexts.Add(homeBox);
 
             awayPlayerLabels = new List<Label>();
             awayPlayerLabels.Add(awayPlayer1Label);
@@ -87,7 +86,6 @@ namespace _20
             awayPlayerContexts.Add(awayPlayer3Context);
             awayPlayerContexts.Add(awayPlayer4Context);
             awayPlayerContexts.Add(awayPlayer5Context);
-            awayPlayerContexts.Add(awayBox);
 
             eventButtons = new List<Button>();
             eventButtons.Add(madeShotButton);
@@ -118,10 +116,11 @@ namespace _20
                     awayPlayerContexts[i].ContextMenuStrip = subContextMenuStrip;
                     homePlayerContexts[i].MouseDown += new MouseEventHandler(this.playerSelect_MouseDown);
                     awayPlayerContexts[i].MouseDown += new MouseEventHandler(this.playerSelect_MouseDown);
+                    homePlayerContexts[i].Click += new EventHandler(this.playerSelect_click);
+                    awayPlayerContexts[i].Click += new EventHandler(this.playerSelect_click);
                 }
-
-                homePlayerContexts[i].Click += new EventHandler(this.playerSelect_click);
-                awayPlayerContexts[i].Click += new EventHandler(this.playerSelect_click);
+                homePlayerLabels[i].Click += new EventHandler(this.playerSelect_click);
+                awayPlayerLabels[i].Click += new EventHandler(this.playerSelect_click);
             }
             jumpBallContextMenuStrip.Items.Add("Possession to Home Team (" + pac.HomeTeam.Name + ")");
             jumpBallContextMenuStrip.Items.Add("Possession to Away Team (" + pac.AwayTeam.Name + ")");
@@ -139,7 +138,6 @@ namespace _20
         {
             //populate all form controls.    
             Console.WriteLine("Updating form...");
-
             // Update the home and away team names
             homeNameLabel.Text = (pac.Possesion == pac.HomeTeam ? ">> " : "") + pac.HomeTeam.Name;
             awayNameLabel.Text = (pac.Possesion == pac.AwayTeam ? ">> " : "") + pac.AwayTeam.Name;
@@ -308,6 +306,10 @@ namespace _20
             if (currButton == System.Windows.Forms.MouseButtons.Right)
             {
                 buttonPanel.Visible = false;
+                firstSelectedPlayer = secondSelectedPlayer = null;
+                firstSelectedLabel = secondSelectedLabel = null;
+                firstSelectedContext = secondSelectedContext = null;
+                update();
                 return;
             }
 
@@ -537,10 +539,10 @@ namespace _20
             // we just use this to know if we selected a home or away player
             bool isHome = false;
 
-            if (sender is GroupBox || sender == homeNameLabel || sender == awayNameLabel)
+            if (sender == homeNameLabel || sender == awayNameLabel)
             {
-                thisSelected = pac.getTeamPlayer(sender == homeBox || sender == homeNameLabel);
-                isHome = sender == homeBox || sender == homeNameLabel;
+                thisSelected = pac.getTeamPlayer(sender == homeNameLabel);
+                isHome = sender == homeNameLabel;
                 i = 5;
             }
             else
