@@ -24,7 +24,7 @@ namespace _20.Events
             return JsonConvert.SerializeObject(new
             {
                 apiCall = apiCall,
-                gameID = pac.GameID, 
+                gameId = pac.GameID, 
                 context = context 
             });
         }
