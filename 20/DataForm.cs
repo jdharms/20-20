@@ -263,7 +263,7 @@ namespace _20
                 }
                 else
                 {
-                    playerRebounded = pac.getPlayerByNumber(isHome, int.Parse(button.Text.Substring(1, button.Text.IndexOf(" ") - 1)));
+                    playerRebounded = pac.getPlayerByNumber(playersOnCourt[0].TeamId == pac.HomeTeam.Id, int.Parse(button.Text.Substring(1, button.Text.IndexOf(" ") - 1)));
                 }
                 this.Close();
             }
