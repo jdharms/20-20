@@ -33,6 +33,7 @@ namespace _20
         private List<Keys> awayPlayerKeys;
         private List<Button> eventButtons;
         private bool waitingForReboundClick;
+        private bool postRebound;
         private Event savedEvent;
         private Player savedPlayer;
         private string savedReboundType;
@@ -325,13 +326,14 @@ namespace _20
             currPoint = loc;
             if (waitingForReboundClick)
             {
-                waitingForReboundClick = false;
                 ReboundEvent re = new ReboundEvent(pac, savedPlayer.Id, savedReboundType, currPoint);
                 confirmAndSendEvent(savedEvent);
                 confirmAndSendEvent(re);
                 savedPlayer = null;
                 savedEvent = null;
                 savedReboundType = null;
+                waitingForReboundClick = false;
+                postRebound = true;
                 return;
             }
             // the form needs to know if we have selected a point yet
@@ -355,6 +357,11 @@ namespace _20
 
         private void courtBox_MouseUp(object sender, MouseEventArgs e)
         {
+            if (postRebound)
+            {
+                postRebound = false;
+                return;
+            }
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
                 buttonPanel.Visible = true;
