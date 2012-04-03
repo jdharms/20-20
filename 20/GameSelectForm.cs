@@ -75,11 +75,6 @@ namespace _20
         private void searchGames(DateTime from, DateTime to)
         {
             games = getGames(from, to);
-            foreach (Game g in games)
-            {
-                Console.WriteLine("in form:");
-                Console.WriteLine(g);
-            }
             gameListBox.DataSource = games;
             gameListBox.Refresh();
             gameListBox.Invalidate();

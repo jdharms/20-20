@@ -32,7 +32,7 @@ namespace _20
         private string password;
         private bool authenticated;
         DateTime lastAuthed;
-        public static bool LOCAL_POST = false;
+        public static bool LOCAL_POST = true;
 
         public int Period { get; set; }
         public bool InsidePeriod { get; set; }
@@ -294,12 +294,6 @@ namespace _20
                     GamesResponse gameResponse = JsonConvert.DeserializeObject<GamesResponse>(responseText);
                     gameResponse.response.TryGetValue("games", out games);
 
-                    Console.WriteLine(responseText);
-                    foreach(Game game in games)
-                    {
-                        Console.WriteLine(game);
-                    }
-
                     return games;
                 }
             }
@@ -345,7 +339,7 @@ namespace _20
                     GameDataResponse gameResponse = JsonConvert.DeserializeObject<GameDataResponse>(responseText);
                     gameResponse.flatten();
                     //gameResponse is the useful data from this call.  It has team names, player names, player numbers.
-                    Console.WriteLine(gameResponse);
+                    //Console.WriteLine(gameResponse);
 
                     HomeTeam = gameResponse.HomeTeam();
                     AwayTeam = gameResponse.AwayTeam();
@@ -481,7 +475,7 @@ namespace _20
                     //make it crash.
                     string gameId = ack.response["gameId"];
 
-                    Console.WriteLine(responseText);
+                    //Console.WriteLine(responseText);
                     return gameId;
                 }
             }
