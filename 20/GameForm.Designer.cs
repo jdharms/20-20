@@ -163,7 +163,6 @@
             this.deleteEventButton.TabIndex = 11;
             this.deleteEventButton.Text = "Delete Event";
             this.deleteEventButton.UseVisualStyleBackColor = true;
-            this.deleteEventButton.Visible = false;
             this.deleteEventButton.Click += new System.EventHandler(this.deleteEvent_Click);
             // 
             // jumpBallButton
@@ -309,7 +308,6 @@
             this.homePlayer5Label.TabIndex = 0;
             this.homePlayer5Label.Text = "40";
             this.homePlayer5Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.homePlayer5Label.Click += new System.EventHandler(this.playerSelect_click);
             this.homePlayer5Label.MouseDown += new System.Windows.Forms.MouseEventHandler(this.playerSelect_MouseDown);
             // 
             // homePlayer4Context
@@ -332,7 +330,6 @@
             this.homePlayer4Label.TabIndex = 0;
             this.homePlayer4Label.Text = "30";
             this.homePlayer4Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.homePlayer4Label.Click += new System.EventHandler(this.playerSelect_click);
             this.homePlayer4Label.MouseDown += new System.Windows.Forms.MouseEventHandler(this.playerSelect_MouseDown);
             // 
             // homePlayer3Context
@@ -355,7 +352,6 @@
             this.homePlayer3Label.TabIndex = 0;
             this.homePlayer3Label.Text = "20";
             this.homePlayer3Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.homePlayer3Label.Click += new System.EventHandler(this.playerSelect_click);
             this.homePlayer3Label.MouseDown += new System.Windows.Forms.MouseEventHandler(this.playerSelect_MouseDown);
             // 
             // homePlayer2Context
@@ -378,7 +374,6 @@
             this.homePlayer2Label.TabIndex = 0;
             this.homePlayer2Label.Text = "10";
             this.homePlayer2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.homePlayer2Label.Click += new System.EventHandler(this.playerSelect_click);
             this.homePlayer2Label.MouseDown += new System.Windows.Forms.MouseEventHandler(this.playerSelect_MouseDown);
             // 
             // homePlayer1Context
@@ -401,7 +396,6 @@
             this.homePlayer1Label.TabIndex = 0;
             this.homePlayer1Label.Text = "01";
             this.homePlayer1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.homePlayer1Label.Click += new System.EventHandler(this.playerSelect_click);
             this.homePlayer1Label.MouseDown += new System.Windows.Forms.MouseEventHandler(this.playerSelect_MouseDown);
             // 
             // homeScore
@@ -425,7 +419,6 @@
             this.homeNameLabel.TabIndex = 0;
             this.homeNameLabel.Text = "Home Team Name";
             this.homeNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.homeNameLabel.Click += new System.EventHandler(this.playerSelect_click);
             // 
             // awayBox
             // 
@@ -515,7 +508,6 @@
             this.awayPlayer5Label.TabIndex = 0;
             this.awayPlayer5Label.Text = "40";
             this.awayPlayer5Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.awayPlayer5Label.Click += new System.EventHandler(this.playerSelect_click);
             this.awayPlayer5Label.MouseDown += new System.Windows.Forms.MouseEventHandler(this.playerSelect_MouseDown);
             // 
             // awayScore
@@ -549,7 +541,6 @@
             this.awayPlayer4Label.TabIndex = 0;
             this.awayPlayer4Label.Text = "30";
             this.awayPlayer4Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.awayPlayer4Label.Click += new System.EventHandler(this.playerSelect_click);
             this.awayPlayer4Label.MouseDown += new System.Windows.Forms.MouseEventHandler(this.playerSelect_MouseDown);
             // 
             // awayNameLabel
@@ -562,7 +553,6 @@
             this.awayNameLabel.TabIndex = 1;
             this.awayNameLabel.Text = "Away Team Name";
             this.awayNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.awayNameLabel.Click += new System.EventHandler(this.playerSelect_click);
             // 
             // awayPlayer3Context
             // 
@@ -584,7 +574,6 @@
             this.awayPlayer3Label.TabIndex = 0;
             this.awayPlayer3Label.Text = "20";
             this.awayPlayer3Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.awayPlayer3Label.Click += new System.EventHandler(this.playerSelect_click);
             this.awayPlayer3Label.MouseDown += new System.Windows.Forms.MouseEventHandler(this.playerSelect_MouseDown);
             // 
             // awayPlayer1Context
@@ -607,7 +596,6 @@
             this.awayPlayer1Label.TabIndex = 0;
             this.awayPlayer1Label.Text = "01";
             this.awayPlayer1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.awayPlayer1Label.Click += new System.EventHandler(this.playerSelect_click);
             this.awayPlayer1Label.MouseDown += new System.Windows.Forms.MouseEventHandler(this.playerSelect_MouseDown);
             // 
             // awayPlayer2Context
@@ -630,7 +618,6 @@
             this.awayPlayer2Label.TabIndex = 0;
             this.awayPlayer2Label.Text = "10";
             this.awayPlayer2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.awayPlayer2Label.Click += new System.EventHandler(this.playerSelect_click);
             this.awayPlayer2Label.MouseDown += new System.Windows.Forms.MouseEventHandler(this.playerSelect_MouseDown);
             // 
             // subContextMenuStrip

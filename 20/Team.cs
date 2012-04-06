@@ -15,6 +15,8 @@ namespace _20
 
         private List<Player> players;
         public List<Player> Players { get { return players; } }
+        private List<Player> ejected;
+        public List<Player> Ejected { get { return ejected; } }
         private List<Player> onCourt; 
         public Player teamPlayer;
 
@@ -37,6 +39,7 @@ namespace _20
             this.timeoutsUsed = 0;
             this.score = 0;
             this.onCourt = new List<Player>();
+            this.ejected = new List<Player>();
 
             //find and set teamPlayer
             foreach(Player p in players)
@@ -133,7 +136,13 @@ namespace _20
 
         public Player getPlayer(string playerId)
         {
-            return players.SingleOrDefault(player => player.Id.Equals(playerId));
+            Player toReturn = players.SingleOrDefault(player => player.Id.Equals(playerId));
+            if (toReturn == null)
+            {
+                toReturn = ejected.SingleOrDefault(player => player.Id.Equals(playerId));
+            }
+
+            return toReturn;
         }
 
         public bool playerOnCourt(string playerId)
@@ -141,9 +150,17 @@ namespace _20
             return onCourt.Contains(getPlayer(playerId));
         }
 
-        public bool registerFoul(string playerId)
+        public bool registerFoul(string playerId, bool ejected)
         {
-            return getPlayer(playerId).addFoul();
+            if (getPlayer(playerId).addFoul())
+            {
+                if (ejected)
+                {
+                    ejectPlayer(playerId);
+                }
+                return true;
+            }
+            return false;
         }
 
         public bool makeSubstitution(string playerIdIn, string playerIdOut)
@@ -165,11 +182,36 @@ namespace _20
             return onCourt;
         }
 
-        public void removeFoul(string playerId)
+        public void removeFoul(string playerId, bool ejected)
         {
             Player p = getPlayer(playerId);
             p.removeFoul();
+            if (ejected)
+            {
+                unejectPlayer(playerId);
+            }
         }
 
+        public void ejectPlayer(Player p)
+        {
+            ejected.Add(p);
+            players.Remove(p);
+        }
+
+        public void ejectPlayer(string playerId)
+        {
+            this.ejectPlayer(getPlayer(playerId));
+        }
+
+        public void unejectPlayer(Player p)
+        {
+            players.Add(p);
+            ejected.Remove(p);
+        }
+
+        public void unejectPlayer(string playerId)
+        {
+            this.unejectPlayer(getPlayer(playerId));
+        }
     }
 }
