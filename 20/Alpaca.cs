@@ -11,6 +11,7 @@ using System.Xml;
 using _20.Events;
 using System.Windows.Forms;
 using System.ComponentModel;
+using System.Configuration;
 
 namespace _20
 {
@@ -24,8 +25,8 @@ namespace _20
     public class Alpaca
     {
         string token;
-        private string secret = "1dT3eE1tWVpJ2CneFA7Y05cxlVbxfBDYJbv1QgrS";
-        private string key = "cb158f575ec65037ef649dccd7e78135e508f73b";
+        private string secret = ConfigurationSettings.AppSettings["secret"];
+        private string key = ConfigurationSettings.AppSettings["key"];
 
         private string username;
         public string Username { get { return username; } }
