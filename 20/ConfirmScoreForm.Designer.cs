@@ -131,6 +131,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(591, 188);
+            this.ControlBox = false;
             this.Controls.Add(this.scoreConfirmPanel);
             this.Name = "ConfirmScoreForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
