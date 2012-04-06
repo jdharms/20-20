@@ -254,6 +254,7 @@ namespace _20
 
                 if (e != null)
                 {
+                    e.EventId = dict["eventId"].ToString();
                     e.setContext(context);
                     e.resolve();
                     events.Add(e);

@@ -11,7 +11,9 @@ namespace _20.Events
     public class FoulEvent : Event
     {
         string committedBy;
+        Player committedByPlayer;
         string drewBy;
+        Player drewByPlayer;
         string foulType;
         Boolean ejected;
         string team;
@@ -20,7 +22,9 @@ namespace _20.Events
             : base(pac)
         {
             this.committedBy = committedBy;
+            this.committedByPlayer = pac.getPlayer(committedBy);
             this.drewBy = drewBy;
+            this.drewByPlayer = pac.getPlayer(drewBy);
             this.foulType = foulType;
             this.ejected = ejected;
             this.location = location;
@@ -68,25 +72,26 @@ namespace _20.Events
             {
                 // If the player is on the Away Team, add a foul
                 // to the team and the player
-                if (team == pac.AwayTeam.Id)
+                bool isHome = pac.getPlayer(committedBy).TeamId == pac.HomeTeam.Id;
+                if (!isHome)
                 {
                     int fouls = pac.AwayTeam.TeamFouls;
                     fouls++;
                     if (fouls < 0)
                         fouls = 0;
                     pac.AwayTeam.TeamFouls = fouls;
-                    pac.AwayTeam.registerFoul(committedBy);
+                    pac.AwayTeam.registerFoul(committedBy, ejected);
                 }
                 // If the player is on the Home Team, add a foul
                 // to the team and the player
-                else if (team == pac.HomeTeam.Id)
+                else
                 {
                     int fouls = pac.HomeTeam.TeamFouls;
                     fouls++;
                     if (fouls < 0)
                         fouls = 0;
                     pac.HomeTeam.TeamFouls = fouls;
-                    pac.HomeTeam.registerFoul(committedBy);
+                    pac.HomeTeam.registerFoul(committedBy, ejected);
                 }
             }
         }
@@ -115,59 +120,66 @@ namespace _20.Events
             else
             {
                 // Removes the foul from the team and from the player
-                if (team == pac.AwayTeam.Id)
+                bool isHome = team == pac.HomeTeam.Id;
+
+                if (!isHome)
                 {
                     int fouls = pac.AwayTeam.TeamFouls;
                     fouls--;
                     if (fouls < 0)
                         fouls = 0;
                     pac.AwayTeam.TeamFouls = fouls;
-                    pac.AwayTeam.removeFoul(committedBy);
+                    pac.AwayTeam.removeFoul(committedBy, ejected);
+                            
                 }
-                else if (team == pac.HomeTeam.Id)
+                else
                 {
                     int fouls = pac.HomeTeam.TeamFouls;
                     fouls--;
                     if (fouls < 0)
                         fouls = 0;
                     pac.HomeTeam.TeamFouls = fouls;
-                    pac.HomeTeam.removeFoul(committedBy);
+                    pac.HomeTeam.removeFoul(committedBy, ejected);
                 }
+
             }
         }
 
         public override string ToString()
         {
-            Player drew = pac.getPlayer(drewBy);
-            Player committed = pac.getPlayer(committedBy);
             string drewString = "";
             string committedString = "";
+            string ejectionString = "";
 
-
-            if (drew == null)
+            if (drewByPlayer == null)
             {
                 drewString = "";
             }
-            else if (drew.TeamPlayer)
+            else if (drewByPlayer.TeamPlayer)
             {
-                drewString = ". Drawn by " + pac.getTeamById(drew.TeamId).Name;
+                drewString = ". Drawn by " + pac.getTeamById(drewByPlayer.TeamId).Name;
             }
             else
             {
-                drewString = ". Drawn by " + drew.DisplayName;
+                drewString = ". Drawn by " + drewByPlayer.DisplayName;
             }
 
-            if (committed.TeamPlayer)
+            if (committedByPlayer.TeamPlayer)
             {
-                committedString = pac.getTeamById(committed.TeamId).Name;
+                committedString = pac.getTeamById(committedByPlayer.TeamId).Name;
             }
             else
             {
-                committedString = committed.DisplayName;
+                committedString = committedByPlayer.DisplayName;
+            }
+
+            if (ejected)
+            {
+                ejectionString = " " + committedByPlayer.DisplayName + " ejected.";
             }
 
                 
-            return char.ToUpper(foulType[0]) + foulType.Substring(1) + " foul on " + committedString + drewString + ".";
+            return char.ToUpper(foulType[0]) + foulType.Substring(1) + " foul on " + committedString + drewString + "." + ejectionString;
         }
     }
 }

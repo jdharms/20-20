@@ -257,24 +257,50 @@ namespace _20
                 periodStartButton.Text = perOrOver + " Start";
             }
 
+            if (firstSelectedContext != null)
+            {
+                if (firstSelectedContext == homeBox)
+                {
+                    firstSelectedContext.Text = "Home";
+                }
+                else if (firstSelectedContext == awayBox)
+                {
+                    firstSelectedContext.Text = "Away";
+                }
+                else
+                {
+                    firstSelectedContext.Text = "";
+                }
+            }
+            if (secondSelectedContext != null)
+            {
+                if (secondSelectedContext == homeBox)
+                {
+                    secondSelectedContext.Text = "Home";
+                }
+                else if (secondSelectedContext == awayBox)
+                {
+                    secondSelectedContext.Text = "Away";
+                }
+                else
+                {
+                    secondSelectedContext.Text = "";
+                }
+            }
+            if (firstSelectedLabel != null)
+            {
+                firstSelectedLabel.ForeColor = Color.Black;
+            }
+            if (secondSelectedLabel != null)
+            {
+                secondSelectedLabel.ForeColor = Color.Black;
+            }
             // the selected players from the player labels should become null
             firstSelectedPlayer = secondSelectedPlayer = null;
             // the selected players' labels should become null 
             firstSelectedLabel = secondSelectedLabel = null;
             // the selected players' groupboxes should become null 
             firstSelectedContext = secondSelectedContext = null;
-
-            //**RESET THE CONTEXTS AND LABELS**//
-            // for all the contexts and labels
-            for (int i = 0; i < homePlayerContexts.Count; i++)
-            {
-                // Clear the contexts' text
-                homePlayerContexts[i].Text = homePlayerContexts[i] == homeBox ? "Home" : "";
-                awayPlayerContexts[i].Text = awayPlayerContexts[i] == awayBox ? "Away" : "";
-                // Change the labels color back to black
-                homePlayerLabels[i].ForeColor = Color.Black;
-                awayPlayerLabels[i].ForeColor = Color.Black;
-            }
 
             // If a point was not selected
             if (!pointSelected)
@@ -296,6 +322,8 @@ namespace _20
         /// <param name="e"></param>
         private void courtBox_MouseDown(object sender, MouseEventArgs e)
         {
+            buttonPanel.Location = new Point(this.Width, this.Height);
+            buttonPanel.Visible = false;
             courtBox.Refresh();
             historyBox.ClearSelected();
             const int imageBorder = 2;
@@ -306,9 +334,6 @@ namespace _20
             if (currButton == System.Windows.Forms.MouseButtons.Right)
             {
                 buttonPanel.Visible = false;
-                firstSelectedPlayer = secondSelectedPlayer = null;
-                firstSelectedLabel = secondSelectedLabel = null;
-                firstSelectedContext = secondSelectedContext = null;
                 update();
                 return;
             }
@@ -352,7 +377,6 @@ namespace _20
             int bLocY = Math.Max(courtLoc.Y, courtLoc.Y + e.Y - (buttonPanel.Height / 2));
             bLocY = Math.Min(bLocY, courtLoc.Y + courtBox.Height - buttonPanel.Height);
             Point buttonPanelLoc = new Point(bLocX, bLocY);
-            buttonPanel.Visible = false;
             buttonPanel.Location = buttonPanelLoc;
         }//courtBox_MouseDown
 
@@ -584,7 +608,7 @@ namespace _20
                 if (isHome)
                 {
                     // set the first selected context to the indexed playercontext
-                    firstSelectedContext = homePlayerContexts[i];
+                    firstSelectedContext = i == 5 ? homeBox : homePlayerContexts[i];
                     //do the same with label
                     firstSelectedLabel = homePlayerLabels[i];
                 }//end if
@@ -592,7 +616,7 @@ namespace _20
                 else
                 {
                     // set the first selected context to the indexed playercontext
-                    firstSelectedContext = awayPlayerContexts[i];
+                    firstSelectedContext = i == 5 ? awayBox : awayPlayerContexts[i];
                     //do the same with label
                     firstSelectedLabel = awayPlayerLabels[i];
                 }//end else
@@ -661,14 +685,14 @@ namespace _20
                 {
                     // set the selected label and contexts
                     secondSelectedLabel = homePlayerLabels[i];
-                    secondSelectedContext = homePlayerContexts[i];
+                    secondSelectedContext = i == 5 ? homeBox : homePlayerContexts[i];
                 }//end if
                 // it was an away player
                 else
                 {
                     //set the second playeers label and context
                     secondSelectedLabel = awayPlayerLabels[i];
-                    secondSelectedContext = awayPlayerContexts[i];
+                    secondSelectedContext = i == 5 ? awayBox : awayPlayerContexts[i];
                 }// end else
 
                 // Second player will be denoted with green text
@@ -722,12 +746,12 @@ namespace _20
                 if (isHome)
                 {
                     secondSelectedLabel = homePlayerLabels[i];
-                    secondSelectedContext = homePlayerContexts[i];
+                    secondSelectedContext = sender == homeNameLabel ? homeBox : homePlayerContexts[i];
                 }
                 else
                 {
                     secondSelectedLabel = awayPlayerLabels[i];
-                    secondSelectedContext = awayPlayerContexts[i];
+                    secondSelectedContext = sender == awayNameLabel ? awayBox : awayPlayerContexts[i];
                 }
 
                 secondSelectedLabel.ForeColor = Color.Green;
@@ -1015,7 +1039,6 @@ namespace _20
             if (str.Equals("1"))
             {
                 dataForm = new DataForm(pac, "missedShot", DataForm.REBOUND, generateDataFormLocation(missedShotButton));
-                dataForm.blocked = blocker != null;
                 dataForm.playerShot = firstSelectedPlayer;
                 dataForm.ShowDialog();
                 if (dataForm.cancelled)
@@ -1030,7 +1053,6 @@ namespace _20
             {
                 Console.WriteLine("HEY: " + str);
                 dataForm = new DataForm(pac, "missedShot", DataForm.SHOT_TYPE, generateDataFormLocation(missedShotButton));
-                dataForm.blocked = blocker != null;
                 dataForm.playerShot = firstSelectedPlayer;
                 dataForm.ShowDialog();
                 if (dataForm.cancelled)
@@ -1044,7 +1066,6 @@ namespace _20
             else if (str.Equals("3"))
             {
                 dataForm = new DataForm(pac, "missedShot", DataForm.FASTBREAK, generateDataFormLocation(missedShotButton));
-                dataForm.blocked = blocker != null;
                 dataForm.playerShot = firstSelectedPlayer;
                 dataForm.ShowDialog();
                 if (dataForm.cancelled)
@@ -1188,6 +1209,22 @@ namespace _20
         {
             if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
             {
+                foulContextMenuStrip.Show(this, generateContextMenuLocation(sender));
+            }
+        }//end foul_MouseDown
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void foul_Click(object sender, EventArgs e)
+        {
+            FoulEvent fe = null;
+            SubstitutionEvent se = null;
+            string str = sender.ToString();
+            if (!str.Equals("Technical Foul"))
+            {
                 if (firstSelectedPlayer == null)
                 {
                     MessageBox.Show("Please select at least one player above");
@@ -1209,27 +1246,21 @@ namespace _20
                     if (secondSelectedContext != null)
                         secondSelectedContext.Text = "Drew";
                 }
-                foulContextMenuStrip.Show(this, generateContextMenuLocation(sender));
             }
-        }//end foul_MouseDown
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void foul_Click(object sender, EventArgs e)
-        {
-            FoulEvent fe = null;
-            string str = sender.ToString();
             string drewBy = secondSelectedPlayer == null ? null : secondSelectedPlayer.Id;
             if (str.Equals("Offensive Foul"))
             {
                 DataForm dataForm = new DataForm(pac, "foul", DataForm.CHARGING, generateDataFormLocation(foulButton));
+                dataForm.committedBy = firstSelectedPlayer;
                 dataForm.ShowDialog();
                 if (dataForm.cancelled)
                 {
                     return;
+                }
+
+                if (dataForm.ejected)
+                {
+                    se = new SubstitutionEvent(pac, dataForm.replacingPlayer.Id, firstSelectedPlayer.Id, firstSelectedPlayer.TeamId);
                 }
 
                 fe = new FoulEvent(pac, firstSelectedPlayer.TeamId, firstSelectedPlayer.Id, 
@@ -1238,29 +1269,49 @@ namespace _20
             else if (str.Equals("Defensive Foul"))
             {
                 DataForm dataForm = new DataForm(pac, "foul", DataForm.FOUL_TYPE, generateDataFormLocation(foulButton));
+                dataForm.committedBy = firstSelectedPlayer;
                 dataForm.ShowDialog();
                 if (dataForm.cancelled)
                 {
                     return;
                 }
 
+                if (dataForm.ejected)
+                {
+                    se = new SubstitutionEvent(pac, dataForm.replacingPlayer.Id, firstSelectedPlayer.Id, firstSelectedPlayer.TeamId);
+                }
                 fe = new FoulEvent(pac, firstSelectedPlayer.TeamId, firstSelectedPlayer.Id, 
                     drewBy, dataForm.foulType, dataForm.ejected, currPoint);
             }
             else if (str.Equals("Technical Foul"))
             {
-                DataForm dataForm = new DataForm(pac, "foul", DataForm.EJECTED, generateDataFormLocation(foulButton));
+                DataForm dataForm = new DataForm(pac, "tech", DataForm.TECHNICAL, generateDataFormLocation(foulButton));
+                dataForm.committedBy = firstSelectedPlayer;
                 dataForm.ShowDialog();
                 if (dataForm.cancelled)
                 {
                     return;
                 }
 
-                fe = new FoulEvent(pac, firstSelectedPlayer.TeamId, firstSelectedPlayer.Id, 
-                    drewBy, "technical" , dataForm.ejected, currPoint);
+                if (dataForm.cancelled)
+                {
+                    return;
+                }
+
+                if (dataForm.ejected)
+                {
+                    se = new SubstitutionEvent(pac, dataForm.replacingPlayer.Id, dataForm.committedBy.Id, dataForm.committedBy.TeamId);
+                }
+                fe = new FoulEvent(pac, dataForm.committedBy.TeamId, dataForm.committedBy.Id, 
+                    null, "technical", dataForm.ejected, currPoint);
+                
             }
 
             confirmAndSendEvent(fe);
+            if (se != null)
+            {
+                confirmAndSendEvent(se);
+            }
         }//end foul_Click
         /*-----------------------------------------------------------------------------------------------------------*/
         /*-------------------------------------------------FOUL END--------------------------------------------------*/

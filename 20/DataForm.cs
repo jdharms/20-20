@@ -22,6 +22,8 @@ namespace _20
         public static int CHARGING = 1;
         public static int EJECTED = 2;
 
+        public static int TECHNICAL = 0;
+
         public static int sideBorderLength = 6;
         public static int topBottomBorderLength = 28;
         public string shotType;
@@ -36,8 +38,10 @@ namespace _20
         private bool isHome;
         public Player playerRebounded;
         public Player playerShot;
-        public bool blocked;
+        public Player committedBy;
+        public Player replacingPlayer;
         private List<Player> playersOnCourt;
+        private List<Player> playersOnBench;
         private Alpaca pac;
         private int iteration;
         private Dictionary<string, EventHandler> events;
@@ -55,11 +59,44 @@ namespace _20
             events["missedShot"] = new EventHandler(this.missedShot_Click);
             events["turnover"] = new EventHandler(this.turnover_Click);
             events["foul"] = new EventHandler(this.foul_Click);
+            events["tech"] = new EventHandler(this.tech_Click);
         }
 
         private void DataForm_Load(object sender, EventArgs e)
         {
-            if (type.Equals("madeShot"))
+            if (type.Equals("tech"))
+            {
+                if (this.iteration == TECHNICAL)
+                {
+                    List<Player> players = null;
+                    if (committedBy == null)
+                    {
+                        this.Text = "Home or Away?";
+                        loadFormWithButtons(new string[] { "HOME (" + pac.HomeTeam.Name + ")", "AWAY (" + pac.AwayTeam.Name + ")"});
+                    }
+                    else if (committedBy.TeamPlayer)
+                    {
+                        players = committedBy.TeamId == pac.HomeTeam.Id ? pac.HomeTeam.getBench() : pac.AwayTeam.getBench();
+                        string[] arr = loadArrayWithPlayers(true, true, players);
+                        arr[players.Count - 1] = committedBy.TeamId == pac.HomeTeam.Id ? "Home (" + pac.HomeTeam.Name  + ")": "Away (" + pac.AwayTeam.Name + ")";
+                        this.Text = "Select Player";
+                        loadFormWithButtons(arr);
+                    }
+                    else
+                    {
+                        this.Text = "Ejected?";
+                        this.iteration = EJECTED;
+                        this.isHome = committedBy.TeamId == pac.HomeTeam.Id;
+                        loadFormWithButtons(new string[] { "Yes", "No" });
+                    }
+                }
+                else if (this.iteration == EJECTED)
+                {
+                    this.Text = "Ejected?";
+                    loadFormWithButtons(new string[] { "Yes", "No" });
+                }
+            }
+            else if (type.Equals("madeShot"))
             {
                 if (this.iteration == SHOT_TYPE)
                 {
@@ -108,7 +145,7 @@ namespace _20
                 if (this.iteration == FOUL_TYPE)
                 {
                     this.Text = "Foul Type?";
-                    loadFormWithButtons(new String[] { "BLOCKING", "SHOOTING", "PERSONAL", "FLAGRANT"});
+                    loadFormWithButtons(new String[] { "BLOCKING", "SHOOTING", "PERSONAL", "FLAGRANT" });
                 }
                 else if (this.iteration == CHARGING)
                 {
@@ -124,7 +161,7 @@ namespace _20
             
         }
 
-        private void loadFormWithButtons(string[] types)
+        public void loadFormWithButtons(string[] types)
         {
             this.Controls.Clear();
             int location = 0;
@@ -137,7 +174,7 @@ namespace _20
                 b.Size = new Size((this.Width - sideBorderLength), (this.Height - topBottomBorderLength) / (types.Count<string>() + 1));
                 b.Location = new Point(0, location);
                 b.Click += i == cancelInd ? new EventHandler(this.cancelForm) : events[type];
-                font = new Font(b.Font.FontFamily, 12.0f);
+                font = new Font(b.Font.FontFamily, 10.0f);
                 b.Font = font;
                 location += b.Size.Height;
                 this.Controls.Add(b);
@@ -194,11 +231,6 @@ namespace _20
             else if (iteration == FASTBREAK)
             {
                 this.fastbreak = button.Text.Equals("Yes");
-                if (this.blocked)
-                {
-                    rebounded = false;
-                    Close();
-                }
                 this.Text = "Rebounded?";
                 loadFormWithButtons(new string[] { "Offensive Rebound", "Defensive Rebound", "Dead Ball Rebound", "No Rebound", });
                 iteration ++;
@@ -251,6 +283,7 @@ namespace _20
                     }
                     players[players.Length - 1] = playersOnCourt[0].TeamId == pac.HomeTeam.Id ? "Home Team Rebound (" + pac.HomeTeam.Name + ")": "Away Team Rebound (" + pac.AwayTeam.Name + ")";
                 }
+                this.Text = "Select Player Coming in";
 
                 iteration++;
                 loadFormWithButtons(players);
@@ -280,6 +313,116 @@ namespace _20
 
         }
 
+        private void tech_Click(object sender, EventArgs e)
+        {
+            Button button = ((Button)sender);
+            if (iteration == TECHNICAL)
+            {
+                if (button.Text.Contains("HOME"))
+                {
+                    isHome = true;
+                    playersOnBench = pac.HomeTeam.getBench();
+                    loadFormWithButtons(loadArrayWithPlayers(true, true, playersOnBench));
+                }
+                else if (button.Text.Contains("AWAY"))
+                {
+                    isHome = false;
+                    playersOnBench = pac.AwayTeam.getBench();
+                    loadFormWithButtons(loadArrayWithPlayers(true, true, playersOnBench));
+                }
+                else
+                {
+                    if (button.Text.Contains(pac.HomeTeam.Name) || button.Text.Contains(pac.AwayTeam.Name))
+                    {
+                        committedBy = pac.getTeamPlayer(isHome);
+                    }
+                    else
+                    {
+                        committedBy = pac.getPlayerByNumber(isHome, int.Parse(button.Text.Substring(1, button.Text.IndexOf(" ") - 1)));
+                    }
+
+                    if (committedBy.TeamPlayer)
+                    {
+                        this.ejected = false;
+                        this.Close();
+                        return;
+                    }
+                    iteration = EJECTED;
+                }
+            }
+            else if (iteration == EJECTED)
+            {
+                this.ejected = button.Text.Equals("Yes");
+                if (!this.ejected && !this.committedBy.TeamPlayer)
+                {
+                    this.Close();
+                    return;
+                }
+
+                isHome = committedBy.TeamId == pac.HomeTeam.Id;
+                playersOnBench = isHome ? pac.HomeTeam.getBench() : pac.AwayTeam.getBench();
+
+                string[] players = null;
+                if(committedBy.TeamPlayer)
+                {
+                    players = new string[playersOnBench.Count];
+                    players[playersOnBench.Count - 1] = pac.getTeamById(committedBy.TeamId).Name;
+                }
+                else
+                {
+                    players = new string[playersOnBench.Count - 1];
+                }
+
+                int playersInd = 0;
+                for (int i = 0; i < playersOnBench.Count; i++)
+                {
+                    if (!playersOnBench[i].TeamPlayer)
+                    {
+                        players[playersInd++] = "#" + playersOnBench[i].Jersey + " " + playersOnBench[i].DisplayName;
+                    }
+                }
+                iteration++;
+                loadFormWithButtons(players);
+            }
+            else if (iteration == PLAYER_SELECT)
+            {
+                replacingPlayer = pac.getPlayerByNumber(playersOnBench[0].TeamId == pac.HomeTeam.Id, int.Parse(button.Text.Substring(1, button.Text.IndexOf(" ") - 1)));
+                this.Close();
+            }
+        }
+
+        private string[] loadArrayWithPlayers(bool isBench, bool withTeam, List<Player> players)
+        {
+            string[] toReturn = null;
+            if (isBench)
+            {
+                if (withTeam)
+                {
+                    toReturn = new string[players.Count];
+                    toReturn[players.Count - 1] = (players[0].TeamId == pac.HomeTeam.Id ? "Home (" : "Away (") + pac.getTeamById(players[0].TeamId).Name + ")";
+                }
+                else
+                {
+                    toReturn = new string[players.Count - 1];
+                }
+            }
+            else
+            {
+                toReturn = new string[players.Count];
+            }
+
+            int arrInd = 0;
+            foreach (Player p in players)
+            {
+                if (!p.TeamPlayer)
+                {
+                    toReturn[arrInd++] = "#" + p.Jersey + " " + p.DisplayName;
+                }
+            }
+
+            return toReturn;
+        }
+
         private void foul_Click(object sender, EventArgs e)
         {
             Button button = ((Button)sender);
@@ -304,9 +447,44 @@ namespace _20
             else if (iteration == EJECTED)
             {
                 this.ejected = button.Text.Equals("Yes");
+                if (!this.ejected && !this.committedBy.TeamPlayer)
+                {
+                    this.Close();
+                    return;
+                }
+
+                isHome = committedBy.TeamId == pac.HomeTeam.Id;
+                playersOnBench = isHome ? pac.HomeTeam.getBench() : pac.AwayTeam.getBench();
+
+                string[] players = null;
+                if(committedBy.TeamPlayer)
+                {
+                    players = new string[playersOnBench.Count];
+                    players[playersOnBench.Count - 1] = pac.getTeamById(committedBy.TeamId).Name;
+                }
+                else
+                {
+                    players = new string[playersOnBench.Count - 1];
+                }
+
+                int playersInd = 0;
+                for (int i = 0; i < playersOnBench.Count; i++)
+                {
+                    if (!playersOnBench[i].TeamPlayer)
+                    {
+                        players[playersInd++] = "#" + playersOnBench[i].Jersey + " " + playersOnBench[i].DisplayName;
+                    }
+                }
+                iteration++;
+                loadFormWithButtons(players);
+            }
+            else if (iteration == PLAYER_SELECT)
+            {
+                replacingPlayer = pac.getPlayerByNumber(playersOnBench[0].TeamId == pac.HomeTeam.Id, int.Parse(button.Text.Substring(1, button.Text.IndexOf(" ") - 1)));
                 this.Close();
             }
         }
+
         public void cancelForm(object sender, EventArgs e)
         {
             this.cancelled = true;
