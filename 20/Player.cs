@@ -32,8 +32,6 @@ namespace _20
         private bool ejected;
         public bool Ejected { get { return ejected; } }
 
-        public bool OnCourt { get; set; }
-
         public Player(string id, string[] name, int jersey, string teamId, bool isTeamPlayer)
         {
             this.id = id;
