@@ -1351,6 +1351,9 @@ namespace _20
         private void periodChange_Click(object sender, EventArgs e)
         {
             // create a generic event. We may have either a period start or period end event
+            Button button = (Button)sender;
+            // Check if its a period or an overtime
+            string perOrOver = pac.Period > 2 ? "Overtime" : "Period";
             Event ev = null;
 
             // if the period is 2 or later, and the teams are not tied, and we are inside a period
@@ -1366,7 +1369,10 @@ namespace _20
                 ev = new GameEndEvent(pac);
                 // and send a game end event
                 confirmScore(true);
-                confirmAndSendEvent(ev);
+                if (pac.HomeTeam.Score != pac.AwayTeam.Score)
+                {
+                    confirmAndSendEvent(ev);
+                }
                 update();
                 return;
             }//end if
@@ -1374,9 +1380,6 @@ namespace _20
             else
             {
                 // shit best be a button
-                Button button = (Button)sender;
-                // Check if its a period or an overtime
-                string perOrOver = pac.Period > 2 ? "Overtime" : "Period";
 
                 //Determine if we're entering/exiting a period//
 
@@ -1387,21 +1390,26 @@ namespace _20
                     ev = new PeriodStartEvent(pac);
 
                     // since we just started a period/overtime, we have to change the button to have end in it
-                    button.Text = perOrOver + " End";
+                    perOrOver += " End";
                 }// end if
                 // if the button had an "End" in it
                 else
                 {
                     // create a period end event
-                    ev = new PeriodEndEvent(pac);
                     confirmScore(false);
+                    ev = new PeriodEndEvent(pac);
                     // since we just ended a period/overtime, we have to change the button to have start in it
-                    button.Text = perOrOver + " Start";
+                    perOrOver += " Start";
                 }// end else
             }//end else
 
             //send appropriate event to server
-            confirmAndSendEvent(ev);
+            if (confirmAndSendEvent(ev))
+            {
+                button.Text = perOrOver;
+            
+            }
+
         }//end periodChange_Click
 
         private void confirmScore(bool endGame)
@@ -1464,7 +1472,10 @@ namespace _20
                 //our point is already used, so we have technically "not selected a point"
                 pointSelected = false;
                 // post the event
-                pac.post(e);
+                if (!pac.post(e))
+                {
+                    return false;
+                }
                 this.buttonPanel.Visible = false;
                 historyBox_Click(null, null);
                 // they said yes!!!! Return true

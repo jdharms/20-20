@@ -223,13 +223,12 @@ namespace _20
             request.ContentType = "application/json";
             request.ContentLength = payload.Length;
             
-            using (var streamWriter = new StreamWriter(request.GetRequestStream()))
-            {
-                streamWriter.Write(payload);
-            }
-
             try
             {
+                using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+                {
+                    streamWriter.Write(payload);
+                }
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
                 using (var streamReader = new StreamReader(response.GetResponseStream()))
@@ -245,13 +244,22 @@ namespace _20
             //TODO: Deserialize error response and print/display useful information.
             catch (WebException e)
             {
+                authenticated = false;
                 using (var response = e.Response)
                 {
                     Console.WriteLine(e.Message);
-                    using (Stream data = response.GetResponseStream())
+                    try
                     {
-                        string responseText = new StreamReader(data).ReadToEnd();
-                        Console.WriteLine(responseText);
+                        using (Stream data = response.GetResponseStream())
+                        {
+                            string responseText = new StreamReader(data).ReadToEnd();
+                            Console.WriteLine(responseText);
+                        }
+                    }
+                    catch (Exception e2)
+                    {
+                        MessageBox.Show("No Internet Connection", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Console.WriteLine(e2.Message);
                     }
                 }
                 return false;
@@ -279,13 +287,12 @@ namespace _20
             request.ContentType = "application/json";
             request.ContentLength = payload.Length;
 
-            using (var streamWriter = new StreamWriter(request.GetRequestStream()))
-            {
-                streamWriter.Write(payload);
-            }
-
             try
             {
+                using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+                {
+                    streamWriter.Write(payload);
+                }
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
                 using (var streamReader = new StreamReader(response.GetResponseStream()))
@@ -304,10 +311,18 @@ namespace _20
                 using (var response = e.Response)
                 {
                     Console.WriteLine(e.Message);
-                    using (Stream data = response.GetResponseStream())
+                    try
                     {
-                        string responseText = new StreamReader(data).ReadToEnd();
-                        Console.WriteLine(responseText);
+                        using (Stream data = response.GetResponseStream())
+                        {
+                            string responseText = new StreamReader(data).ReadToEnd();
+                            Console.WriteLine(responseText);
+                        }
+                    }
+                    catch (NullReferenceException nfe)
+                    {
+                        MessageBox.Show("No Internet Connection", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Console.WriteLine(nfe.Message);
                     }
                 }
                 return null;
@@ -396,14 +411,14 @@ namespace _20
             }
             request.ContentType = "application/json";
             request.ContentLength = payload.Length;
-            using ( var streamWriter = new StreamWriter(request.GetRequestStream()))
-            {
-                streamWriter.Write(payload);
-            }
 
             string responseText;
             try
             {
+                using ( var streamWriter = new StreamWriter(request.GetRequestStream()))
+                {
+                    streamWriter.Write(payload);
+                }
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
                 using (var streamReader = new StreamReader(response.GetResponseStream()))
@@ -413,12 +428,20 @@ namespace _20
             }
             catch (WebException we)
             {
-                using (var response = we.Response)
+                try
                 {
-                    using (Stream data = response.GetResponseStream())
+                    using (var response = we.Response)
                     {
-                        responseText = new StreamReader(data).ReadToEnd();
+                        using (Stream data = response.GetResponseStream())
+                        {
+                            responseText = new StreamReader(data).ReadToEnd();
+                        }
                     }
+                }
+                catch (NullReferenceException nfe)
+                {
+                    MessageBox.Show("No Internet Connection", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
                 }
             }
             if (e.deserialize(responseText))
