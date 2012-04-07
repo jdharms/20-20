@@ -272,6 +272,7 @@ namespace _20
                 if (isDead)
                 {
                     players = new string[] { "Home Possession", "Away Possession" };
+                    this.Text = "Select Possesion";
                 }
                 else
                 {
@@ -282,8 +283,8 @@ namespace _20
                         players[i] = "#" + p.Jersey + " " + p.DisplayName;
                     }
                     players[players.Length - 1] = playersOnCourt[0].TeamId == pac.HomeTeam.Id ? "Home Team Rebound (" + pac.HomeTeam.Name + ")": "Away Team Rebound (" + pac.AwayTeam.Name + ")";
+                    this.Text = "Select Player Coming in";
                 }
-                this.Text = "Select Player Coming in";
 
                 iteration++;
                 loadFormWithButtons(players);
