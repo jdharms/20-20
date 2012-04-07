@@ -33,11 +33,17 @@ namespace _20
         private string password;
         private bool authenticated;
         DateTime lastAuthed;
-        public static bool LOCAL_POST = false;
+        public static bool LOCAL_RUN = false;
 
         public int Period { get; set; }
         public bool InsidePeriod { get; set; }
         public bool GameEnded { get; set; }
+
+        private string gameTime;
+        public string GameTime { get { return gameTime; } }
+
+        private string gameVenue;
+        public string GameVenue { get { return gameVenue; } }
 
         public Team AwayTeam { get; set; }
         public Team HomeTeam { get; set; }
@@ -121,20 +127,32 @@ namespace _20
             {
                 selectForm.StartPosition = FormStartPosition.CenterScreen;
                 selectForm.ShowDialog();
+                this.gameTime = selectForm.gameTime;
+                if (gameTime.IndexOf("T") >= 0)
+                {
+                    gameTime = gameTime.Replace("T", " ");
+                }
+                if (gameTime.IndexOf("+") >= 0)
+                {
+                    gameTime = gameTime.Substring(0, gameTime.IndexOf("+") - 1);
+                }
+                this.gameVenue = selectForm.gameVenue;
                 if (selectForm.selected)
                 {
                     gid = selectForm.selectedGameId;
+                    getGameData(gid);
+                    break;
+                }
+                else if (selectForm.customGameSelected)
+                {
+                    this.HomeTeam = selectForm.customGame.homeTeam;
+                    this.AwayTeam = selectForm.customGame.awayTeam;
+                    LOCAL_RUN = true;
                     break;
                 }
 
-                List<Game> games = getGames(selectForm.from, selectForm.to);
-                Console.Write(selectForm.from);
-                Console.Write(selectForm.to);
-                Console.Write(games.Count);
                 //selectForm.gameBox.DataSource = games;
             }
-
-            getGameData(gid);
 
             // if one is empty, both are empty
             if (HomeTeam.getOncourt() == null || HomeTeam.getOncourt().Count == 0)
@@ -167,19 +185,22 @@ namespace _20
                 HomeTeam.setPlayersOnCourt(setup.homeStarters.ToList<Player>());
                 AwayTeam.setPlayersOnCourt(setup.awayStarters.ToList<Player>());
 
-                StartingLineups s = new StartingLineups();
-
-                foreach (Player p in HomeTeam.getOncourt())
+                if (!LOCAL_RUN)
                 {
-                    s.addStarter(true, p.Id);
-                }
+                    StartingLineups s = new StartingLineups();
 
-                foreach (Player p in AwayTeam.getOncourt())
-                {
-                    s.addStarter(false, p.Id);
-                }
+                    foreach (Player p in HomeTeam.getOncourt())
+                    {
+                        s.addStarter(true, p.Id);
+                    }
 
-                setGameData(s);
+                    foreach (Player p in AwayTeam.getOncourt())
+                    {
+                        s.addStarter(false, p.Id);
+                    }
+
+                    setGameData(s);
+                }
             }
 
             Console.WriteLine(token);
@@ -378,7 +399,7 @@ namespace _20
 
         public bool post(Event e)
         {
-            if (LOCAL_POST)
+            if (LOCAL_RUN)
             {
                 Console.WriteLine("Local post: posting " + e);
                 e.EventId = DateTime.Now.ToString();

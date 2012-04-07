@@ -9,12 +9,12 @@ namespace _20
     public class Team
     {
         private string id;
-        public string Id { get { return id; } }
+        public string Id { get { return id; } set { id = value; }  }
         private string name;
-        public string Name { get { return name; } }
+        public string Name { get { return name; } set { name = value; } }
 
         private List<Player> players;
-        public List<Player> Players { get { return players; } }
+        public List<Player> Players { get { return players; } set { players = value; } }
         private List<Player> ejected;
         public List<Player> Ejected { get { return ejected; } }
         private List<Player> onCourt; 

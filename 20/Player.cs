@@ -10,15 +10,15 @@ namespace _20
         private string fName;
         private string mName;
         private string lName;
-        public string Name { get { return lName + ", " + fName + " " + mName; } }
+        public string Name { get { return lName + ", " + fName + " " + mName; } set { setPlayerName(value);}}
 
         public string DisplayName { get { return teamPlayer ? "Team Player" : fName + " " + lName; } }
 
         private string id;
-        public string Id { get { return id; } }
+        public string Id { get { return id; } set { id = value; } }
 
         private int jersey;
-        public int Jersey { get { return jersey; } }
+        public int Jersey { get { return jersey; } set{jersey = value;} }
 
         private string teamId;
         public string TeamId { get { return teamId; } }
@@ -35,9 +35,7 @@ namespace _20
         public Player(string id, string[] name, int jersey, string teamId, bool isTeamPlayer)
         {
             this.id = id;
-            fName = name[0];
-            mName = name[1];
-            lName = name[2];
+            setPlayerName(name);
             this.jersey = jersey;
             this.teamId = teamId;
             this.teamPlayer = isTeamPlayer;
@@ -70,6 +68,32 @@ namespace _20
         {
             fouls--;
         }
+
+        private void setPlayerName(string[] name)
+        {
+            fName = name[0];
+            mName = name[1];
+            lName = name[2];
+        }
+        private void setPlayerName(string value)
+        {
+            string[] name = new string[3]; 
+            string[] split = value.Split();
+            name[0] = split[0];
+            if(split.Length == 2)
+            {
+                name[1] = "";
+                name[2] = split[1];
+            }
+            else if(split.Length == 3)
+            {
+                name[1] = split[1];
+                name[2] = split[2]; 
+            }
+
+            setPlayerName(name);
+        }
+
 
         public override string ToString()
         {

@@ -142,6 +142,8 @@ namespace _20
             homeNameLabel.Text = (pac.Possesion == pac.HomeTeam ? ">> " : "") + pac.HomeTeam.Name;
             awayNameLabel.Text = (pac.Possesion == pac.AwayTeam ? ">> " : "") + pac.AwayTeam.Name;
 
+            venueLabel.Text = pac.GameTime + ", " + pac.GameVenue;
+
             if (pac.HomeTeam.TeamFouls >= 10)
             {
                 label1.Text = "Double Bonus";

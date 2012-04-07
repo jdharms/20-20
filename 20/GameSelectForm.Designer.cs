@@ -37,6 +37,7 @@
             this.selectGameButton = new System.Windows.Forms.Button();
             this.exitButton = new System.Windows.Forms.Button();
             this.searchTodayButton = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // FromLabel
@@ -124,12 +125,22 @@
             this.searchTodayButton.UseVisualStyleBackColor = true;
             this.searchTodayButton.Click += new System.EventHandler(this.searchTodayButton_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(378, 233);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(17, 16);
+            this.button1.TabIndex = 9;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // GameSelectForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(394, 248);
             this.ControlBox = false;
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.searchTodayButton);
             this.Controls.Add(this.exitButton);
             this.Controls.Add(this.selectGameButton);
@@ -159,5 +170,6 @@
         private System.Windows.Forms.Button selectGameButton;
         private System.Windows.Forms.Button exitButton;
         private System.Windows.Forms.Button searchTodayButton;
+        private System.Windows.Forms.Button button1;
     }
 }
