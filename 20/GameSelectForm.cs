@@ -75,6 +75,10 @@ namespace _20
         private void searchGames(DateTime from, DateTime to)
         {
             games = getGames(from, to);
+            if (games == null)
+            {
+                return;
+            }
             gameListBox.DataSource = games;
             gameListBox.Refresh();
             gameListBox.Invalidate();
