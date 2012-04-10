@@ -1384,6 +1384,7 @@ namespace _20
                     {
                         pac.post(ev);
                         //the score is different, we are ending NOW
+
                         if (!confirmScore(true))
                         {
                             ev = new GameEndEvent(pac);
