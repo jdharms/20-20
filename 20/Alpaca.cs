@@ -223,8 +223,6 @@ namespace _20
             return null;
         }
 
-
-
         /// <summary>
         /// Submits a login request to the ESPN ALPS server.
         /// Stores the authorization token in state variable
@@ -472,10 +470,6 @@ namespace _20
                 {
                     //We need to remove the deleted event.
                     eventLog.RemoveAt(eventLog.Count - 1);
-                    Notify();
-                }
-                else if (e is GameEndEvent)
-                {
                     Notify();
                 }
                 else

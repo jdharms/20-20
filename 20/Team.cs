@@ -29,6 +29,7 @@ namespace _20
         private int timeoutsUsed;
         public int TimeoutsUsed { get { return timeoutsUsed; } set { timeoutsUsed = value; } }
         public int TimeoutsLeft { get { return 5 - timeoutsUsed; } }
+        private Stack<int> teamFoulsStack;
         
         public Team(string id, string name, List<Player> players)
         {
@@ -40,6 +41,7 @@ namespace _20
             this.score = 0;
             this.onCourt = new List<Player>();
             this.ejected = new List<Player>();
+            this.teamFoulsStack = new Stack<int>();
 
             //find and set teamPlayer
             foreach(Player p in players)
@@ -212,6 +214,20 @@ namespace _20
         public void unejectPlayer(string playerId)
         {
             this.unejectPlayer(getPlayer(playerId));
+        }
+
+        public void pushTeamFouls(bool reset)
+        {
+            teamFoulsStack.Push(teamFouls);
+            if (reset)
+            {
+                teamFouls = 0;
+            }
+        }
+
+        public void resetToLastKnownTeamFouls()
+        {
+            teamFouls = teamFoulsStack.Pop();
         }
     }
 }

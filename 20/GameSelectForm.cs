@@ -79,15 +79,23 @@ namespace _20
 
         private void searchGames(DateTime from, DateTime to)
         {
+            if (from.CompareTo(to) > 0)
+            {
+                MessageBox.Show("From date must be before the to date", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             games = getGames(from, to);
             if (games == null)
             {
                 return;
             }
+            if (games.Count == 0)
+            {
+                MessageBox.Show("There are no games between " + from.ToString() + " and " + to.ToString() + ".", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             gameListBox.DataSource = games;
             gameListBox.Refresh();
             gameListBox.Invalidate();
-            gameListBox.SetSelected(0, true);
             selectGameButton.Focus();
         }
 

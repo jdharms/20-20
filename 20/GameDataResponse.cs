@@ -99,7 +99,7 @@ namespace _20
             foreach(Dictionary<string, object> dict in gameEvents)
             {
                 Event e = null;
-                string eventType = dict["apiCall"].ToString();
+                string eventType = dict["eventType"].ToString().Split(new char[] { '/' })[1];
                 Console.WriteLine("Found eventType: " + eventType);
                 Context context = JsonConvert.DeserializeObject<Context>(dict["context"].ToString());
                 if (eventType.Equals("gameEnd"))
