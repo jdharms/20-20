@@ -105,6 +105,7 @@
             this.flipSidesButton = new System.Windows.Forms.Button();
             this.confirmCheckBox = new System.Windows.Forms.CheckBox();
             this.courtBox = new System.Windows.Forms.PictureBox();
+            this.venueLabel = new System.Windows.Forms.Label();
             this.jumpBallContextMenuStrip.SuspendLayout();
             this.homeBox.SuspendLayout();
             this.homeTimeoutContextMenuStrip.SuspendLayout();
@@ -853,11 +854,20 @@
             this.courtBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.courtBox_MouseMove);
             this.courtBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.courtBox_MouseUp);
             // 
+            // venueLabel
+            // 
+            this.venueLabel.Location = new System.Drawing.Point(492, 6);
+            this.venueLabel.Name = "venueLabel";
+            this.venueLabel.Size = new System.Drawing.Size(262, 16);
+            this.venueLabel.TabIndex = 19;
+            this.venueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1243, 637);
+            this.Controls.Add(this.venueLabel);
             this.Controls.Add(this.confirmCheckBox);
             this.Controls.Add(this.flipSidesButton);
             this.Controls.Add(this.buttonPanel);
@@ -977,6 +987,7 @@
         private System.Windows.Forms.Label homeBonus;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox confirmCheckBox;
+        private System.Windows.Forms.Label venueLabel;
     }
 }
 

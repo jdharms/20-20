@@ -50,14 +50,13 @@ namespace _20.Events
         public override void unresolve()
         {
             //Take those points away.
-            pac.getTeamById(teamId).Score -= points;
+            pac.getTeamById(teamId).Score = Math.Max(pac.getTeamById(teamId).Score + points, 0);
         }
 
         public override string serialize()
         {
             return JsonConvert.SerializeObject(new
             {
-                apiCall = apiCall,
                 gameId = pac.GameID,
                 shooter = shooter,
                 assistedBy = assist,

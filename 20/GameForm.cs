@@ -142,6 +142,8 @@ namespace _20
             homeNameLabel.Text = (pac.Possesion == pac.HomeTeam ? ">> " : "") + pac.HomeTeam.Name;
             awayNameLabel.Text = (pac.Possesion == pac.AwayTeam ? ">> " : "") + pac.AwayTeam.Name;
 
+            venueLabel.Text = pac.GameTime + ", " + pac.GameVenue;
+
             if (pac.HomeTeam.TeamFouls >= 10)
             {
                 label1.Text = "Double Bonus";
@@ -1356,63 +1358,60 @@ namespace _20
             string perOrOver = pac.Period > 2 ? "Overtime" : "Period";
             Event ev = null;
 
-            // if the period is 2 or later, and the teams are not tied, and we are inside a period
-            if (pac.Period >= 2 && (pac.HomeTeam.Score != pac.AwayTeam.Score) && pac.InsidePeriod)
+            // if the button had "Start" in it
+            if (button.Text.Contains("Start"))
             {
-                ev = new PeriodEndEvent(pac);
-                confirmScore(false);
-                // send a period end event
-                if (!confirmAndSendEvent(ev))
-                {
-                    return;
-                }//end if
-                ev = new GameEndEvent(pac);
-                // and send a game end event
-                confirmScore(true);
-                if (pac.HomeTeam.Score != pac.AwayTeam.Score)
-                {
-                    confirmAndSendEvent(ev);
-                }
-                update();
+                ev = new PeriodStartEvent(pac);
+                pac.post(ev);
+                perOrOver += " End";
                 return;
-            }//end if
-            // the game should not end at this point
+            }// end if
+            //PERIOD END
             else
             {
-                // shit best be a button
-
-                //Determine if we're entering/exiting a period//
-
-                // if the button had "Start" in it
-                if (button.Text.Contains("Start"))
+                ev = new PeriodEndEvent(pac);
+                bool sameScore = confirmScore(false);
+                if (pac.Period >= 2)
                 {
-                    // create a period start event
-                    ev = new PeriodStartEvent(pac);
+                    // going into overtime
+                    if (sameScore)
+                    {
+                        pac.post(ev);
+                        perOrOver = "Overtime";
+                    }
+                    //we are trying to end the game
+                    else
+                    {
+                        pac.post(ev);
+                        //the score is different, we are ending NOW
 
-                    // since we just started a period/overtime, we have to change the button to have end in it
-                    perOrOver += " End";
-                }// end if
-                // if the button had an "End" in it
+                        if (!confirmScore(true))
+                        {
+                            ev = new GameEndEvent(pac);
+                            pac.post(ev);
+                        }
+                        // the user changed the score so we are going into another overtime
+                        else
+                        {
+                            perOrOver = "Overtime";
+                        }
+                    }
+                }
                 else
                 {
-                    // create a period end event
-                    confirmScore(false);
-                    ev = new PeriodEndEvent(pac);
-                    // since we just ended a period/overtime, we have to change the button to have start in it
-                    perOrOver += " Start";
-                }// end else
-            }//end else
-
-            //send appropriate event to server
-            if (confirmAndSendEvent(ev))
-            {
-                button.Text = perOrOver;
-            
-            }
-
+                    pac.post(ev);
+                }
+                perOrOver += " Start";
+            }// end else
+            button.Text = perOrOver;
         }//end periodChange_Click
 
-        private void confirmScore(bool endGame)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="endGame"></param>
+        /// <returns>True if the teams score are the same after confirming</returns>
+        private bool confirmScore(bool endGame)
         {
             ConfirmScoreForm conf = new ConfirmScoreForm(pac, endGame);
             if (endGame)
@@ -1422,6 +1421,7 @@ namespace _20
             conf.ShowDialog();
             pac.HomeTeam.Score = conf.homeScore;
             pac.AwayTeam.Score = conf.awayScore;
+            return pac.HomeTeam.Score == pac.AwayTeam.Score;
         }
 
         /// <summary>

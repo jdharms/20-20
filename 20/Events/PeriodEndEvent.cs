@@ -26,7 +26,6 @@ namespace _20.Events
         {
             return JsonConvert.SerializeObject(new
             {
-                apiCall = apiCall,
                 gameId = pac.GameID, 
                 period = pac.Period, 
                 context = context 
@@ -36,6 +35,8 @@ namespace _20.Events
         // Not a soul found in these parts
         public override void resolve()
         {
+            pac.HomeTeam.pushTeamFouls(period < 2);
+            pac.AwayTeam.pushTeamFouls(period < 2);
             pac.Period++;
             pac.InsidePeriod = false;
         }
@@ -44,6 +45,8 @@ namespace _20.Events
         public override void unresolve()
         {
             pac.InsidePeriod = true;
+            pac.HomeTeam.resetToLastKnownTeamFouls();
+            pac.AwayTeam.resetToLastKnownTeamFouls();
         }
 
         public override string ToString()
