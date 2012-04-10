@@ -13,6 +13,8 @@ namespace _20
     {
         public bool selected = false;
         public string selectedGameId = "";
+        public string gameVenue;
+        public string gameTime;
         public DateTime from;
         public DateTime to;
         public List<Game> games;
@@ -39,8 +41,11 @@ namespace _20
         {
             if ((Game)gameListBox.SelectedItem != null)
             {
+                Game game = ((Game)gameListBox.SelectedItem);
                 selected = true;
-                selectedGameId = ((Game)gameListBox.SelectedItem).gameId;
+                selectedGameId = game.gameId;
+                gameVenue = game.venue;
+                gameTime = game.time;
                 Close();
             }
             else
@@ -74,21 +79,46 @@ namespace _20
 
         private void searchGames(DateTime from, DateTime to)
         {
+            if (from.CompareTo(to) > 0)
+            {
+                MessageBox.Show("From date must be before the to date", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             games = getGames(from, to);
             if (games == null)
             {
                 return;
             }
+            if (games.Count == 0)
+            {
+                MessageBox.Show("There are no games between " + from.ToString() + " and " + to.ToString() + ".", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             gameListBox.DataSource = games;
             gameListBox.Refresh();
             gameListBox.Invalidate();
-            gameListBox.SetSelected(0, true);
             selectGameButton.Focus();
         }
 
         private void GameSelectForm_Load(object sender, EventArgs e)
         {
 
+        }
+
+        public CustomGame customGame;
+        public bool customGameSelected;
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.customGame = new CustomGame();
+            this.customGame.ShowDialog();
+            if (this.customGame.cancelled)
+            {
+                return;
+            }
+
+            this.gameTime = this.customGame.gameTime;
+            this.gameVenue = this.customGame.gameVenue;
+            this.customGameSelected = true;
+            this.Close();
         }
     }
 }

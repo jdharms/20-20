@@ -9,12 +9,12 @@ namespace _20
     public class Team
     {
         private string id;
-        public string Id { get { return id; } }
+        public string Id { get { return id; } set { id = value; }  }
         private string name;
-        public string Name { get { return name; } }
+        public string Name { get { return name; } set { name = value; } }
 
         private List<Player> players;
-        public List<Player> Players { get { return players; } }
+        public List<Player> Players { get { return players; } set { players = value; } }
         private List<Player> ejected;
         public List<Player> Ejected { get { return ejected; } }
         private List<Player> onCourt; 
@@ -29,6 +29,7 @@ namespace _20
         private int timeoutsUsed;
         public int TimeoutsUsed { get { return timeoutsUsed; } set { timeoutsUsed = value; } }
         public int TimeoutsLeft { get { return 5 - timeoutsUsed; } }
+        private Stack<int> teamFoulsStack;
         
         public Team(string id, string name, List<Player> players)
         {
@@ -40,6 +41,7 @@ namespace _20
             this.score = 0;
             this.onCourt = new List<Player>();
             this.ejected = new List<Player>();
+            this.teamFoulsStack = new Stack<int>();
 
             //find and set teamPlayer
             foreach(Player p in players)
@@ -212,6 +214,20 @@ namespace _20
         public void unejectPlayer(string playerId)
         {
             this.unejectPlayer(getPlayer(playerId));
+        }
+
+        public void pushTeamFouls(bool reset)
+        {
+            teamFoulsStack.Push(teamFouls);
+            if (reset)
+            {
+                teamFouls = 0;
+            }
+        }
+
+        public void resetToLastKnownTeamFouls()
+        {
+            teamFouls = teamFoulsStack.Pop();
         }
     }
 }

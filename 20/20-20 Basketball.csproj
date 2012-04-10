@@ -78,11 +78,17 @@
     <Compile Include="ConfirmScoreForm.Designer.cs">
       <DependentUpon>ConfirmScoreForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="CustomTeam.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="CustomTeam.Designer.cs">
+      <DependentUpon>CustomTeam.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomGame.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomGame.Designer.cs">
+      <DependentUpon>CustomGame.cs</DependentUpon>
     </Compile>
     <Compile Include="SetupGameForm.cs">
       <SubType>Form</SubType>
@@ -129,8 +135,11 @@
     <EmbeddedResource Include="ConfirmScoreForm.resx">
       <DependentUpon>ConfirmScoreForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="CustomTeam.resx">
+      <DependentUpon>CustomTeam.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomGame.resx">
+      <DependentUpon>CustomGame.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GameSelectForm.resx">
       <DependentUpon>GameSelectForm.cs</DependentUpon>
