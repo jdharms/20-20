@@ -50,7 +50,7 @@ namespace _20.Events
         public override void unresolve()
         {
             //Take those points away.
-            pac.getTeamById(teamId).Score = Math.Max(pac.getTeamById(teamId).Score + points, 0);
+            pac.getTeamById(teamId).Score = Math.Max(pac.getTeamById(teamId).Score - points, 0);
         }
 
         public override string serialize()

@@ -333,6 +333,12 @@ namespace _20
             MouseButtons currButton = e.Button;
             Point loc = new Point(e.X, e.Y);
 
+            if (!pac.InsidePeriod)
+            {
+                MessageBox.Show("You must start a period before continuing", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             if (currButton == System.Windows.Forms.MouseButtons.Right)
             {
                 buttonPanel.Visible = false;
@@ -834,17 +840,17 @@ namespace _20
             {
                 if (firstSelectedPlayer == null || secondSelectedPlayer == null)
                 {
-                    MessageBox.Show("Please select one Home player and one Away player above");
+                    MessageBox.Show("Please select one Home player and one Away player above", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 else if (firstSelectedPlayer.TeamId == secondSelectedPlayer.TeamId)
                 {
-                    MessageBox.Show("Selected players must be on different teams");
+                    MessageBox.Show("Selected players must be on different teams", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 else if (!pointSelected)
                 {
-                    MessageBox.Show("Please select a location on the court");
+                    MessageBox.Show("Please select a location on the court", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 else
@@ -912,17 +918,17 @@ namespace _20
             {
                 if (firstSelectedPlayer == null)
                 {
-                    MessageBox.Show("Please select at least one player above");
+                    MessageBox.Show("Please select at least one player above", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 else if (secondSelectedPlayer != null && firstSelectedPlayer.TeamId != secondSelectedPlayer.TeamId)
                 {
-                    MessageBox.Show("Selected players must be on the same team");
+                    MessageBox.Show("Selected players must be on the same team", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 else if (!pointSelected)
                 {
-                    MessageBox.Show("Please select a location on the court");
+                    MessageBox.Show("Please select a location on the court", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 else
@@ -1004,17 +1010,17 @@ namespace _20
             {
                 if (firstSelectedPlayer == null)
                 {
-                    MessageBox.Show("Please select at least one player above");
+                    MessageBox.Show("Please select at least one player above", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 else if (secondSelectedPlayer != null && firstSelectedPlayer.TeamId == secondSelectedPlayer.TeamId)
                 {
-                    MessageBox.Show("Selected players must be on different teams");
+                    MessageBox.Show("Selected players must be on different teams", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 else if (!pointSelected)
                 {
-                    MessageBox.Show("Please select a location on the court");
+                    MessageBox.Show("Please select a location on the court", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 else
@@ -1111,12 +1117,12 @@ namespace _20
             {
                 if (firstSelectedPlayer == null)
                 {
-                    MessageBox.Show("Please select only ONE player above");
+                    MessageBox.Show("Please select only ONE player above", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 else if (!pointSelected)
                 {
-                    MessageBox.Show("Please select a location on the court");
+                    MessageBox.Show("Please select a location on the court", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 else
@@ -1162,17 +1168,17 @@ namespace _20
             {
                 if (firstSelectedPlayer == null)
                 {
-                    MessageBox.Show("Please select at least one player above");
+                    MessageBox.Show("Please select at least one player above", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 else if (secondSelectedPlayer != null && firstSelectedPlayer.TeamId == secondSelectedPlayer.TeamId)
                 {
-                    MessageBox.Show("Selected players must be on different teams");
+                    MessageBox.Show("Selected players must be on different teams", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 else if (!pointSelected)
                 {
-                    MessageBox.Show("Please select a location on the court");
+                    MessageBox.Show("Please select a location on the court", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 else
@@ -1229,17 +1235,17 @@ namespace _20
             {
                 if (firstSelectedPlayer == null)
                 {
-                    MessageBox.Show("Please select at least one player above");
+                    MessageBox.Show("Please select at least one player above", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 else if (secondSelectedPlayer != null && firstSelectedPlayer.TeamId == secondSelectedPlayer.TeamId)
                 {
-                    MessageBox.Show("Selected players must be on different teams");
+                    MessageBox.Show("Selected players must be on different teams", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 else if (!pointSelected)
                 {
-                    MessageBox.Show("Please select a location on the court");
+                    MessageBox.Show("Please select a location on the court", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 else
@@ -1327,7 +1333,7 @@ namespace _20
         private void deleteEvent_Click(object sender, EventArgs e)
         {
             //requests user to confirm deletion of event.
-            if (MessageBox.Show("Really Delete?", "Confirm Delete.", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            if (MessageBox.Show("Really Delete?", "Confirm Delete.", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
                 //this branch runs if the result of the confirmation is "OK"
                 Console.WriteLine("Deleting...");
@@ -1464,7 +1470,7 @@ namespace _20
             // Send a message box that asks the 
             if (confirmCheckBox.Checked)
             {
-                send = MessageBox.Show("Press OK to send the following event:\n" + e, "", MessageBoxButtons.OKCancel) == DialogResult.OK;
+                send = MessageBox.Show("Press OK to send the following event:\n" + e, "", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK;
             } // end if
 
             if (send)
