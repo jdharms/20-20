@@ -52,6 +52,8 @@
   <ItemGroup>
     <Compile Include="AckResponse.cs" />
     <Compile Include="Alpaca.cs" />
+    <Compile Include="ConfigParser.cs" />
+    <Compile Include="Events\EventFilter.cs" />
     <Compile Include="Events\FoulEvent.cs" />
     <Compile Include="Events\PeriodEndEvent.cs" />
     <Compile Include="Events\PeriodStartEvent.cs" />
@@ -89,6 +91,12 @@
     </Compile>
     <Compile Include="CustomGame.Designer.cs">
       <DependentUpon>CustomGame.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QuickPrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QuickPrompt.Designer.cs">
+      <DependentUpon>QuickPrompt.cs</DependentUpon>
     </Compile>
     <Compile Include="SetupGameForm.cs">
       <SubType>Form</SubType>
@@ -140,6 +148,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CustomGame.resx">
       <DependentUpon>CustomGame.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QuickPrompt.resx">
+      <DependentUpon>QuickPrompt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GameSelectForm.resx">
       <DependentUpon>GameSelectForm.cs</DependentUpon>

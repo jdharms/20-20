@@ -50,6 +50,7 @@
             this.scoreConfirmPanel.Name = "scoreConfirmPanel";
             this.scoreConfirmPanel.Size = new System.Drawing.Size(592, 186);
             this.scoreConfirmPanel.TabIndex = 20;
+            this.scoreConfirmPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.scoreConfirmPanel_Paint);
             // 
             // confirmScoreButton
             // 
