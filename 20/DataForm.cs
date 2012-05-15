@@ -111,6 +111,7 @@ namespace _20
                             }
                         }
                         iteration = PLAYER_SELECT;
+                        this.Text = "Select Replacing Player";
                         loadFormWithButtons(p);
                     }
                 }
@@ -195,7 +196,7 @@ namespace _20
             {
                 Button b = new Button();
                 b.Text = i == cancelInd ? "Cancel" : types[i];
-                b.Size = new Size((this.Width - sideBorderLength), (this.Height - topBottomBorderLength) / (types.Count<string>() + 1));
+                b.Size = new Size((this.Width - sideBorderLength), (this.Height - topBottomBorderLength) / (types.Length + 1));
                 b.Location = new Point(0, location);
                 b.Click += i == cancelInd ? new EventHandler(this.cancelForm) : events[type];
                 font = new Font(b.Font.FontFamily, 10.0f);
