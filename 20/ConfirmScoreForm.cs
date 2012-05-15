@@ -60,5 +60,10 @@ namespace _20
             this.homeScoreConfirmText.Text = "" + pac.HomeTeam.Score;
             this.awayScoreConfirmText.Text = "" + pac.AwayTeam.Score;
         }
+
+        private void scoreConfirmPanel_Paint(object sender, PaintEventArgs e)
+        {
+            confirmScoreButton_Click(confirmScoreButton, null);
+        }
     }
 }

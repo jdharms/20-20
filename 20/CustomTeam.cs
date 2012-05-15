@@ -160,7 +160,7 @@ namespace _20
 
         private void addPlayer_Click(object sender, EventArgs e)
         {
-            Player p = new Player("" + currId++, new string[] {"New", "", "Player"}, generateNextAvailableNumber(), this.team.Id, false);
+            Player p = new Player(System.DateTime.Now.Millisecond + "" + currId++, new string[] {"New", "", "Player"}, generateNextAvailableNumber(), this.team.Id, false);
             this.players.Add(p);
             this.playersListBox.SetSelected(this.indexOf(p), true);
             updateForm();
@@ -255,7 +255,7 @@ namespace _20
                 return;
             }
             this.team.Players = this.players.ToList<Player>();
-            Player teamPlayer = new Player("" + currId, new string[] {"Team", "" , "Player"}, -1, this.team.Id, true);
+            Player teamPlayer = new Player("" + currId++, new string[] { "Team", "", "Player" }, -1, this.team.Id, true);
             this.team.Players.Add(teamPlayer);
             this.team.teamPlayer = teamPlayer;
             this.Close();
