@@ -94,9 +94,6 @@
             this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem9 = new System.Windows.Forms.ToolStripMenuItem();
-            this.reboundContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItem13 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem14 = new System.Windows.Forms.ToolStripMenuItem();
             this.foulContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem12 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem15 = new System.Windows.Forms.ToolStripMenuItem();
@@ -124,7 +121,6 @@
             this.subContextMenuStrip.SuspendLayout();
             this.madeShotContextMenuStrip.SuspendLayout();
             this.missedShotContextMenuStrip.SuspendLayout();
-            this.reboundContextMenuStrip.SuspendLayout();
             this.foulContextMenuStrip.SuspendLayout();
             this.buttonPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.courtBox)).BeginInit();
@@ -162,7 +158,7 @@
             this.deleteEventButton.Name = "deleteEventButton";
             this.deleteEventButton.Size = new System.Drawing.Size(262, 35);
             this.deleteEventButton.TabIndex = 11;
-            this.deleteEventButton.Text = "Delete Event";
+            this.deleteEventButton.Text = "Delete Last Event";
             this.deleteEventButton.UseVisualStyleBackColor = true;
             this.deleteEventButton.Click += new System.EventHandler(this.deleteEvent_Click);
             // 
@@ -175,7 +171,7 @@
             this.jumpBallButton.TabIndex = 3;
             this.jumpBallButton.Text = "Jump Ball";
             this.jumpBallButton.UseVisualStyleBackColor = true;
-            this.jumpBallButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.jumpBall_MouseDown);
+            this.jumpBallButton.Click += new System.EventHandler(this.jumpball_Click);
             // 
             // jumpBallContextMenuStrip
             // 
@@ -219,7 +215,7 @@
             this.foulButton.TabIndex = 6;
             this.foulButton.Text = "Foul";
             this.foulButton.UseVisualStyleBackColor = true;
-            this.foulButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.foul_MouseDown);
+            this.foulButton.Click += new System.EventHandler(this.foul_Click);
             // 
             // homeBox
             // 
@@ -651,7 +647,7 @@
             this.madeShotButton.TabIndex = 14;
             this.madeShotButton.Text = "Made Shot";
             this.madeShotButton.UseVisualStyleBackColor = true;
-            this.madeShotButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.madeShot_MouseDown);
+            this.madeShotButton.Click += new System.EventHandler(this.madeShot_Click);
             // 
             // missedShotButton
             // 
@@ -662,7 +658,7 @@
             this.missedShotButton.TabIndex = 15;
             this.missedShotButton.Text = "Missed Shot";
             this.missedShotButton.UseVisualStyleBackColor = true;
-            this.missedShotButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.missedShot_MouseDown);
+            this.missedShotButton.Click += new System.EventHandler(this.missedShot_Click);
             // 
             // madeShotContextMenuStrip
             // 
@@ -753,28 +749,6 @@
             this.toolStripMenuItem9.Size = new System.Drawing.Size(175, 22);
             this.toolStripMenuItem9.Text = "3";
             this.toolStripMenuItem9.Click += new System.EventHandler(this.missedShot_Click);
-            // 
-            // reboundContextMenuStrip
-            // 
-            this.reboundContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem13,
-            this.toolStripMenuItem14});
-            this.reboundContextMenuStrip.Name = "madeShotContextMenuStrip";
-            this.reboundContextMenuStrip.Size = new System.Drawing.Size(177, 48);
-            // 
-            // toolStripMenuItem13
-            // 
-            this.toolStripMenuItem13.Name = "toolStripMenuItem13";
-            this.toolStripMenuItem13.Size = new System.Drawing.Size(176, 22);
-            this.toolStripMenuItem13.Text = "Offensive Rebound";
-            this.toolStripMenuItem13.Click += new System.EventHandler(this.rebound_Click);
-            // 
-            // toolStripMenuItem14
-            // 
-            this.toolStripMenuItem14.Name = "toolStripMenuItem14";
-            this.toolStripMenuItem14.Size = new System.Drawing.Size(176, 22);
-            this.toolStripMenuItem14.Text = "Defensive Rebound";
-            this.toolStripMenuItem14.Click += new System.EventHandler(this.rebound_Click);
             // 
             // foulContextMenuStrip
             // 
@@ -900,7 +874,6 @@
             this.subContextMenuStrip.ResumeLayout(false);
             this.madeShotContextMenuStrip.ResumeLayout(false);
             this.missedShotContextMenuStrip.ResumeLayout(false);
-            this.reboundContextMenuStrip.ResumeLayout(false);
             this.foulContextMenuStrip.ResumeLayout(false);
             this.buttonPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.courtBox)).EndInit();
@@ -973,9 +946,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem10;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem11;
-        private System.Windows.Forms.ContextMenuStrip reboundContextMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem13;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem14;
         private System.Windows.Forms.Label homeTimeoutLabel;
         private System.Windows.Forms.Label awayTimeoutLabel;
         private System.Windows.Forms.ContextMenuStrip foulContextMenuStrip;

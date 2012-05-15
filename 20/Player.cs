@@ -21,7 +21,7 @@ namespace _20
         public int Jersey { get { return jersey; } set{jersey = value;} }
 
         private string teamId;
-        public string TeamId { get { return teamId; } }
+        public string TeamId { get { return teamId; } set { teamId = value; } }
 
         private bool teamPlayer;
         public bool TeamPlayer { get { return teamPlayer; } }

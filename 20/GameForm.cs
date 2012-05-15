@@ -834,44 +834,35 @@ namespace _20
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void jumpBall_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right || e.Button == MouseButtons.Left)
-            {
-                if (firstSelectedPlayer == null || secondSelectedPlayer == null)
-                {
-                    MessageBox.Show("Please select one Home player and one Away player above", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                else if (firstSelectedPlayer.TeamId == secondSelectedPlayer.TeamId)
-                {
-                    MessageBox.Show("Selected players must be on different teams", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                else if (!pointSelected)
-                {
-                    MessageBox.Show("Please select a location on the court", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                else
-                {
-                    firstSelectedContext.Text = "Jump";
-                    secondSelectedContext.Text = "Jump";
-                }
-                jumpBallContextMenuStrip.Show(this, generateContextMenuLocation(sender));
-
-            }
-        }//end jumpButton_MouseDown
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void jumpball_Click(object sender, EventArgs e)
         {
-            //requests user to confirm deletion of event.
-            string strSender = sender.ToString();
+            if (firstSelectedPlayer == null || secondSelectedPlayer == null)
+            {
+                MessageBox.Show("Please select one Home player and one Away player above", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else if (firstSelectedPlayer.TeamId == secondSelectedPlayer.TeamId)
+            {
+                MessageBox.Show("Selected players must be on different teams", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else if (!pointSelected)
+            {
+                MessageBox.Show("Please select a location on the court", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else
+            {
+                firstSelectedContext.Text = "Jump";
+                secondSelectedContext.Text = "Jump";
+            }
+
+            string str = getQuickPromptResult(sender, true);
+            if (str == null)
+            {
+                return;
+            }
+
             JumpballEvent jbe = null;
             Player awayPlayer = null;
             Player homePlayer = null;
@@ -888,7 +879,7 @@ namespace _20
                 awayPlayer = firstSelectedPlayer;
             }
 
-            if (strSender.Contains("Home"))
+            if (str.Contains("Home"))
             {
                 jbe = new JumpballEvent(pac, homePlayer.Id, awayPlayer.Id, homePlayer.Id, currPoint);
             }
@@ -899,6 +890,7 @@ namespace _20
 
             confirmAndSendEvent(jbe);
         }//end jumpball_Click
+
         /*------------------------------------------------------------------------------------------------------------*/
         /*------------------------------------------------JUMPBALL END------------------------------------------------*/
         /*------------------------------------------------------------------------------------------------------------*/
@@ -906,40 +898,6 @@ namespace _20
         /*************************************************************************************************************/
         /**************************************************MADE SHOT**************************************************/
         /*************************************************************************************************************/
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void madeShot_MouseDown(object sender, MouseEventArgs e)
-        {
-
-            if (e.Button == MouseButtons.Right || e.Button == MouseButtons.Left)
-            {
-                if (firstSelectedPlayer == null)
-                {
-                    MessageBox.Show("Please select at least one player above", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                else if (secondSelectedPlayer != null && firstSelectedPlayer.TeamId != secondSelectedPlayer.TeamId)
-                {
-                    MessageBox.Show("Selected players must be on the same team", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                else if (!pointSelected)
-                {
-                    MessageBox.Show("Please select a location on the court", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                else
-                {
-                    firstSelectedContext.Text = "Shooter";
-                    if (secondSelectedContext != null)
-                        secondSelectedContext.Text = "Assist";
-                }
-                madeShotContextMenuStrip.Show(this, generateContextMenuLocation(sender));
-            }
-        }//end madeButton_MouseDown
 
         /// <summary>
         /// 
@@ -948,8 +906,46 @@ namespace _20
         /// <param name="e"></param>
         private void madeShot_Click(object sender, EventArgs e)
         {
+            if (firstSelectedPlayer == null)
+            {
+                MessageBox.Show("Please select at least one player above", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else if (secondSelectedPlayer != null && firstSelectedPlayer.TeamId != secondSelectedPlayer.TeamId)
+            {
+                MessageBox.Show("Selected players must be on the same team", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else if (!pointSelected)
+            {
+                MessageBox.Show("Please select a location on the court", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else
+            {
+                firstSelectedContext.Text = "Shooter";
+                if (secondSelectedContext != null)
+                    secondSelectedContext.Text = "Assist";
+            }
+
+            bool goaltending = false;
+
+            string str = getQuickPromptResult(sender, false);
+            if (str == null)
+            {
+                return;
+            }
+            else if (str.ToLower().Equals("goaltending"))
+            {
+                goaltending = true;
+                str = getQuickPromptResult(sender, true);
+                if (str == null)
+                {
+                    return;
+                }
+            }
+
             MadeShotEvent mse = null;
-            string str = sender.ToString();
             string assistId = secondSelectedPlayer != null ? secondSelectedPlayer.Id : null;
             //HAS TO BE A FREE THROW!!
             if (str.Equals("1"))
@@ -962,7 +958,7 @@ namespace _20
                     return;
                 }
                 mse = new MadeShotEvent(pac, firstSelectedPlayer.Id, firstSelectedPlayer.TeamId, null,
-                                        "free-throw", 1, false, dataForm.goaltending, currPoint);
+                                        "free-throw", 1, false, goaltending, currPoint);
             }
             // can be a jumpshot, layup, dunk, tip-in
             else if (str.Equals("2"))
@@ -974,7 +970,7 @@ namespace _20
                     return;
                 }
                 mse = new MadeShotEvent(pac, firstSelectedPlayer.Id, firstSelectedPlayer.TeamId, assistId,
-                                        dataForm.shotType, 2, dataForm.fastbreak, dataForm.goaltending, currPoint);
+                                        dataForm.shotType, 2, dataForm.fastbreak, goaltending, currPoint);
             }
             else if (str.Equals("3"))
             {
@@ -986,7 +982,7 @@ namespace _20
                 }
 
                 mse = new MadeShotEvent(pac, firstSelectedPlayer.Id, firstSelectedPlayer.TeamId, assistId,
-                                        "jump-shot", 3, dataForm.fastbreak, dataForm.goaltending, currPoint);
+                                        "jump-shot", 3, dataForm.fastbreak, goaltending, currPoint);
             }
 
             confirmAndSendEvent(mse);
@@ -1004,43 +1000,38 @@ namespace _20
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void missedShot_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
-            {
-                if (firstSelectedPlayer == null)
-                {
-                    MessageBox.Show("Please select at least one player above", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                else if (secondSelectedPlayer != null && firstSelectedPlayer.TeamId == secondSelectedPlayer.TeamId)
-                {
-                    MessageBox.Show("Selected players must be on different teams", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                else if (!pointSelected)
-                {
-                    MessageBox.Show("Please select a location on the court", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                else
-                {
-                    firstSelectedContext.Text = "Shooter";
-                    if (secondSelectedContext != null)
-                        secondSelectedContext.Text = "Blocker";
-                }
-                missedShotContextMenuStrip.Show(this, generateContextMenuLocation(sender));
-            }
-        }//end missedShot_MouseDown
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void missedShot_Click(object sender, EventArgs e)
         {
+            if (firstSelectedPlayer == null)
+            {
+                MessageBox.Show("Please select at least one player above", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else if (secondSelectedPlayer != null && firstSelectedPlayer.TeamId == secondSelectedPlayer.TeamId)
+            {
+                MessageBox.Show("Selected players must be on different teams", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else if (!pointSelected)
+            {
+                MessageBox.Show("Please select a location on the court", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else
+            {
+                firstSelectedContext.Text = "Shooter";
+                if (secondSelectedContext != null)
+                    secondSelectedContext.Text = "Blocker";
+            }
+
             MissedShotEvent mse = null;
-            string str = sender.ToString();
+            string str = this.getQuickPromptResult(sender, false);
+
+            if (str == null)
+            {
+                return;
+            }
+
             string blocker = secondSelectedPlayer == null ? null : secondSelectedPlayer.Id;
             DataForm dataForm = null;
             //HAS TO BE A FREE THROW!!
@@ -1104,57 +1095,6 @@ namespace _20
         /*-----------------------------------------------------------------------------------------------------------*/
 
         /************************************************************************************************************/
-        /************************************************REBOUND SHOT************************************************/
-        /************************************************************************************************************/
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void rebound_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
-            {
-                if (firstSelectedPlayer == null)
-                {
-                    MessageBox.Show("Please select only ONE player above", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                else if (!pointSelected)
-                {
-                    MessageBox.Show("Please select a location on the court", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                else
-                {
-                    firstSelectedContext.Text = "Reb.";
-                    if (secondSelectedContext != null)
-                        secondSelectedContext.Text = "";
-                }
-                reboundContextMenuStrip.Show(this, generateContextMenuLocation(sender));
-            }
-        }//end rebound_MouseDown
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void rebound_Click(object sender, EventArgs e)
-        {
-            string str = sender.ToString();
-            int strLength = str.Length;
-            string type = str.Substring(0, strLength - str.IndexOf(" ") + 1).ToLower();
-
-            ReboundEvent re = new ReboundEvent(pac, firstSelectedPlayer.Id, type, currPoint);
-
-            confirmAndSendEvent(re);
-        }//end rebound_Click
-        /*-----------------------------------------------------------------------------------------------------------*/
-        /*------------------------------------------------REBOUND END------------------------------------------------*/
-        /*-----------------------------------------------------------------------------------------------------------*/
-
-        /************************************************************************************************************/
         /**************************************************TURNOVER**************************************************/
         /************************************************************************************************************/
         /// <summary>
@@ -1213,25 +1153,28 @@ namespace _20
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void foul_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
-            {
-                foulContextMenuStrip.Show(this, generateContextMenuLocation(sender));
-            }
-        }//end foul_MouseDown
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void foul_Click(object sender, EventArgs e)
         {
+            string str = this.getQuickPromptResult(sender, false);
+
+            bool ejected = false;
+            if (str == null)
+            {
+                return;
+            }
+            else if (str.ToLower().Equals("ejection"))
+            {
+                ejected = true;
+                str = this.getQuickPromptResult(sender, true);
+                if (str == null)
+                {
+                    return;
+                }
+            }
+            print(str);
             FoulEvent fe = null;
             SubstitutionEvent se = null;
-            string str = sender.ToString();
-            if (!str.Equals("Technical Foul"))
+            if (!str.Equals("Technical"))
             {
                 if (firstSelectedPlayer == null)
                 {
@@ -1256,9 +1199,10 @@ namespace _20
                 }
             }
             string drewBy = secondSelectedPlayer == null ? null : secondSelectedPlayer.Id;
-            if (str.Equals("Offensive Foul"))
+            if (str.Equals("Offensive"))
             {
                 DataForm dataForm = new DataForm(pac, "foul", DataForm.CHARGING, generateDataFormLocation(foulButton));
+                dataForm.ejected = ejected;
                 dataForm.committedBy = firstSelectedPlayer;
                 dataForm.ShowDialog();
                 if (dataForm.cancelled)
@@ -1272,11 +1216,12 @@ namespace _20
                 }
 
                 fe = new FoulEvent(pac, firstSelectedPlayer.TeamId, firstSelectedPlayer.Id, 
-                    drewBy, dataForm.foulType, dataForm.ejected, currPoint);
+                    drewBy, dataForm.foulType, ejected, currPoint);
             }
-            else if (str.Equals("Defensive Foul"))
+            else if (str.Equals("Defensive"))
             {
                 DataForm dataForm = new DataForm(pac, "foul", DataForm.FOUL_TYPE, generateDataFormLocation(foulButton));
+                dataForm.ejected = ejected;
                 dataForm.committedBy = firstSelectedPlayer;
                 dataForm.ShowDialog();
                 if (dataForm.cancelled)
@@ -1289,11 +1234,12 @@ namespace _20
                     se = new SubstitutionEvent(pac, dataForm.replacingPlayer.Id, firstSelectedPlayer.Id, firstSelectedPlayer.TeamId);
                 }
                 fe = new FoulEvent(pac, firstSelectedPlayer.TeamId, firstSelectedPlayer.Id, 
-                    drewBy, dataForm.foulType, dataForm.ejected, currPoint);
+                    drewBy, dataForm.foulType, ejected, currPoint);
             }
-            else if (str.Equals("Technical Foul"))
+            else if (str.Equals("Technical"))
             {
                 DataForm dataForm = new DataForm(pac, "tech", DataForm.TECHNICAL, generateDataFormLocation(foulButton));
+                dataForm.ejected = ejected;
                 dataForm.committedBy = firstSelectedPlayer;
                 dataForm.ShowDialog();
                 if (dataForm.cancelled)
@@ -1311,7 +1257,7 @@ namespace _20
                     se = new SubstitutionEvent(pac, dataForm.replacingPlayer.Id, dataForm.committedBy.Id, dataForm.committedBy.TeamId);
                 }
                 fe = new FoulEvent(pac, dataForm.committedBy.TeamId, dataForm.committedBy.Id, 
-                    null, "technical", dataForm.ejected, currPoint);
+                    null, "technical", ejected, currPoint);
                 
             }
 
@@ -1548,7 +1494,16 @@ namespace _20
             this.update();
         }
 
+        public string getQuickPromptResult(object sender, bool bizzare)
+        {
+            QuickPrompt prompt = new QuickPrompt(pac, ((Button) sender).Text, generateContextMenuLocation(sender), bizzare);
+            prompt.ShowDialog();
+            return prompt.cancelled ? null : prompt.result;
+        }
 
-
+        public void print(object o)
+        {
+            Console.WriteLine(o); 
+        }
     }// end GameForm
 } //end using namespace

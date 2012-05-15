@@ -30,7 +30,6 @@ namespace _20
         public string turnoverType;
         public string foulType;
         public bool cancelled;
-        public bool goaltending;
         public bool fastbreak;
         public bool ejected;
         public bool rebounded;
@@ -82,12 +81,37 @@ namespace _20
                         this.Text = "Select Player";
                         loadFormWithButtons(arr);
                     }
+                    else if (!ejected)
+                    {
+                        Close();
+                        return;
+                    }
                     else
                     {
-                        this.Text = "Ejected?";
-                        this.iteration = EJECTED;
-                        this.isHome = committedBy.TeamId == pac.HomeTeam.Id;
-                        loadFormWithButtons(new string[] { "Yes", "No" });
+                        isHome = committedBy.TeamId == pac.HomeTeam.Id;
+                        playersOnBench = isHome ? pac.HomeTeam.getBench() : pac.AwayTeam.getBench();
+
+                        string[] p = null;
+                        if(committedBy.TeamPlayer)
+                        {
+                            p = new string[playersOnBench.Count];
+                            p[playersOnBench.Count - 1] = pac.getTeamById(committedBy.TeamId).Name;
+                        }
+                        else
+                        {
+                            p = new string[playersOnBench.Count - 1];
+                        }
+
+                        int playersInd = 0;
+                        for (int i = 0; i < playersOnBench.Count; i++)
+                        {
+                            if (!playersOnBench[i].TeamPlayer)
+                            {
+                                p[playersInd++] = "#" + playersOnBench[i].Jersey + " " + playersOnBench[i].DisplayName;
+                            }
+                        }
+                        iteration = PLAYER_SELECT;
+                        loadFormWithButtons(p);
                     }
                 }
                 else if (this.iteration == EJECTED)
@@ -201,13 +225,6 @@ namespace _20
             else if (iteration == FASTBREAK)
             {
                 this.fastbreak = button.Text.Equals("Yes");
-                loadFormWithButtons(new string[] { "Yes", "No" });
-                this.Text = "Goaltending?";
-                iteration++;
-            }
-            else if (iteration == GOALTENDING)
-            {
-                this.goaltending = button.Text.Equals("Yes");
                 this.Close();
             }
 
@@ -287,6 +304,7 @@ namespace _20
                 }
 
                 iteration++;
+                this.Text = "Select replacing player";
                 loadFormWithButtons(players);
             }
             else if (iteration == PLAYER_SELECT)
@@ -348,42 +366,40 @@ namespace _20
                         this.Close();
                         return;
                     }
-                    iteration = EJECTED;
-                }
-            }
-            else if (iteration == EJECTED)
-            {
-                this.ejected = button.Text.Equals("Yes");
-                if (!this.ejected && !this.committedBy.TeamPlayer)
-                {
-                    this.Close();
-                    return;
-                }
-
-                isHome = committedBy.TeamId == pac.HomeTeam.Id;
-                playersOnBench = isHome ? pac.HomeTeam.getBench() : pac.AwayTeam.getBench();
-
-                string[] players = null;
-                if(committedBy.TeamPlayer)
-                {
-                    players = new string[playersOnBench.Count];
-                    players[playersOnBench.Count - 1] = pac.getTeamById(committedBy.TeamId).Name;
-                }
-                else
-                {
-                    players = new string[playersOnBench.Count - 1];
-                }
-
-                int playersInd = 0;
-                for (int i = 0; i < playersOnBench.Count; i++)
-                {
-                    if (!playersOnBench[i].TeamPlayer)
+                    if (!ejected && !this.committedBy.TeamPlayer)
                     {
-                        players[playersInd++] = "#" + playersOnBench[i].Jersey + " " + playersOnBench[i].DisplayName;
+                        this.Close();
+                        return;
+                    }
+                    else
+                    {
+                        isHome = committedBy.TeamId == pac.HomeTeam.Id;
+                        playersOnBench = isHome ? pac.HomeTeam.getBench() : pac.AwayTeam.getBench();
+
+                        string[] players = null;
+                        if(committedBy.TeamPlayer)
+                        {
+                            players = new string[playersOnBench.Count];
+                            players[playersOnBench.Count - 1] = pac.getTeamById(committedBy.TeamId).Name;
+                        }
+                        else
+                        {
+                            players = new string[playersOnBench.Count - 1];
+                        }
+
+                        int playersInd = 0;
+                        for (int i = 0; i < playersOnBench.Count; i++)
+                        {
+                            if (!playersOnBench[i].TeamPlayer)
+                            {
+                                players[playersInd++] = "#" + playersOnBench[i].Jersey + " " + playersOnBench[i].DisplayName;
+                            }
+                        }
+                        iteration = PLAYER_SELECT;
+                        loadFormWithButtons(players);
                     }
                 }
-                iteration++;
-                loadFormWithButtons(players);
+                this.Text = "Select Replacing Player";
             }
             else if (iteration == PLAYER_SELECT)
             {
@@ -430,24 +446,8 @@ namespace _20
             if (iteration == FOUL_TYPE) 
             {
                 string lower = button.Text.ToLower();
-                if(lower.IndexOf(" ") >= 0)
-                {
-                    lower = lower.Equals("tip in") ? "tip-in" : "jump-shot";
-                }
                 this.foulType = lower;
-                loadFormWithButtons(new string[] { "Yes", "No" });
-                this.Text = "Ejected?";
-                iteration += 2;
-            }
-            else if (iteration == CHARGING)
-            {
-                this.foulType = button.Text.Equals("Yes") ? "charging" : "offensive";
-                this.Text = "Ejected?";
-                iteration++;
-            }
-            else if (iteration == EJECTED)
-            {
-                this.ejected = button.Text.Equals("Yes");
+
                 if (!this.ejected && !this.committedBy.TeamPlayer)
                 {
                     this.Close();
@@ -476,7 +476,44 @@ namespace _20
                         players[playersInd++] = "#" + playersOnBench[i].Jersey + " " + playersOnBench[i].DisplayName;
                     }
                 }
-                iteration++;
+                iteration = PLAYER_SELECT;
+                this.Text = "Select Replacing Player";
+                loadFormWithButtons(players);
+            }
+            else if (iteration == CHARGING)
+            {
+                this.foulType = button.Text.Equals("Yes") ? "charging" : "offensive";
+
+                if (!this.ejected && !this.committedBy.TeamPlayer)
+                {
+                    this.Close();
+                    return;
+                }
+
+                isHome = committedBy.TeamId == pac.HomeTeam.Id;
+                playersOnBench = isHome ? pac.HomeTeam.getBench() : pac.AwayTeam.getBench();
+
+                string[] players = null;
+                if(committedBy.TeamPlayer)
+                {
+                    players = new string[playersOnBench.Count];
+                    players[playersOnBench.Count - 1] = pac.getTeamById(committedBy.TeamId).Name;
+                }
+                else
+                {
+                    players = new string[playersOnBench.Count - 1];
+                }
+
+                int playersInd = 0;
+                for (int i = 0; i < playersOnBench.Count; i++)
+                {
+                    if (!playersOnBench[i].TeamPlayer)
+                    {
+                        players[playersInd++] = "#" + playersOnBench[i].Jersey + " " + playersOnBench[i].DisplayName;
+                    }
+                }
+                iteration = PLAYER_SELECT;
+                this.Text = "Select Replacing Player";
                 loadFormWithButtons(players);
             }
             else if (iteration == PLAYER_SELECT)

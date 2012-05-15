@@ -16,6 +16,7 @@ namespace _20
         public bool cancelled;
         public string gameTime;
         public string gameVenue;
+        private int currId;
 
         public CustomGame()
         {
@@ -24,6 +25,7 @@ namespace _20
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.currId = int.MinValue + 1;
             this.homeNameLabel.Text = homeTeam != null ? homeTeam.Name : "None";
             this.awayNameLabel.Text = awayTeam != null ? awayTeam.Name : "None";
         }
@@ -42,6 +44,7 @@ namespace _20
                 return;
             }
             this.homeTeam = custom.team;
+            this.homeTeam.Id = currId++ + "";
             this.homeNameLabel.Text = this.homeTeam == null ? "None" : this.homeTeam.Name;
         }
 
@@ -63,6 +66,7 @@ namespace _20
                 return;
             }
             this.awayTeam = custom.team;
+            this.awayTeam.Id = currId++ + "";
             this.awayNameLabel.Text = this.awayTeam == null ? "None" : this.awayTeam.Name;
         }
 
@@ -72,6 +76,15 @@ namespace _20
             {
                 MessageBox.Show("You must make two teams", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
+            }
+            for (int i = 0; i < homeTeam.Players.Count; i++)
+            {
+                homeTeam.Players[i].TeamId = homeTeam.Id;
+            }
+
+            for (int i = 0; i < awayTeam.Players.Count; i++)
+            {
+                awayTeam.Players[i].TeamId = awayTeam.Id;
             }
             this.gameTime = DateTime.Now.ToString();
             this.Close();
