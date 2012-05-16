@@ -101,8 +101,6 @@ namespace _20
 
         private void GameSelectForm_Load(object sender, EventArgs e)
         {
-            searchGamesButton_click(searchGameButton, null);
-            selectGameButton_Click(selectGameButton, null);
         }
 
         public CustomGame customGame;

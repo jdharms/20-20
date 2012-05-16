@@ -9,7 +9,7 @@ namespace _20
 {
     public class ConfigParser
     {
-        private Dictionary<string, ConfigObject> configs;
+        private Dictionary<string, Dictionary<string, List<string>>> configs;
         private XmlTextReader reader;
         private string filename;
 
@@ -19,19 +19,66 @@ namespace _20
         /// </summary>
         /// <param name="filename">The file name of the XML Configuration file. Throws a FileNotFoundException if the file does not exist.</param>
         /// <param name="possibleTags">The configuation tags to look for.</param>
-        public ConfigParser(string filename, string[] possibleTags)
+        public ConfigParser(string filename)
         {
+            Dictionary<string, string[]> tagsToTags = new Dictionary<string, string[]>();
+            configs = new Dictionary<string, Dictionary<string, List<string>>>();
+
+            tagsToTags.Add("events", new string[] { 
+                "made", "missed", "blocked", 
+                "rebound", "jumpball", "foul", 
+                "turnover", "substitution", "timeout" 
+            });
+
+            tagsToTags.Add("hashtags", new string[] {
+                "assist", "fastbreak", "goaltend", "ejected", "forced"
+            });
+
+            tagsToTags.Add("shotTypes", new string[] {
+                "jumpshot", "layup", "dunk", "freethrow", "tip"
+            });
+
+            tagsToTags.Add("timeoutTypes", new string[] {
+                "media", "official", "home", "away"
+            });
+
+            tagsToTags.Add("teamTypes", new string[] {
+                "home", "away"
+            });
+
+            tagsToTags.Add("foulTypes", new string[] {
+                "blocking", "charging", "shooting", 
+                "offensive", "personal", "technical", "flagrant"
+            });
+
+            tagsToTags.Add("turnoverTypes", new string[] {
+                "traveling", "lost", "bounds", "violation", "goaltending", "thrown"
+            });
+
             try
             {
                 this.filename = filename;
-                configs = new Dictionary<string, ConfigObject>();
-                foreach (string tag in possibleTags)
+                foreach (string tag in tagsToTags.Keys)
                 {
-                    if (resetReaderTo(tag))
+                    Dictionary<string, List<string>> thisConfig = null; 
+                    foreach (string subTag in tagsToTags[tag])
                     {
-                        List<string> indicators = this.getAllIndicators(tag);
-                        Dictionary<string, string> hashtags = this.getAllHashtags(tag);
-                        configs.Add(tag, new ConfigObject(indicators, hashtags));
+                        if (resetReaderTo(subTag))
+                        {
+                            List<string> indicators = this.getAllIndicators(tag, subTag);
+                            if (indicators != null)
+                            {
+                                if (thisConfig == null)
+                                {
+                                    thisConfig = new Dictionary<string, List<string>>();
+                                }
+                                thisConfig.Add(subTag, indicators);
+                            }
+                        }
+                    }
+                    if (thisConfig != null)
+                    {
+                        configs.Add(tag, thisConfig);
                     }
                 }
             }
@@ -48,7 +95,7 @@ namespace _20
         /// <returns>Returns true if a configuation is found. Otherwise false.</returns>
         public bool containsConfiguration(string tag)
         {
-            ConfigObject config = null;
+            Dictionary<string, List<string>> config = new Dictionary<string, List<string>>(); 
             if (configs.TryGetValue(tag, out config))
             {
                 return true;
@@ -62,36 +109,20 @@ namespace _20
         /// </summary>
         /// <param name="tag">The tag to look for. Throws a ConfigurationNotFoundException if the tag is not found.</param>
         /// <returns>A list of indicators for a tag.</returns>
-        public List<string> getIndicatorsForTag(string tag)
+        public Dictionary<string, List<string>> getDictionaryForTag(string tag)
         {
-            ConfigObject config = null;
+            Dictionary<string, List<string>> config = new Dictionary<string, List<string>>(); 
             if (configs.TryGetValue(tag, out config))
             {
-                return config.Indicators;
+                return config;
             }
 
             throw new ConfigurationNotFoundException(tag);
         }
 
-        /// <summary>
-        /// Searches for the hashtags for a specific tag. If no hashtags are found, this method returns null.
-        /// </summary>
-        /// <param name="tag">The tag to look for. Throws a ConfigurationNotFoundException if the tag is not found.</param>
-        /// <returns>A dictionary mapping known hashtags to configured hashtags.</returns>
-        public Dictionary<string, string> getHashtagsForTag(string tag)
+        private List<string> getAllIndicators(string tag, string subTag)
         {
-            ConfigObject config = null;
-            if (configs.TryGetValue(tag, out config))
-            {
-                return config.Hashtags;
-            }
-
-            throw new ConfigurationNotFoundException(tag);
-        }
-
-        private List<string> getAllIndicators(string tag)
-        {
-            if (!this.hasIndicators(tag))
+            if (!this.hasIndicators(tag, subTag))
             {
                 return null;
             }
@@ -110,56 +141,10 @@ namespace _20
             return all;
         }
 
-        private bool hasIndicators(string tag)
+        private bool hasIndicators(string tag, string subTag)
         {
-            this.resetReaderTo(tag);
+            this.resetReaderTo(tag, subTag);
             return reader.ReadToDescendant("indicator");
-        }
-
-        private Dictionary<string, string> getAllHashtags(string tag)
-        {
-            if (!this.hasHashtags(tag))
-            {
-                return null;
-            }
-
-            // ************** TODO ****************** //
-            // Edit this if statement block so that it looks for these hashtags 
-            string[] tagSearch;
-            if (tag.Equals("made"))
-            {
-                tagSearch = new string[] { "fastbreak", "goaltending" };
-            }
-            else if (tag.Equals("missed"))
-            {
-                tagSearch = new string[] { "blocked" };
-            }
-            else
-            {
-                tagSearch = new string[0];
-            }
-
-            Dictionary<string, string> all = null;
-            foreach (string hashtag in tagSearch)
-            {
-                if (reader.ReadToDescendant(hashtag))
-                {
-                    if (all == null)
-                    { 
-                        all = new Dictionary<string, string>();
-                    }
-                    all.Add(hashtag, reader.ReadElementContentAsString());
-                }
-                this.hasHashtags(tag);
-            }
-
-            return all;
-        }
-
-        private bool hasHashtags(string tag)
-        {
-            this.resetReaderTo(tag);
-            return reader.ReadToDescendant("hashtag");
         }
 
         private bool resetReaderTo(string tag)
@@ -167,6 +152,15 @@ namespace _20
             reader = new XmlTextReader(filename);
             reader.ReadToDescendant("setup");
             return reader.ReadToDescendant(tag);
+        }
+
+        private bool resetReaderTo(string tag, string subTag)
+        {
+            if (resetReaderTo(tag))
+            {
+                return reader.ReadToDescendant(subTag);
+            }
+            return false;
         }
 
         private class ConfigObject
