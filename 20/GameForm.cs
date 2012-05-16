@@ -105,27 +105,21 @@ namespace _20
             confirmScore(false);
             pac.OnStateChange += update;
             waitingForReboundClick = false;
-            //GameDataResponse gameData = pac.getGameData(pac.GameID);
+            GameDataResponse gameData = pac.getGameData(pac.GameID);
             for (int i = 0; i < awayPlayerLabels.Count; i++)
             {
                 if (i < 5)
                 {
-                    homePlayerLabels[i].ContextMenuStrip = subContextMenuStrip;
-                    awayPlayerLabels[i].ContextMenuStrip = subContextMenuStrip;
-                    homePlayerContexts[i].ContextMenuStrip = subContextMenuStrip;
-                    awayPlayerContexts[i].ContextMenuStrip = subContextMenuStrip;
-                    homePlayerContexts[i].MouseDown += new MouseEventHandler(this.playerSelect_MouseDown);
-                    awayPlayerContexts[i].MouseDown += new MouseEventHandler(this.playerSelect_MouseDown);
                     homePlayerContexts[i].Click += new EventHandler(this.playerSelect_click);
                     awayPlayerContexts[i].Click += new EventHandler(this.playerSelect_click);
                 }
                 homePlayerLabels[i].Click += new EventHandler(this.playerSelect_click);
                 awayPlayerLabels[i].Click += new EventHandler(this.playerSelect_click);
             }
-            jumpBallContextMenuStrip.Items.Add("Possession to Home Team (" + pac.HomeTeam.Name + ")");
-            jumpBallContextMenuStrip.Items.Add("Possession to Away Team (" + pac.AwayTeam.Name + ")");
-            jumpBallContextMenuStrip.Items[0].Click += new EventHandler(this.jumpball_Click);
-            jumpBallContextMenuStrip.Items[1].Click += new EventHandler(this.jumpball_Click);
+            //jumpBallContextMenuStrip.Items.Add("Possession to Home Team (" + pac.HomeTeam.Name + ")");
+            //jumpBallContextMenuStrip.Items.Add("Possession to Away Team (" + pac.AwayTeam.Name + ")");
+            //jumpBallContextMenuStrip.Items[0].Click += new EventHandler(this.jumpball_Click);
+            //jumpBallContextMenuStrip.Items[1].Click += new EventHandler(this.jumpball_Click);
             update();
         }//end GameFormLoad
 
@@ -259,6 +253,65 @@ namespace _20
                 periodStartButton.Text = perOrOver + " Start";
             }
 
+            resetFirstSecondSelected();
+            //if (firstSelectedContext != null)
+            //{
+            //    if (firstSelectedContext == homeBox)
+            //    {
+            //        firstSelectedContext.Text = "Home";
+            //    }
+            //    else if (firstSelectedContext == awayBox)
+            //    {
+            //        firstSelectedContext.Text = "Away";
+            //    }
+            //    else
+            //    {
+            //        firstSelectedContext.Text = "";
+            //    }
+            //}
+            //if (secondSelectedContext != null)
+            //{
+            //    if (secondSelectedContext == homeBox)
+            //    {
+            //        secondSelectedContext.Text = "Home";
+            //    }
+            //    else if (secondSelectedContext == awayBox)
+            //    {
+            //        secondSelectedContext.Text = "Away";
+            //    }
+            //    else
+            //    {
+            //        secondSelectedContext.Text = "";
+            //    }
+            //}
+            //if (firstSelectedLabel != null)
+            //{
+            //    firstSelectedLabel.ForeColor = Color.Black;
+            //}
+            //if (secondSelectedLabel != null)
+            //{
+            //    secondSelectedLabel.ForeColor = Color.Black;
+            //}
+            //// the selected players from the player labels should become null
+            //firstSelectedPlayer = secondSelectedPlayer = null;
+            //// the selected players' labels should become null 
+            //firstSelectedLabel = secondSelectedLabel = null;
+            //// the selected players' groupboxes should become null 
+            //firstSelectedContext = secondSelectedContext = null;
+
+            // If a point was not selected
+            if (!pointSelected)
+            {
+                // refresh the court so the point doesn't stay
+                courtBox.Refresh();
+            }
+
+
+            this.Invalidate();
+        }
+
+        private void resetFirstSecondSelected()
+        {
             if (firstSelectedContext != null)
             {
                 if (firstSelectedContext == homeBox)
@@ -303,16 +356,6 @@ namespace _20
             firstSelectedLabel = secondSelectedLabel = null;
             // the selected players' groupboxes should become null 
             firstSelectedContext = secondSelectedContext = null;
-
-            // If a point was not selected
-            if (!pointSelected)
-            {
-                // refresh the court so the point doesn't stay
-                courtBox.Refresh();
-            }
-
-
-            this.Invalidate();
         }//end update
         
         /// <summary>
@@ -457,95 +500,6 @@ namespace _20
         /**************************************************************************************************************/
         /*************************************************SUBSTITUTION*************************************************/
         /**************************************************************************************************************/
-        /// <summary>
-        /// Handles a right click of a player (which is the substitution)
-        /// </summary>
-        /// <param name="sender">Should only be a label</param>
-        /// <param name="e">May or may not use</param>
-        private void playerSelect_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (buttonPanel.Visible)
-            {
-                buttonPanel.Visible = false;
-            }
-            //if the click registered was a right click
-            if (e.Button == System.Windows.Forms.MouseButtons.Right)
-            {
-                // we are going to reset everything in the right click menu
-                subContextMenuStrip.Items.Clear();
-
-                // get the oncourt and bench..
-                List<Player> onCourt = null;
-                List<Player> bench = null;
-                // this will be the player that was right clicked on
-                Player senderPlayer = null;
-
-                // lets get the jersey nubmer that was clicked on
-                int senderNumber = -1;
-                if (sender is Label)
-                {
-                    homeRightClicked = homePlayerLabels.Contains(sender);
-                    senderNumber = int.Parse(((Label)sender).Text);
-                }
-                else
-                {
-                    homeRightClicked = homePlayerContexts.Contains(sender);
-                    senderNumber = homeRightClicked ? int.Parse(homePlayerLabels[homePlayerContexts.IndexOf((GroupBox)sender)].Text) 
-                                                    : int.Parse(awayPlayerLabels[awayPlayerContexts.IndexOf((GroupBox)sender)].Text);
-                }
-
-
-                onCourt = homeRightClicked ? pac.HomeTeam.getOncourt() : pac.AwayTeam.getOncourt();
-                bench = homeRightClicked ? pac.HomeTeam.getBench() : pac.AwayTeam.getBench();
-                senderPlayer = pac.getPlayerByNumber(homeRightClicked, senderNumber);
-
-                // The top thing that will say the players name coming out
-                ToolStripMenuItem subInItem = new ToolStripMenuItem("Sub out #" + senderNumber + " (" + senderPlayer.DisplayName + ")");
-                subInItem.Enabled = false;
-                subContextMenuStrip.Items.Add(subInItem);
-
-                // add the seperator
-                subContextMenuStrip.Items.Add(new ToolStripSeparator());
-
-                foreach (Player p in bench)
-                {
-                    if (!p.TeamPlayer)
-                    {
-                        ToolStripMenuItem tsmi = new ToolStripMenuItem("with #" + p.Jersey + " (" + p.DisplayName + ")");
-                        tsmi.Click += new EventHandler(this.subPlayer_click);
-                        subContextMenuStrip.Items.Add(tsmi);                        
-                    }
-                }
-
-                ////First right click item
-                //ToolStripMenuItem subInItem = new ToolStripMenuItem("Sub out #" + senderNumber + " (" + senderPlayer.DisplayName + ")");
-                ////get an array of sub in players
-                //ToolStripMenuItem[] playerMenu = new ToolStripMenuItem[bench.Count - 1];
-                ////index to keep track of the player menu
-                //int toolStripInd = 0;
-
-                ////for every player on the bench
-                //for (int i = 0; i < bench.Count; i++)
-                //{
-                //    //if this player isnt a team player
-                //    if (!bench[i].TeamPlayer)
-                //    {
-                //        //make a new menu item with the bench player
-                //        playerMenu[toolStripInd] = new ToolStripMenuItem("with #" + bench[i].Jersey + " (" + bench[i].DisplayName + ")");
-                //        //make the menu item's click function subPlayer_click
-                //        playerMenu[toolStripInd].Click += new EventHandler(subPlayer_click);
-                //        //move to the next index
-                //        toolStripInd++;
-                //    }//end if
-                //}//end for
-
-                ////add the player menu to the drop down of the sub in player
-                //subInItem.DropDownItems.AddRange(playerMenu);
-
-                ////add the sub in player item in the context menu
-                //subContextMenuStrip.Items.Add(subInItem);
-            }//end if
-        }//end playerSelect_MouseDown
 
         /// <summary>
         /// Performed when a player label is clicked on. Will set the players that were selected
@@ -1384,25 +1338,7 @@ namespace _20
         private void timeout_Click(object sender, EventArgs e)
         {
 
-            TimeoutEvent timeoutEvent = null;
-            if (sender.ToString().Equals("Home Timeout"))
-            {
-                timeoutEvent = new TimeoutEvent(pac, pac.HomeTeam.Id, "team");
-            }
-            else if (sender.ToString().Equals("Away Timeout"))
-            {
-                timeoutEvent = new TimeoutEvent(pac, pac.AwayTeam.Id, "team");
-            }
-            else if (sender.ToString().Equals("Media Timeout"))
-            {
-                timeoutEvent = new TimeoutEvent(pac, null, "media");
-            }
-            else if (sender.ToString().Equals("Official Timeout"))
-            {
-                timeoutEvent = new TimeoutEvent(pac, null, "official");
-            }
-
-            confirmAndSendEvent(timeoutEvent);
+            
         }//end timeout_Click
        
         /// <summary>
@@ -1467,7 +1403,7 @@ namespace _20
 
         private Point generateContextMenuLocation(object sender)
         {
-            Button b = (Button) sender;
+            Control b = (Control)sender;
             return new Point(buttonPanel.Location.X + b.Location.X,  buttonPanel.Location.Y + b.Location.Y);
         }
 
@@ -1494,9 +1430,61 @@ namespace _20
             this.update();
         }
 
+        private Player lastPlayer = null;
+        private Point lastClick = new Point(-1, -1);
         public string getQuickPromptResult(object sender, bool bizzare)
         {
-            QuickPrompt prompt = new QuickPrompt(pac, ((Button) sender).Text, generateContextMenuLocation(sender), bizzare);
+            QuickPrompt prompt = null;
+            if (sender is Button)
+            {
+                prompt = new QuickPrompt(pac, ((Button)sender).Text, generateContextMenuLocation(sender), bizzare);
+            }
+            else
+            {
+                if (sender == homeNameLabel || sender == awayNameLabel)
+                {
+                    Point p = sender == homeNameLabel ? new Point(homeBox.Location.X, homeBox.Location.Y) : new Point(awayBox.Location.X, awayBox.Location.Y);
+                    prompt = new QuickPrompt(pac, "timeout", p, bizzare);
+                }
+                else
+                {
+                    GroupBox context = null;
+                    Point loc = new Point(-1, -1);
+                    if (sender is Label)
+                    {
+                        if (bizzare)
+                        {
+                            context = homePlayerContexts[homePlayerLabels.IndexOf((Label)sender)];
+                            loc.X = homeBox.Location.X + context.Location.X;
+                            loc.Y = homeBox.Location.Y + context.Location.Y;
+                        }
+                        else
+                        {
+                            context = awayPlayerContexts[awayPlayerLabels.IndexOf((Label)sender)];
+                            loc.X = awayBox.Location.X + context.Location.X;
+                            loc.Y = awayBox.Location.Y + context.Location.Y;
+                        }
+                    }
+                    else
+                    {
+                        context = (GroupBox)sender;
+                        if (bizzare)
+                        {
+                            loc.X = homeBox.Location.X + context.Location.X;
+                            loc.Y = homeBox.Location.Y + context.Location.Y;
+                        }
+                        else
+                        {
+                            loc.X = awayBox.Location.X + context.Location.X;
+                            loc.Y = awayBox.Location.Y + context.Location.Y;
+                        }
+
+                    }
+                    prompt = new QuickPrompt(pac, "sub", loc, bizzare);
+                    prompt.Text = "Sub out #" + lastPlayer.Jersey + " (" + lastPlayer.DisplayName + ")";
+                }
+            }
+
             prompt.ShowDialog();
             return prompt.cancelled ? null : prompt.result;
         }
@@ -1504,6 +1492,76 @@ namespace _20
         public void print(object o)
         {
             Console.WriteLine(o); 
+        }
+
+        private void sub_DoubleClick(object sender, EventArgs e)
+        {
+            string result = null;
+            if (sender == homeNameLabel || sender == awayNameLabel)
+            {
+                resetFirstSecondSelected();
+                result = getQuickPromptResult(sender, sender == homeNameLabel);
+                if (result == null)
+                {
+                    return;
+                }
+                TimeoutEvent timeoutEvent = null;
+                if (result.Equals("Home Timeout"))
+                {
+                    timeoutEvent = new TimeoutEvent(pac, pac.HomeTeam.Id, "team");
+                }
+                else if (result.Equals("Away Timeout"))
+                {
+                    timeoutEvent = new TimeoutEvent(pac, pac.AwayTeam.Id, "team");
+                }
+                else if (result.Equals("Media Timeout"))
+                {
+                    timeoutEvent = new TimeoutEvent(pac, null, "media");
+                }
+                else if (result.Equals("Official Timeout"))
+                {
+                    timeoutEvent = new TimeoutEvent(pac, null, "official");
+                }
+
+                confirmAndSendEvent(timeoutEvent);
+                return;
+            }
+
+            // lets get the jersey nubmer that was clicked on
+            int senderNumber = -1;
+            if (sender is Label)
+            {
+                homeRightClicked = homePlayerLabels.Contains(sender);
+                senderNumber = int.Parse(((Label)sender).Text);
+            }
+            else
+            {
+                homeRightClicked = homePlayerContexts.Contains(sender);
+                senderNumber = homeRightClicked ? int.Parse(homePlayerLabels[homePlayerContexts.IndexOf((GroupBox)sender)].Text) 
+                                                : int.Parse(awayPlayerLabels[awayPlayerContexts.IndexOf((GroupBox)sender)].Text);
+            }
+            lastPlayer = pac.getPlayerByNumber(homeRightClicked, senderNumber);
+
+            resetFirstSecondSelected();
+            result = getQuickPromptResult(sender, homeRightClicked);
+            if (result == null)
+            {
+                return;
+            }
+
+            int outBeg = result.IndexOf("#") + 1;
+            int outLength = result.IndexOf(" (") - outBeg;
+
+            int subOutNumber = int.Parse(result.Substring(outBeg, outLength));
+
+            Player subOutPlayer = lastPlayer;
+            Player subInPlayer = null;
+
+            subInPlayer = pac.getPlayerByNumber(homeRightClicked, subOutNumber);
+
+            SubstitutionEvent subEvent = new SubstitutionEvent(pac, subInPlayer.Id, subOutPlayer.Id, subInPlayer.TeamId);
+
+            confirmAndSendEvent(subEvent);
         }
     }// end GameForm
 } //end using namespace
