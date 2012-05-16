@@ -12,16 +12,19 @@ namespace _20
     public partial class QuickPrompt : Form
     {
         private string type;
+        private Alpaca pac;
         private bool bizzare;
         private Dictionary<string, EventHandler> events;
         public static int sideBorderLength = 6;
         public static int topBottomBorderLength = 28;
+        private float fontSize = 15.0f;
         public bool cancelled;
         public string result;
 
         public QuickPrompt(Alpaca pac, string type, Point loc, bool bizzare)
         {
             InitializeComponent();
+            this.pac = pac; 
             this.type = type;
             this.bizzare = bizzare;
             this.Location = loc;
@@ -65,6 +68,36 @@ namespace _20
                     this.loadFormWithButtons(new string[] { "Offensive", "Defensive", "Technical", "Ejection"});
                 }
             }
+            else if (this.type.Equals("sub"))
+            {
+                this.Size = new Size(234, 500);
+                List<Player> players = null;
+                fontSize = 10f;
+                if (bizzare)
+                {
+                    players = pac.HomeTeam.getBench();
+                }
+                else
+                {
+                    players = pac.AwayTeam.getBench();
+                }
+                string[] pArray = new string[players.Count-1];
+                int count = 0;
+                
+                foreach(Player p in players)
+                {
+                    if (!p.TeamPlayer)
+                    {
+                        pArray[count++] = "with #" + p.Jersey + " (" + p.DisplayName + ")";
+                    }
+                }
+                this.loadFormWithButtons(pArray);
+            }
+            else if (this.type.Equals("timeout"))
+            {
+                this.Text = "Select timeout type";
+                loadFormWithButtons(new string[] {(bizzare ? "Home" : "Away") + " Timeout", "Media Timeout", "Official Timeout" });
+            }
         }
 
         public void loadFormWithButtons(string[] types)
@@ -80,7 +113,7 @@ namespace _20
                 b.Size = new Size((this.Width - sideBorderLength), (this.Height - topBottomBorderLength) / (types.Count<string>() + 1));
                 b.Location = new Point(0, location);
                 b.Click += i == cancelInd ? new EventHandler(this.cancelForm) : new EventHandler(this.allPurposeButtonClick);
-                font = new Font(b.Font.FontFamily, 15.0f);
+                font = new Font(b.Font.FontFamily, fontSize);
                 b.Font = font;
                 location += b.Size.Height;
                 this.Controls.Add(b);
