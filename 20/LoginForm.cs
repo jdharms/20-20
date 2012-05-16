@@ -59,9 +59,6 @@ namespace _20
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
-            userNameBox.Text = "jnguyenjr";
-            passwordBox.Text = "Espnalps!";
-            submitButton_Click(submitButton, null);
             if (failed)
             {
                 failedLoginLabel.Text = "Bad username or password.";
