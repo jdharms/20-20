@@ -441,7 +441,15 @@ namespace _20
             }
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                buttonPanel.Visible = true;
+                if (!doubleClicked)
+                {
+                    buttonPanel.Visible = true;
+                }
+                else
+                {
+                    buttonPanel.Visible = false;
+                    doubleClicked = false;
+                }
             }
 
 
@@ -1386,13 +1394,16 @@ namespace _20
             }
         }
 
+        private bool doubleClicked;
         private void courtBox_DoubleClick(object sender, EventArgs e)
         {
-            if (buttonPanel.Visible)
-            {
-                buttonPanel.Visible = false;
-                courtBox.Refresh();
-            }
+            doubleClicked = true;
+            courtBox.Refresh();
+
+            //if (buttonPanel.Visible)
+            //{
+            //    buttonPanel.Visible = false;
+            //}
         } // end confirmAndSendEvent(Event e);
 
         private Point generateDataFormLocation(Button button)
